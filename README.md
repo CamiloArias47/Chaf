@@ -1,5 +1,5 @@
 ![Texto Alt](/img/chaf.png "Chaf")
-# Chaf
+
 Herramienta de control de inventario para negocios, proyecto Desarrollo de software.
 
 1. **Descripción problema**  
