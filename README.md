@@ -1,6 +1,6 @@
 ![Texto Alt](/img/chaf.png "Chaf")
 
-Herramienta de control de inventario para negocios, proyecto Desarrollo de software.
+## Herramienta de control de inventario para negocios, proyecto Desarrollo de software ##
 
 1. **Descripción problema**  
 
