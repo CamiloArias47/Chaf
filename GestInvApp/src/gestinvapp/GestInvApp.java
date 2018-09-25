@@ -5,6 +5,8 @@
  */
 package gestinvapp;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author david
@@ -16,6 +18,8 @@ public class GestInvApp {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        GesInvAppView view = new GesInvAppView();
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
 }
