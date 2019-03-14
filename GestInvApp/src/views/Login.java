@@ -33,7 +33,6 @@ public class Login extends javax.swing.JFrame {
         materialButton1 = new libraries.MaterialButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/chaf.png"))); // NOI18N
@@ -41,14 +40,12 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(240, 240, 240));
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/campos.png"))); // NOI18N
-        jLabel2.setBorder(null);
         jLabel2.setDoubleBuffered(true);
         jLabel2.setOpaque(true);
 
         jLabel3.setBackground(new java.awt.Color(240, 240, 240));
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/campos.png"))); // NOI18N
-        jLabel3.setBorder(null);
         jLabel3.setDoubleBuffered(true);
         jLabel3.setOpaque(true);
 
@@ -131,7 +128,11 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                Login inicio = new Login();
+                inicio.setVisible(true);
+        
+              
+                
             }
         });
     }
