@@ -22,5 +22,6 @@ public class Main {
       /*  DashboardView view = new DashboardView();
         view.setVisible(true);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); */
+      Conection con = new Conection();
     }
 }
