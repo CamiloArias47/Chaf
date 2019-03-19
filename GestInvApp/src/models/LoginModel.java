@@ -5,10 +5,14 @@
  */
 package models;
 
+import models.ConexionBD;
 /**
  *
  * @author invitado
  */
-public class loginModel {
+public class LoginModel {
     
+    private String user;
+    private String pwd;
+    private con
 }
