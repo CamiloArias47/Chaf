@@ -43,6 +43,11 @@ public class Login extends javax.swing.JFrame {
 
         materialButton1.setBackground(new java.awt.Color(119, 177, 236));
         materialButton1.setText("Iniciar sessión");
+        materialButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                materialButton1MouseClicked(evt);
+            }
+        });
         materialButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 materialButton1ActionPerformed(evt);
@@ -91,7 +96,7 @@ public class Login extends javax.swing.JFrame {
             input2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -158,6 +163,10 @@ public class Login extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void materialButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialButton1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_materialButton1MouseClicked
 
     /**
      * @param args the command line arguments
