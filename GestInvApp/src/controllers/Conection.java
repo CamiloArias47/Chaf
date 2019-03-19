@@ -31,7 +31,7 @@ public class Conection {
         }
            
         try{
-           con = DriverManager.getConnection("jdbc:postgresql://chaf.cjbpeuvptazq.us-east-2.rds.amazonaws.com:5432/chaf", "CHAF", "Cali20*Q");
+           con = DriverManager.getConnection("jdbc:postgresql://chaf-pruebas.cjbpeuvptazq.us-east-2.rds.amazonaws.com:5432/chaf", "CHAF", "Cali20*Q");
         }
         catch(SQLException ex){
            System.out.println("No se pudo conectar a la base de datos, "+ex);
