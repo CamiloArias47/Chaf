@@ -14,5 +14,4 @@ public class LoginModel {
     
     private String user;
     private String pwd;
-    private con
 }
