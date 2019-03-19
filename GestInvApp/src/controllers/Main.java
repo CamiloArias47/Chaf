@@ -8,6 +8,7 @@ package controllers;
 import javax.swing.JFrame;
 import views.DashboardView;
 import views.Login;
+import models.conexionBD;
 
 /**
  *
@@ -15,10 +16,14 @@ import views.Login;
  */
 public class Main {
     public static void main(String[] args) {
-          Login login = new Login();
-          login.setVisible(true);
-          login.setLayout(null);
-          login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//          Login login = new Login();
+//          login.setVisible(true);
+//          login.setLayout(null);
+//          login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+          
+          conexionBD c = new conexionBD();
+          c.conectar();
+          c.pruebaConexion();
       /*  DashboardView view = new DashboardView();
         view.setVisible(true);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); */
