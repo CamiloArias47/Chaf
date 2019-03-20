@@ -19,34 +19,48 @@ import java.util.logging.Logger;
  */
 public class ConexionBD {
 
-    
-    
-    private Connection conexion = null;
+    protected Connection conexion = null; //esta protegida para que las clases hijas (modelos) puedann acceder a la conexion
     private ResultSet response  = null;
     private Statement s         = null;
-    
-    public void ConexionBD (){
+
+    public ConexionBD(){
         if( conexion != null){
+            System.out.println("[ConexionDB] Conectado");
             return;
         }
-         
-    String url = "jdbc:postgresql://chaf-pruebas.cjbpeuvptazq.us-east-2.rds.amazonaws.com:5432/CHAF_PRUEBA";
-    String pwd = "Cali20*Q";
-    
-    try{
-    Class.forName("org.postgresql.Driver");
-    conexion = DriverManager.getConnection(url,"chaf",pwd);
-     if( conexion != null){
-            System.out.println("Conectando a la BD en AWS...");
+
+        System.out.println("[ConexionDB] Iniciar conexion...");
+
+        String url = "jdbc:postgresql://chaf-pruebas.cjbpeuvptazq.us-east-2.rds.amazonaws.com:5432/CHAF_PRUEBA";
+        String user = "chaf";
+        String pwd = "Cali20*Q";
+
+        try{
+          Class.forName("org.postgresql.Driver");
+          System.out.println("[ConexionDB] Driver cargado");
+        }catch(ClassNotFoundException e){
+                System.out.println(e);
         }
-    }catch(ClassNotFoundException | SQLException e){
-            System.out.println(e);
+
+        try{
+          conexion = DriverManager.getConnection(url,"chaf",pwd);
+           if( conexion != null){
+            System.out.println("[ConexionBD] Conectado a la BD en AWS");
+           }
+        }
+        catch(SQLException ex){
+          System.out.println("[ConexionDB]Error: No se pudo conectar a la base de datos, "+ex);
+          ex.printStackTrace();
         }
     }
-   
+
+    public Connection getConexion(){
+      return this.conexion;
+    }
+
     public void ejecutarConsulta(String sentencia){
-        
-        String string = "";  
+
+        String string = "";
         try {
             s = conexion.createStatement();
             response = s.executeQuery(sentencia);
@@ -57,11 +71,11 @@ public class ConexionBD {
          * Pregunta, como se manejarian las consultas basicas. Pense en manejarlas como un arreglo
          * ejemplo : {'SELECT','UPDATE',DELETE'}
          * para  asi mismo pasara la respuesta en un condicional debajo de este comentario
-         */      
+         */
         try {
             while(response.next()){
                 int i= 1;
-                while(i<6){
+                while(i<4){
                     string += response.getString(i) + ",";
                     i++;
                 }
@@ -70,32 +84,5 @@ public class ConexionBD {
         } catch (SQLException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-        
-    public void respuestaConsulta(){
-       
-    }
-    public Connection getConexion() {
-        return conexion;
-    }
-
-    public void setConexion(Connection conexion) {
-        this.conexion = conexion;
-    }
-
-    public ResultSet getResponse() {
-        return response;
-    }
-
-    public void setResponse(ResultSet response) {
-        this.response = response;
-    }
-
-    public Statement getS() {
-        return s;
-    }
-
-    public void setS(Statement s) {
-        this.s = s;
     }
 }
