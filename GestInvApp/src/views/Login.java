@@ -5,11 +5,17 @@
  */
 package views;
 
+import controllers.DashboardController;
+import javax.swing.JFrame;
+import controllers.LoginController;
+
 /**
  *
  * @author camilo
  */
 public class Login extends javax.swing.JFrame {
+
+    private views.DashboardView dashboard;
 
     /**
      * Creates new form Login
@@ -28,11 +34,11 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        materialButton1 = new libraries.MaterialButton();
+        submit = new libraries.MaterialButton();
         input1 = new views.Input();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        inputPassword = new javax.swing.JPasswordField();
         input2 = new views.Input();
-        jTextField1 = new javax.swing.JTextField();
+        inputUser = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -41,21 +47,21 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/chaf.png"))); // NOI18N
 
-        materialButton1.setBackground(new java.awt.Color(119, 177, 236));
-        materialButton1.setText("Iniciar sessión");
-        materialButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        submit.setBackground(new java.awt.Color(119, 177, 236));
+        submit.setText("Iniciar sesión");
+        submit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                materialButton1MouseClicked(evt);
+                submitMouseClicked(evt);
             }
         });
-        materialButton1.addActionListener(new java.awt.event.ActionListener() {
+        submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                materialButton1ActionPerformed(evt);
+                submitActionPerformed(evt);
             }
         });
 
-        jPasswordField1.setToolTipText("");
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        inputPassword.setToolTipText("");
+        inputPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout input1Layout = new javax.swing.GroupLayout(input1);
         input1.setLayout(input1Layout);
@@ -63,23 +69,24 @@ public class Login extends javax.swing.JFrame {
             input1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(inputPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addContainerGap())
         );
         input1Layout.setVerticalGroup(
             input1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        jTextField1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(134, 134, 134));
-        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        inputUser.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        inputUser.setForeground(new java.awt.Color(134, 134, 134));
+        inputUser.setToolTipText("");
+        inputUser.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        inputUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                inputUserActionPerformed(evt);
             }
         });
 
@@ -89,14 +96,14 @@ public class Login extends javax.swing.JFrame {
             input2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(inputUser, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addContainerGap())
         );
         input2Layout.setVerticalGroup(
             input2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
+                .addComponent(inputUser, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -128,8 +135,8 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(170, 170, 170)
-                        .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                        .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,24 +156,37 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(input1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
+    private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_materialButton1ActionPerformed
+    }//GEN-LAST:event_submitActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void inputUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUserActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_inputUserActionPerformed
 
-    private void materialButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialButton1MouseClicked
+    private void submitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_materialButton1MouseClicked
+        LoginController ctlLogin = new LoginController();
+        DashboardController ctlDashboard = new DashboardController(); 
+        ctlLogin.clickLogin(inputUser.getText(),inputPassword.getText());
+        if(ctlLogin.getLogged()){
+          ctlDashboard = new DashboardController();
+          ctlDashboard.setSesionActual(inputUser.getText());
+          dashboard = new DashboardView();
+          dashboard.setVisible(true);
+          dashboard.setLayout(null);
+          dashboard.setCurrentUser(ctlDashboard.getNombreUsuario(inputUser.getText()));
+          dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+          this.setVisible(false);
+        }
+    }//GEN-LAST:event_submitMouseClicked
 
     /**
      * @param args the command line arguments
@@ -175,7 +195,7 @@ public class Login extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -200,9 +220,9 @@ public class Login extends javax.swing.JFrame {
             public void run() {
                 Login inicio = new Login();
                 inicio.setVisible(true);
-        
-              
-                
+
+
+
             }
         });
     }
@@ -210,11 +230,11 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private views.Input input1;
     private views.Input input2;
+    private javax.swing.JPasswordField inputPassword;
+    private javax.swing.JTextField inputUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
-    private libraries.MaterialButton materialButton1;
+    private libraries.MaterialButton submit;
     // End of variables declaration//GEN-END:variables
 }
