@@ -16,11 +16,11 @@ import java.util.logging.Logger;
  *
  * @author Carlos Andres Cordoba Ramos
  */
-        
+
 public class DashboardModel extends models.ConexionBD {
-    
+
     private String currentUser;
-    
+
     public DashboardModel(){
     }
 
@@ -31,7 +31,7 @@ public class DashboardModel extends models.ConexionBD {
     public void setCurrentUser(String currentUser) {
         this.currentUser = currentUser;
     }
-    
+
     public String getNameUser(String user){
         Connection con = this.conexion;
         String resultadoQuery = "";
@@ -45,9 +45,9 @@ public class DashboardModel extends models.ConexionBD {
           }
       } catch (SQLException ex) {
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
-          
+
       }
-        
+
         return resultadoQuery;
     }
 }
