@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import controllers.CurrentSesionController;
 
 /**
  *
@@ -19,12 +20,23 @@ public class ProductsView extends javax.swing.JFrame {
     private Date date = Calendar.getInstance().getTime();
     private DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
     private String fechaActual = dateFormat.format(date);
+    private int userIdLogged; //id del usuario logueado
 
     /**
      * Creates new form ProductsView
      */
     public ProductsView() {
         initComponents();
+    }
+
+    public void setUserIdLogged(int id){
+      this.userIdLogged = id;
+    }
+
+    public void setInfoUser(){
+      CurrentSesionController sesion = new CurrentSesionController(this.userIdLogged);
+      this.nameUser.setText(sesion.getName());
+      this.rolUser.setText(sesion.getRol());
     }
 
     /**
@@ -37,8 +49,8 @@ public class ProductsView extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        nameUser = new javax.swing.JLabel();
+        rolUser = new javax.swing.JLabel();
         materialButton1 = new libraries.MaterialButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -47,9 +59,9 @@ public class ProductsView extends javax.swing.JFrame {
 
         jLabel1.setText(this.fechaActual);
 
-        jLabel2.setText("Nombre usuario");
+        nameUser.setText("Nombre usuario");
 
-        jLabel3.setText("Rol");
+        rolUser.setText("Rol");
 
         materialButton1.setBackground(new java.awt.Color(119, 177, 236));
         materialButton1.setText("Registrar producto");
@@ -90,8 +102,8 @@ public class ProductsView extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)))
+                            .addComponent(nameUser)
+                            .addComponent(rolUser)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -106,9 +118,9 @@ public class ProductsView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(nameUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(rolUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -160,10 +172,10 @@ public class ProductsView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private libraries.MaterialButton materialButton1;
+    private javax.swing.JLabel nameUser;
+    private javax.swing.JLabel rolUser;
     // End of variables declaration//GEN-END:variables
 }

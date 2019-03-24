@@ -13,13 +13,11 @@ package controllers;
 
 public class DashboardController {
 
-    private int userIdLogged; //id del usuario logueado, se lo pasamos a otros modulos
+
 
     public DashboardController(){
 
     }
 
-    public void setUserIdLogged(int id){
-      this.userIdLogged = id;
-    }
+    
 }
