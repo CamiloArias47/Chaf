@@ -20,6 +20,10 @@ public class LoginModel extends ConexionBD{
 
     private String user;
     private String pass;
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
     public LoginModel(){
       super();
     }
@@ -55,6 +59,10 @@ public class LoginModel extends ConexionBD{
 
     public String getPass(){
       return this.pass;
+<<<<<<< HEAD
+    }
+=======
     }    
     
+>>>>>>> master
 }
