@@ -61,7 +61,7 @@
                               <Component id="materialButton2" max="32767" attributes="0"/>
                               <Component id="materialButton6" alignment="1" max="32767" attributes="0"/>
                               <Component id="materialButton5" alignment="1" max="32767" attributes="0"/>
-                              <Component id="materialButton3" alignment="1" min="-2" pref="132" max="-2" attributes="0"/>
+                              <Component id="BtnProduct" alignment="1" min="-2" pref="132" max="-2" attributes="0"/>
                               <Component id="materialButton1" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="181" max="32767" attributes="0"/>
@@ -91,7 +91,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="materialButton2" min="-2" pref="27" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="materialButton3" min="-2" pref="27" max="-2" attributes="0"/>
+                          <Component id="BtnProduct" min="-2" pref="27" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="materialButton4" min="-2" pref="27" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -130,7 +130,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="materialButton2ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="libraries.MaterialButton" name="materialButton3">
+        <Component class="libraries.MaterialButton" name="BtnProduct">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="99" red="66" type="rgb"/>
@@ -138,7 +138,7 @@
             <Property name="text" type="java.lang.String" value="PRODUCTOS"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="materialButton3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnProductActionPerformed"/>
           </Events>
         </Component>
         <Component class="libraries.MaterialButton" name="materialButton4">

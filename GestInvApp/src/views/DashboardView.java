@@ -15,6 +15,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import views.ProductsView;
+import controllers.CurrentSesionController;
+import javax.swing.JFrame;
 
 
 
@@ -27,6 +30,8 @@ public class DashboardView extends javax.swing.JFrame {
     private DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
     private String fechaActual = dateFormat.format(date);
 
+    private int userIdLogged; //id del usuario logueado, se lo pasamos a otros modulos
+
     public DashboardView() {
 
         initComponents();
@@ -37,6 +42,10 @@ public class DashboardView extends javax.swing.JFrame {
 
     public void setCurrentUser(String user){
         this.sesionActual.setText(user);
+    }
+
+    public void setUserIdLogged(int id){
+        this.userIdLogged = id;
     }
 
     /**
@@ -51,7 +60,7 @@ public class DashboardView extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         materialButton1 = new libraries.MaterialButton();
         materialButton2 = new libraries.MaterialButton();
-        materialButton3 = new libraries.MaterialButton();
+        BtnProduct = new libraries.MaterialButton();
         materialButton4 = new libraries.MaterialButton();
         materialButton5 = new libraries.MaterialButton();
         materialButton6 = new libraries.MaterialButton();
@@ -85,11 +94,11 @@ public class DashboardView extends javax.swing.JFrame {
             }
         });
 
-        materialButton3.setBackground(new java.awt.Color(102, 153, 255));
-        materialButton3.setText("PRODUCTOS");
-        materialButton3.addActionListener(new java.awt.event.ActionListener() {
+        BtnProduct.setBackground(new java.awt.Color(102, 153, 255));
+        BtnProduct.setText("PRODUCTOS");
+        BtnProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                materialButton3ActionPerformed(evt);
+                BtnProductActionPerformed(evt);
             }
         });
 
@@ -164,7 +173,7 @@ public class DashboardView extends javax.swing.JFrame {
                             .addComponent(materialButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(materialButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(materialButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(materialButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 181, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -187,7 +196,7 @@ public class DashboardView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(materialButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(materialButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtnProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(materialButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -221,9 +230,16 @@ public class DashboardView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_materialButton2ActionPerformed
 
-    private void materialButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton3ActionPerformed
+    private void BtnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnProductActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_materialButton3ActionPerformed
+        System.out.println("[DashboardView]: productos cliked");
+        ProductsView productView = new ProductsView();
+        productView.setUserIdLogged(this.userIdLogged);
+        productView.setInfoUser();
+        productView.setVisible(true);
+        productView.setLayout(null);
+        productView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_BtnProductActionPerformed
 
     private void materialButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton4ActionPerformed
         // TODO add your handling code here:
@@ -285,12 +301,12 @@ public class DashboardView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private libraries.MaterialButton BtnProduct;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private libraries.MaterialButton materialButton1;
     private libraries.MaterialButton materialButton2;
-    private libraries.MaterialButton materialButton3;
     private libraries.MaterialButton materialButton4;
     private libraries.MaterialButton materialButton5;
     private libraries.MaterialButton materialButton6;

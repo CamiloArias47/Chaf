@@ -179,8 +179,8 @@ public class Login extends javax.swing.JFrame {
         ctlLogin.clickLogin(inputUser.getText(),inputPassword.getText());
         if(ctlLogin.getLogged()){
           CurrentSesionController sesion = new CurrentSesionController(ctlLogin.getIdUserLogged());
-          ctlDashboard.setUserIdLogged(ctlLogin.getIdUserLogged()); //le pasamos el id del usuario al dashboard, para que lo pueda pasar a los otros modulos
           dashboard = new DashboardView();
+          dashboard.setUserIdLogged(ctlLogin.getIdUserLogged()); //le pasamos el id del usuario al dashboard, para que lo pueda pasar a los otros modulos
           dashboard.setVisible(true);
           dashboard.setLayout(null);
           dashboard.setCurrentUser(sesion.getName());
