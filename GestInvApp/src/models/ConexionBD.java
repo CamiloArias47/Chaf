@@ -22,6 +22,11 @@ public class ConexionBD {
     protected Connection conexion = null; //esta protegida para que las clases hijas (modelos) puedann acceder a la conexion
     private ResultSet response  = null;
     private Statement s         = null;
+<<<<<<< HEAD
+=======
+    protected String currentUser;
+    protected String pwd;
+>>>>>>> master
 
     public ConexionBD(){
         if( conexion != null){
