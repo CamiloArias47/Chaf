@@ -1,6 +1,8 @@
 package controllers;
 
 import models.LoginModel;
+import models.UserModel;
+import controllers.CurrentSesionController;
 /**
 * @fileoverview Controlador del login
 * @version 1.0
@@ -13,6 +15,7 @@ import models.LoginModel;
 public class LoginController {
 
     private boolean logged = false; //indica si el logueo fue satisfactorio
+    private int idUserLogged; //almacena el id del usuario logueado
 
     public LoginController(){
 
@@ -24,6 +27,7 @@ public class LoginController {
         login.setPass(pass);
         if(login.validate()){
           System.out.println("[LoginController] Access allow");
+          setCurrentUser(user); //llamar al metodo que establece el usuario logueado
           logged = true;
         }
         else{
@@ -32,7 +36,20 @@ public class LoginController {
         }
     }
 
+    /*
+    *Consulta el id del usuario logueado
+    **/
+    private void setCurrentUser(String userName){
+      UserModel user = new UserModel();
+      user.whereUserName(userName);
+      this.idUserLogged = user.getTercero_id();
+    }
+
     public boolean getLogged(){
       return logged;
+    }
+
+    public int getIdUserLogged(){
+      return idUserLogged;
     }
 }

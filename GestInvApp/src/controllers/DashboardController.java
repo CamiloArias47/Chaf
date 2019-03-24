@@ -10,24 +10,16 @@ package controllers;
  * @author Carlos Andres Cordoba Ramos
  */
 
-import models.DashboardModel;
 
 public class DashboardController {
-    private DashboardModel dashboard;
-    
+
+    private int userIdLogged; //id del usuario logueado, se lo pasamos a otros modulos
+
     public DashboardController(){
-        dashboard = new DashboardModel();
+
     }
-    
-    public void setSesionActual(String sesion){
-        dashboard.setCurrentUser(sesion);
-    }
-    public String getSesionActual(){
-        return dashboard.getCurrentUser();
-    }
-    
-    public String getNombreUsuario(String user){
-        String resultado = this.dashboard.getNameUser(user);
-        return resultado;
+
+    public void setUserIdLogged(int id){
+      this.userIdLogged = id;
     }
 }

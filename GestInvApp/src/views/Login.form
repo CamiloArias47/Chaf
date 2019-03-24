@@ -73,11 +73,7 @@
               <Component id="input1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="submit" min="-2" pref="51" max="-2" attributes="0"/>
-<<<<<<< HEAD
-              <EmptySpace pref="45" max="32767" attributes="0"/>
-=======
               <EmptySpace pref="49" max="32767" attributes="0"/>
->>>>>>> master
           </Group>
       </Group>
     </DimensionLayout>

@@ -5,12 +5,10 @@
  */
 package views;
 
-<<<<<<< HEAD
-=======
 import controllers.DashboardController;
->>>>>>> master
 import javax.swing.JFrame;
 import controllers.LoginController;
+import controllers.CurrentSesionController;
 
 /**
  *
@@ -51,11 +49,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/chaf.png"))); // NOI18N
 
         submit.setBackground(new java.awt.Color(119, 177, 236));
-<<<<<<< HEAD
-        submit.setText("Iniciar sessión");
-=======
         submit.setText("Iniciar sesión");
->>>>>>> master
         submit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 submitMouseClicked(evt);
@@ -143,11 +137,7 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(170, 170, 170)
                         .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-<<<<<<< HEAD
-                .addContainerGap(81, Short.MAX_VALUE))
-=======
                 .addContainerGap(84, Short.MAX_VALUE))
->>>>>>> master
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,11 +158,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(input1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-<<<<<<< HEAD
-                .addContainerGap(45, Short.MAX_VALUE))
-=======
                 .addContainerGap(49, Short.MAX_VALUE))
->>>>>>> master
         );
 
         pack();
@@ -189,23 +175,15 @@ public class Login extends javax.swing.JFrame {
     private void submitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitMouseClicked
         // TODO add your handling code here:
         LoginController ctlLogin = new LoginController();
-<<<<<<< HEAD
+        DashboardController ctlDashboard = new DashboardController();
         ctlLogin.clickLogin(inputUser.getText(),inputPassword.getText());
         if(ctlLogin.getLogged()){
+          CurrentSesionController sesion = new CurrentSesionController(ctlLogin.getIdUserLogged());
+          ctlDashboard.setUserIdLogged(ctlLogin.getIdUserLogged()); //le pasamos el id del usuario al dashboard, para que lo pueda pasar a los otros modulos
           dashboard = new DashboardView();
           dashboard.setVisible(true);
           dashboard.setLayout(null);
-=======
-        DashboardController ctlDashboard = new DashboardController(); 
-        ctlLogin.clickLogin(inputUser.getText(),inputPassword.getText());
-        if(ctlLogin.getLogged()){
-          ctlDashboard = new DashboardController();
-          ctlDashboard.setSesionActual(inputUser.getText());
-          dashboard = new DashboardView();
-          dashboard.setVisible(true);
-          dashboard.setLayout(null);
-          dashboard.setCurrentUser(ctlDashboard.getNombreUsuario(inputUser.getText()));
->>>>>>> master
+          dashboard.setCurrentUser(sesion.getName());
           dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           this.setVisible(false);
         }
