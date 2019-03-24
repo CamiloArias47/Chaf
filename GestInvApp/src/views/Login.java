@@ -8,6 +8,7 @@ package views;
 import controllers.DashboardController;
 import javax.swing.JFrame;
 import controllers.LoginController;
+import controllers.CurrentSesionController;
 
 /**
  *
@@ -177,12 +178,12 @@ public class Login extends javax.swing.JFrame {
         DashboardController ctlDashboard = new DashboardController();
         ctlLogin.clickLogin(inputUser.getText(),inputPassword.getText());
         if(ctlLogin.getLogged()){
-          ctlDashboard = new DashboardController();
-          ctlDashboard.setSesionActual(inputUser.getText());
+          CurrentSesionController sesion = new CurrentSesionController(ctlLogin.getIdUserLogged());
+          ctlDashboard.setUserIdLogged(ctlLogin.getIdUserLogged()); //le pasamos el id del usuario al dashboard, para que lo pueda pasar a los otros modulos
           dashboard = new DashboardView();
           dashboard.setVisible(true);
           dashboard.setLayout(null);
-          dashboard.setCurrentUser(ctlDashboard.getNombreUsuario(inputUser.getText()));
+          dashboard.setCurrentUser(sesion.getName());
           dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           this.setVisible(false);
         }

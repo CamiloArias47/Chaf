@@ -19,22 +19,22 @@ import java.util.Date;
 
 
 public class DashboardView extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form DashboardView
      */
-    private Date date = Calendar.getInstance().getTime();  
-    private DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");  
-    private String fechaActual = dateFormat.format(date);  
-    
+    private Date date = Calendar.getInstance().getTime();
+    private DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+    private String fechaActual = dateFormat.format(date);
+
     public DashboardView() {
-        
+
         initComponents();
-              
+
     }
-    
-    
-    
+
+
+
     public void setCurrentUser(String user){
         this.sesionActual.setText(user);
     }
@@ -256,7 +256,7 @@ public class DashboardView extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

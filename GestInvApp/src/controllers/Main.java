@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import views.DashboardView;
 import views.Login;
 import models.ConexionBD;
+import views.ProductsView;
 
 /**
  *
@@ -20,5 +21,10 @@ public class Main {
           login.setVisible(true);
           login.setLayout(null);
           login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+          /*ProductsView productView = new ProductsView();
+          productView.setVisible(true);
+          productView.setLayout(null);
+          productView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
     }
 }
