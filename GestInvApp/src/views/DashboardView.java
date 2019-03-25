@@ -238,7 +238,6 @@ public class DashboardView extends javax.swing.JFrame {
         productView.setInfoUser();
         productView.setVisible(true);
         productView.setLayout(null);
-        productView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_BtnProductActionPerformed
 
     private void materialButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton4ActionPerformed
