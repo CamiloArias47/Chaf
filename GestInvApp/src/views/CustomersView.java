@@ -43,7 +43,7 @@ public class CustomersView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         materialButton1 = new libraries.MaterialButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel3.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         jLabel3.setText("jLabel3");

@@ -17,15 +17,15 @@ import views.UserView;
  */
 public class Main {
     public static void main(String[] args) {
-//          Login login = new Login();
-//          login.setVisible(true);
-//          login.setLayout(null);
-//          login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+          Login login = new Login();
+          login.setVisible(true);
+          login.setLayout(null);
+          login.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-          UserView productView = new UserView();
-          productView.setVisible(true);
-          productView.setLayout(null);
-          productView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//          UserView productView = new UserView();
+//          productView.setVisible(true);
+//          productView.setLayout(null);
+//          productView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           
     }         
 }

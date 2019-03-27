@@ -5,6 +5,7 @@
  */
 package views;
 
+import controllers.CurrentSesionController;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -12,6 +13,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ContainerEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -24,7 +26,8 @@ import javax.swing.table.TableCellRenderer;
  * @author Carlos Andres
  */
 public class UserView extends javax.swing.JFrame {
-    private JLabel editar,eliminar,activar;
+   // private JLabel editar,eliminar,activar;
+    private JButton editar = new JButton();
     private ImageIcon editarIcon,eliminarIcon,activarIcon;
     private Icon edImg,elimImg,actImg;
     /* array de jlabel donde se alojaran las opciones del modulo*/
@@ -34,31 +37,47 @@ public class UserView extends javax.swing.JFrame {
     /*renderizador encargado de "convertir" los datos del jlabel para que se vean las imgns en el jtable  */
     private LabelRenderer renderizador = new LabelRenderer();
     private UserRegisterView form;
+    private int userIdLogged; //id del usuario logueado
+    
      /**
      * Creates new form UsuariosView
      */
     public UserView() {
         
-        editar = new JLabel();
+//        editar = new JLabel();
         editarIcon = new ImageIcon(getClass().getResource("/img/editar.png"));
         edImg = new ImageIcon(editarIcon.getImage().getScaledInstance(20, 20, 0));
         editar.setIcon(edImg);
-              
-        eliminar = new JLabel();
-        eliminarIcon = new ImageIcon(getClass().getResource("/img/desactivar.png"));
-        elimImg = new ImageIcon(eliminarIcon.getImage().getScaledInstance(20, 20, 0));
-        eliminar.setIcon(elimImg);
+        editar.setIcon(edImg);
+//              
+//        eliminar = new JLabel();
+//        eliminarIcon = new ImageIcon(getClass().getResource("/img/desactivar.png"));
+//        elimImg = new ImageIcon(eliminarIcon.getImage().getScaledInstance(20, 20, 0));
+//        eliminar.setIcon(elimImg);
+//        
+//        activar = new JLabel();
+//        activarIcon = new ImageIcon(getClass().getResource("/img/activar.png"));
+//        actImg = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
+//        activar.setIcon(actImg);
+//        
+//        opciones[0]= editar;
+//        opciones[1]= eliminar;
+//        opciones[2]= activar;
+//        
         
-        activar = new JLabel();
-        activarIcon = new ImageIcon(getClass().getResource("/img/activar.png"));
-        actImg = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
-        activar.setIcon(actImg);
-        
-        opciones[0]= editar;
-        opciones[1]= eliminar;
-        opciones[2]= activar;
+        this.setResizable(false);
         initComponents();
         
+    }
+    
+    public void setUserIdLogged(int id){
+      this.userIdLogged = id;
+    }
+    
+    public void setInfoUser(){
+      CurrentSesionController sesion = new CurrentSesionController(this.userIdLogged);
+      this.nameUser.setText(sesion.getName());
+      this.rolUser.setText(sesion.getRol());
     }
 
     /**
@@ -72,11 +91,11 @@ public class UserView extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         materialButton1 = new libraries.MaterialButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        nameUser = new javax.swing.JLabel();
+        rolUser = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -90,12 +109,6 @@ public class UserView extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel3.setText("jLabel3");
-        jLabel3.setIcon(elimImg);
-
-        jLabel4.setText("jLabel4");
-        jLabel4.setIcon(actImg);
 
         materialButton1.setBackground(new java.awt.Color(119, 177, 236));
         materialButton1.setText("Registrar Usuario");
@@ -112,7 +125,7 @@ public class UserView extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, this.opciones[0],this.opciones[1],this.opciones[2]}
+                {null, null, this.editar,null,null}
             },
             new String [] {
                 "Usuario", "Nombre", "Editar","Desactivar","Activar"
@@ -133,36 +146,41 @@ public class UserView extends javax.swing.JFrame {
         this.jTable1.getColumn("Desactivar").setMaxWidth(sizeColumn + 20);
         this.jTable1.getColumn("Activar").setCellRenderer(renderizador);
         this.jTable1.getColumn("Activar").setMaxWidth(sizeColumn);
+        this.jTable1.setRowHeight(30);
         jScrollPane1.setViewportView(jTable1);
+
+        nameUser.setText("jLabel1");
+
+        rolUser.setText("jLabel2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(74, 74, 74)
-                                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(57, Short.MAX_VALUE))))
+                                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rolUser)
+                            .addComponent(nameUser))))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jLabel3)
+                .addGap(31, 31, 31)
+                .addComponent(nameUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addGap(4, 4, 4)
+                .addComponent(rolUser)
+                .addGap(18, 18, 18)
                 .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -183,14 +201,9 @@ public class UserView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
-        form = new UserRegisterView();
-        form.setForeground(Color.red);
-        form.setVisible(true);
-        form.moveToFront();
-        this.add(form);
-        
         
     }//GEN-LAST:event_materialButton1ActionPerformed
 
@@ -243,12 +256,12 @@ public class UserView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private libraries.MaterialButton materialButton1;
+    private javax.swing.JLabel nameUser;
+    private javax.swing.JLabel rolUser;
     // End of variables declaration//GEN-END:variables
 }
