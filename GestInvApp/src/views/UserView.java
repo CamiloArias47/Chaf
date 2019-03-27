@@ -26,45 +26,54 @@ import javax.swing.table.TableCellRenderer;
  * @author Carlos Andres
  */
 public class UserView extends javax.swing.JFrame {
-   // private JLabel editar,eliminar,activar;
-    private JButton editar = new JButton();
+    /* botones */
+    private JButton editar,eliminar,activar;
     private ImageIcon editarIcon,eliminarIcon,activarIcon;
     private Icon edImg,elimImg,actImg;
     /* array de jlabel donde se alojaran las opciones del modulo*/
-    private JLabel[] opciones = new JLabel[3];
+//    private JButton[] opciones = new JButton[3];
     /* tamaño de las columnas de editar y activar*/
     private int sizeColumn = 40;
     /*renderizador encargado de "convertir" los datos del jlabel para que se vean las imgns en el jtable  */
     private LabelRenderer renderizador = new LabelRenderer();
     private UserRegisterView form;
     private int userIdLogged; //id del usuario logueado
+    private Object[][] rows;
     
      /**
      * Creates new form UsuariosView
      */
     public UserView() {
         
-//        editar = new JLabel();
-        editarIcon = new ImageIcon(getClass().getResource("/img/editar.png"));
-        edImg = new ImageIcon(editarIcon.getImage().getScaledInstance(20, 20, 0));
+        /**
+         Creacion de boton editar
+         */
+        editar          = new JButton(); 
+        editar.setBackground(Color.white);
+        editarIcon      = new ImageIcon(getClass().getResource("/img/editar.png"));
+        edImg           = new ImageIcon(editarIcon.getImage().getScaledInstance(20, 20, 0));
         editar.setIcon(edImg);
-        editar.setIcon(edImg);
-//              
-//        eliminar = new JLabel();
-//        eliminarIcon = new ImageIcon(getClass().getResource("/img/desactivar.png"));
-//        elimImg = new ImageIcon(eliminarIcon.getImage().getScaledInstance(20, 20, 0));
-//        eliminar.setIcon(elimImg);
-//        
-//        activar = new JLabel();
-//        activarIcon = new ImageIcon(getClass().getResource("/img/activar.png"));
-//        actImg = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
-//        activar.setIcon(actImg);
-//        
-//        opciones[0]= editar;
-//        opciones[1]= eliminar;
-//        opciones[2]= activar;
-//        
         
+        /**
+         Creacion de boton eliminar
+         */             
+        
+        eliminar        = new JButton();
+        eliminar.setBackground(Color.white);
+        eliminarIcon    = new ImageIcon(getClass().getResource("/img/desactivar.png"));
+        elimImg         = new ImageIcon(eliminarIcon.getImage().getScaledInstance(20, 20, 0));
+        eliminar.setIcon(elimImg);
+        
+        /**
+         Creacion de boton activar
+         */
+        
+        activar         = new JButton();
+        activar.setBackground(Color.white);
+        activarIcon     = new ImageIcon(getClass().getResource("/img/activar.png"));
+        actImg          = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
+        activar.setIcon(actImg);
+
         this.setResizable(false);
         initComponents();
         
@@ -78,6 +87,24 @@ public class UserView extends javax.swing.JFrame {
       CurrentSesionController sesion = new CurrentSesionController(this.userIdLogged);
       this.nameUser.setText(sesion.getName());
       this.rolUser.setText(sesion.getRol());
+    }
+    
+    public Object[][] initRows(int filas){
+     this.rows = new Object[filas][5];
+     for(int i = 0;i < filas;i++){
+         for(int j = 1;j< 5 ;j++){
+            switch(j){
+                    case 2: rows[i][j] = this.editar;
+                    break;
+                    case 3: rows[i][j] = this.eliminar;
+                    break;
+                    case 4: rows[i][j] = this.activar;
+                    break;
+                    default: rows[i][j] = null;
+            }
+         }
+     }
+     return rows;
     }
 
     /**
@@ -124,9 +151,8 @@ public class UserView extends javax.swing.JFrame {
         });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, this.editar,null,null}
-            },
+            initRows(200)
+            ,
             new String [] {
                 "Usuario", "Nombre", "Editar","Desactivar","Activar"
             }
