@@ -60,6 +60,19 @@ public class ConexionBD {
       return this.conexion;
     }
 
+    /*
+    * CIerra la conexion
+    **/
+    public void closeConection(){
+        try{
+            this.conexion.close();
+            System.out.println("[ConexionBD] Conexión cerrada");
+        }
+        catch(SQLException ex){
+            System.out.println("Error al cerrar la conexion con la Base de datos. \n"+ex);
+        }
+    }
+
     public void ejecutarConsulta(String sentencia){
 
         String string = "";
