@@ -130,6 +130,35 @@ public class UserModel {
         return numero_id;
     }
     
-    
-
+    /**
+     * @author: Carlos Andres Cordoba Ramos
+     * @param tipoDoc
+     * @param numDoc
+     * @param dir
+     * @param name
+     * @param tel
+     * 
+     */
+    public void insertarUsuario(String tipoDoc,int numDoc,String dir,String name,String tel){
+        try {
+            ConexionBD con = new ConexionBD();
+            Connection conex = con.getConexion();
+            Statement query = conex.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                  ResultSet.CONCUR_UPDATABLE);
+           // ResultSet response = query.executeQuery("INSERT INTO tercero VALUES ('"+tipoDoc+"',"+numDoc+",'"+dir+"','"+name+"','"+tel+"';");
+            ResultSet response = query.executeQuery("SELECT * FROM tercero");
+            response.moveToInsertRow();
+            response.updateString("tipo_id",tipoDoc);
+            response.updateInt("numero_id", numDoc);
+            response.updateString("direccion",dir);
+            response.updateString("nombre_tercero",name);
+            response.updateString("telefono",tel);
+            response.insertRow();
+            response.moveToCurrentRow();
+      
+            System.out.println("inserto");
+        } catch (SQLException ex) {
+            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

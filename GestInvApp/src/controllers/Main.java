@@ -10,6 +10,7 @@ import views.DashboardView;
 import views.Login;
 import models.ConexionBD;
 import views.ProductsView;
+import views.TercerosRegisterView;
 import views.UserView;
 /**
  *
@@ -22,7 +23,7 @@ public class Main {
 //          login.setLayout(null);
 //          login.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-          UserView productView = new UserView();
+          TercerosRegisterView productView = new TercerosRegisterView();
           productView.setVisible(true);
           productView.setLayout(null);
           productView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
