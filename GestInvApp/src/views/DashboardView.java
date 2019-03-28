@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -243,19 +244,9 @@ public class DashboardView extends javax.swing.JFrame {
 
     private void BtnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnProductActionPerformed
         // TODO add your handling code here:
-<<<<<<< HEAD
         ProductsController controlProducts = new ProductsController();
         controlProducts.setUserIdLogged(this.userIdLogged);
         controlProducts.showView();
-=======
-        System.out.println("[DashboardView]: productos cliked");
-        ProductsView productView = new ProductsView();
-        productView.setUserIdLogged(this.userIdLogged);
-        productView.setInfoUser();
-        productView.setVisible(true);
-        productView.setLayout(null);
-        productView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
->>>>>>> master
     }//GEN-LAST:event_BtnProductActionPerformed
 
     private void materialButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton4ActionPerformed
