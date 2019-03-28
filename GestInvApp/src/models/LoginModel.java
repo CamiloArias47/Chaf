@@ -29,6 +29,7 @@ public class LoginModel extends ConexionBD{
       try {
           Statement query = con.createStatement();
           ResultSet response = query.executeQuery("SELECT * FROM usuario WHERE lower(login_usuario) = lower('"+user+"') and contraseña = '"+pass+"'");
+          this.closeConection();
           if(response.next()){
             return true;
           }
