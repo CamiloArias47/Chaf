@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,6 +19,7 @@ import java.util.Date;
 import views.ProductsView;
 import controllers.CurrentSesionController;
 import javax.swing.JFrame;
+import controllers.ProductsController;
 
 
 
@@ -46,6 +48,10 @@ public class DashboardView extends javax.swing.JFrame {
 
     public void setUserIdLogged(int id){
         this.userIdLogged = id;
+    }
+
+    public int getUserIdLogged(){
+      return this.userIdLogged;
     }
 
     /**
@@ -238,13 +244,9 @@ public class DashboardView extends javax.swing.JFrame {
 
     private void BtnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnProductActionPerformed
         // TODO add your handling code here:
-        System.out.println("[DashboardView]: productos cliked");
-        ProductsView productView = new ProductsView();
-        productView.setUserIdLogged(this.userIdLogged);
-        productView.setInfoUser();
-        productView.setVisible(true);
-        productView.setLayout(null);
-        productView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ProductsController controlProducts = new ProductsController();
+        controlProducts.setUserIdLogged(this.userIdLogged);
+        controlProducts.showView();
     }//GEN-LAST:event_BtnProductActionPerformed
 
     private void materialButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton4ActionPerformed

@@ -103,7 +103,7 @@ public class UserModel {
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
-    
+
     //Getters
 
     public String getTipo_id() {
@@ -129,7 +129,7 @@ public class UserModel {
     public int getNumero_id() {
         return numero_id;
     }
-    
-    
+
+
 
 }

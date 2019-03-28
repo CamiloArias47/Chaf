@@ -10,6 +10,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import controllers.CurrentSesionController;
+import controllers.ProductsController;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -21,6 +27,8 @@ public class ProductsView extends javax.swing.JFrame {
     private DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
     private String fechaActual = dateFormat.format(date);
     private int userIdLogged; //id del usuario logueado
+    private LabelRenderer renderizador = new LabelRenderer();
+    private int sizeColumn = 40;
 
     /**
      * Creates new form ProductsView
@@ -39,6 +47,19 @@ public class ProductsView extends javax.swing.JFrame {
       this.rolUser.setText(sesion.getRol());
     }
 
+    public void setProductsTable(DefaultTableModel model){
+      jTable1.setModel(model);
+    }
+
+    public void renderTable(){
+      this.jTable1.getColumn("Editar").setCellRenderer(renderizador);
+      this.jTable1.getColumn("Editar").setMaxWidth(sizeColumn);
+      this.jTable1.getColumn("Desactivar").setCellRenderer(renderizador);
+      this.jTable1.getColumn("Desactivar").setMaxWidth(sizeColumn + 20);
+      this.jTable1.getColumn("Activar").setCellRenderer(renderizador);
+      this.jTable1.getColumn("Activar").setMaxWidth(sizeColumn);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,7 +72,7 @@ public class ProductsView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         nameUser = new javax.swing.JLabel();
         rolUser = new javax.swing.JLabel();
-        materialButton1 = new libraries.MaterialButton();
+        btnRegester = new libraries.MaterialButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -63,28 +84,35 @@ public class ProductsView extends javax.swing.JFrame {
 
         rolUser.setText("Rol");
 
-        materialButton1.setBackground(new java.awt.Color(119, 177, 236));
-        materialButton1.setText("Registrar producto");
-        materialButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegester.setBackground(new java.awt.Color(119, 177, 236));
+        btnRegester.setText("Registrar producto");
+        btnRegester.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                materialButton1ActionPerformed(evt);
+                btnRegesterActionPerformed(evt);
             }
         });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Codigo", "Nombre", "Opciones"
+                "Codigo", "Nombre", "Opciones", "Title 4", "Title 5", "Title 6", "Title 7"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -106,7 +134,7 @@ public class ProductsView extends javax.swing.JFrame {
                             .addComponent(rolUser)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRegester, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -122,7 +150,7 @@ public class ProductsView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rolUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRegester, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -131,14 +159,23 @@ public class ProductsView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
+    private void btnRegesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegesterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_materialButton1ActionPerformed
+        ProductsController productCtl = new ProductsController();
+        productCtl.setUserIdLogged(this.userIdLogged);
+        productCtl.showFormRegister();
+    }//GEN-LAST:event_btnRegesterActionPerformed
+
+    public class LabelRenderer extends DefaultTableCellRenderer implements TableCellRenderer{
+     public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){
+      return (Component)value;
+     }
+    }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -171,10 +208,10 @@ public class ProductsView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private libraries.MaterialButton btnRegester;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private libraries.MaterialButton materialButton1;
     private javax.swing.JLabel nameUser;
     private javax.swing.JLabel rolUser;
     // End of variables declaration//GEN-END:variables
