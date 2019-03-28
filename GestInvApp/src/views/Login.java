@@ -104,7 +104,7 @@ public class Login extends javax.swing.JFrame {
             input2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputUser, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                .addComponent(inputUser)
                 .addContainerGap())
         );
 
