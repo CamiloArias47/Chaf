@@ -11,8 +11,11 @@ import java.util.Calendar;
 import java.util.Date;
 import controllers.CurrentSesionController;
 import controllers.ProductsController;
-import views.ProductsRegisterView;
-import javax.swing.JFrame;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -24,6 +27,8 @@ public class ProductsView extends javax.swing.JFrame {
     private DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
     private String fechaActual = dateFormat.format(date);
     private int userIdLogged; //id del usuario logueado
+    private LabelRenderer renderizador = new LabelRenderer();
+    private int sizeColumn = 40;
 
     /**
      * Creates new form ProductsView
@@ -40,6 +45,19 @@ public class ProductsView extends javax.swing.JFrame {
       CurrentSesionController sesion = new CurrentSesionController(this.userIdLogged);
       this.nameUser.setText(sesion.getName());
       this.rolUser.setText(sesion.getRol());
+    }
+
+    public void setProductsTable(DefaultTableModel model){
+      jTable1.setModel(model);
+    }
+
+    public void renderTable(){
+      this.jTable1.getColumn("Editar").setCellRenderer(renderizador);
+      this.jTable1.getColumn("Editar").setMaxWidth(sizeColumn);
+      this.jTable1.getColumn("Desactivar").setCellRenderer(renderizador);
+      this.jTable1.getColumn("Desactivar").setMaxWidth(sizeColumn + 20);
+      this.jTable1.getColumn("Activar").setCellRenderer(renderizador);
+      this.jTable1.getColumn("Activar").setMaxWidth(sizeColumn);
     }
 
     /**
@@ -76,18 +94,25 @@ public class ProductsView extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Codigo", "Nombre", "Opciones"
+                "Codigo", "Nombre", "Opciones", "Title 4", "Title 5", "Title 6", "Title 7"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -137,18 +162,20 @@ public class ProductsView extends javax.swing.JFrame {
     private void btnRegesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegesterActionPerformed
         // TODO add your handling code here:
         ProductsController productCtl = new ProductsController();
-        ProductsRegisterView formRegister = new ProductsRegisterView();
-        formRegister.setUserIdLogged(this.userIdLogged);
-        formRegister.setInfoUser();
-        formRegister.setComboBoxProveedores(productCtl.getComboBoxProveedores());
-        formRegister.setVisible(true);
-        formRegister.setLayout(null);
+        productCtl.setUserIdLogged(this.userIdLogged);
+        productCtl.showFormRegister();
     }//GEN-LAST:event_btnRegesterActionPerformed
+
+    public class LabelRenderer extends DefaultTableCellRenderer implements TableCellRenderer{
+     public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){
+      return (Component)value;
+     }
+    }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
