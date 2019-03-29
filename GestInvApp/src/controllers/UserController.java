@@ -5,10 +5,17 @@
  */
 package controllers;
 
+import models.UserModel;
+
 /**
  *
  * @author Carlos Andres
  */
 public class UserController {
-    
+    private UserModel modeloUser;
+    public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
+        this.modeloUser = new UserModel();
+        //faltan validaciones
+        this.modeloUser.insertarUsuario(tipoDoc, numDoc, dir, name, tel);
+    }
 }
