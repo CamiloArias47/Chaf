@@ -6,8 +6,8 @@
 package models;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,8 +27,10 @@ public class LoginModel extends ConexionBD{
     public boolean validate(){
       Connection con = this.conexion;
       try {
-          Statement query = con.createStatement();
-          ResultSet response = query.executeQuery("SELECT * FROM usuario WHERE lower(login_usuario) = lower('"+user+"') and contraseña = '"+pass+"'");
+          PreparedStatement query = con.prepareStatement("SELECT * FROM usuario WHERE lower(login_usuario) = lower(?) and contraseña = ?");
+          query.setString(1,user);
+          query.setString(2,pass);
+          ResultSet response = query.executeQuery();
           this.closeConection();
           if(response.next()){
             return true;
