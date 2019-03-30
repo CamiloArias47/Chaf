@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +18,8 @@ public class UserModel {
 
     String tipo_id, direccion, nombre, telefono;
     int tercero_id, numero_id;
+    int cantidadUsers  = 0;
+    ArrayList<ArrayList> usuarios = new ArrayList<ArrayList>();
 
     public UserModel(){
 
@@ -160,5 +163,37 @@ public class UserModel {
         } catch (SQLException ex) {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    /* aqui quede, hay que pasarle los datos a la vista*/
+    public ArrayList getUsersExist(){
+      try{
+        ConexionBD con = new ConexionBD();
+        Connection conex = con.getConexion();
+        Statement query = conex.createStatement();
+        ResultSet response = query.executeQuery("SELECT u.login_usuario,t.nombre_tercero AS nombre FROM tercero AS t \n" +
+                                                "NATURAL JOIN usuario AS u");
+        while(response.next()){
+            this.cantidadUsers++;
+            int i= 1;
+            ArrayList<String> usuario = new ArrayList<String>();
+            while(i<3){
+                usuario.add(response.getString(i));
+                i++;
+            }
+            this.usuarios.add(usuario);
+            
+            
+        }
+        System.out.print(cantidadUsers);
+        return usuarios;
+      }
+      catch(SQLException ex){
+          Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+          return usuarios;
+      }
+    }
+    
+    public int getCantidadUsers(){
+        return this.cantidadUsers;
     }
 }

@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import java.util.ArrayList;
 import models.UserModel;
 
 /**
@@ -13,9 +14,14 @@ import models.UserModel;
  */
 public class UserController {
     private UserModel modeloUser;
+    
     public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
         this.modeloUser = new UserModel();
         //faltan validaciones
         this.modeloUser.insertarUsuario(tipoDoc, numDoc, dir, name, tel);
+    }
+    
+    public ArrayList getUserForTable(){
+        return (String) usuarios.get(0);
     }
 }

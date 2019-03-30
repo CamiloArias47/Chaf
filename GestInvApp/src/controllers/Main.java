@@ -6,6 +6,7 @@
 package controllers;
 
 import javax.swing.JFrame;
+import models.UserModel;
 import views.Login;
 import views.TercerosRegisterView;
 /**
@@ -14,9 +15,12 @@ import views.TercerosRegisterView;
  */
 public class Main {
     public static void main(String[] args) {
-          Login login = new Login();
-          login.setVisible(true);
-          login.setLayout(null);
-          login.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);          
+//          Login login = new Login();
+//          login.setVisible(true);
+//          login.setLayout(null);
+//          login.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
+
+        UserModel um = new UserModel();
+        System.out.println(um.getUsersExist());
     }         
 }
