@@ -24,6 +24,7 @@ public final class CurrentSesionController {
     }
 
     public String getRol() {
+        
         return rol;
     }
 

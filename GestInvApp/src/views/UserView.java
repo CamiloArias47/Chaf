@@ -14,10 +14,12 @@ import java.awt.event.ContainerEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
@@ -36,7 +38,6 @@ public class UserView extends javax.swing.JFrame {
     private int sizeColumn = 40;
     /*renderizador encargado de "convertir" los datos del jlabel para que se vean las imgns en el jtable  */
     private LabelRenderer renderizador = new LabelRenderer();
-    private UserRegisterView form;
     private int userIdLogged; //id del usuario logueado
     private Object[][] rows;
     
@@ -230,6 +231,12 @@ public class UserView extends javax.swing.JFrame {
     
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
+        System.out.println("[TercerosRegisterView]: entrando a creacion de Usuarios");
+        TercerosRegisterView creacionTercero = new TercerosRegisterView();
+        creacionTercero.setVisible(true);
+        creacionTercero.setLayout(null);
+        creacionTercero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
         
     }//GEN-LAST:event_materialButton1ActionPerformed
 

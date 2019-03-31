@@ -5,6 +5,8 @@
  */
 package views;
 
+import controllers.UserController;
+import javax.swing.JFrame;
 import libraries.TextPrompt;
 
 
@@ -37,22 +39,22 @@ public class TercerosRegisterView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         tipoDoc = new views.Input();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
         nomCompleto = new views.Input();
-        inputUser2 = new javax.swing.JTextField();
+        inputUserDir = new javax.swing.JTextField();
         direction = new views.Input();
-        inputUser4 = new javax.swing.JTextField();
+        inputUserNomUser = new javax.swing.JTextField();
         numDoc = new views.Input();
-        inputUser5 = new javax.swing.JTextField();
+        inputUserNumDoc = new javax.swing.JTextField();
         phone = new views.Input();
-        inputUser6 = new javax.swing.JTextField();
+        inputUserTel = new javax.swing.JTextField();
+        materialButton1 = new libraries.MaterialButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(153, 153, 153));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CC", "NIT", "TI", "AS", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CC", "NIT", "TI", "AS", " " }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -76,14 +78,14 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        inputUser2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        inputUser2.setForeground(new java.awt.Color(134, 134, 134));
-        inputUser2.setToolTipText("");
-        direccion = new TextPrompt("Direccion",this.inputUser2);
-        inputUser2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        inputUser2.addActionListener(new java.awt.event.ActionListener() {
+        inputUserDir.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        inputUserDir.setForeground(new java.awt.Color(134, 134, 134));
+        inputUserDir.setToolTipText("");
+        direccion = new TextPrompt("Direccion",this.inputUserDir);
+        inputUserDir.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        inputUserDir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputUser2ActionPerformed(evt);
+                inputUserDirActionPerformed(evt);
             }
         });
 
@@ -93,25 +95,25 @@ public class TercerosRegisterView extends javax.swing.JFrame {
             nomCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(nomCompletoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputUser2, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(inputUserDir, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addContainerGap())
         );
         nomCompletoLayout.setVerticalGroup(
             nomCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(nomCompletoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputUser2)
+                .addComponent(inputUserDir)
                 .addContainerGap())
         );
 
-        inputUser4.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        inputUser4.setForeground(new java.awt.Color(134, 134, 134));
-        inputUser4.setToolTipText("");
-        nombreCompleto = new TextPrompt("Nombres y Apellidos",this.inputUser4);
-        inputUser4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        inputUser4.addActionListener(new java.awt.event.ActionListener() {
+        inputUserNomUser.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        inputUserNomUser.setForeground(new java.awt.Color(134, 134, 134));
+        inputUserNomUser.setToolTipText("");
+        nombreCompleto = new TextPrompt("Nombres y Apellidos",this.inputUserNomUser);
+        inputUserNomUser.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        inputUserNomUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputUser4ActionPerformed(evt);
+                inputUserNomUserActionPerformed(evt);
             }
         });
 
@@ -121,25 +123,25 @@ public class TercerosRegisterView extends javax.swing.JFrame {
             directionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(directionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputUser4, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(inputUserNomUser, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addContainerGap())
         );
         directionLayout.setVerticalGroup(
             directionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(directionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputUser4)
+                .addComponent(inputUserNomUser)
                 .addContainerGap())
         );
 
-        inputUser5.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        inputUser5.setForeground(new java.awt.Color(134, 134, 134));
-        inputUser5.setToolTipText("");
-        numeroIdentificacion = new TextPrompt("Numero de documento",this.inputUser5);
-        inputUser5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        inputUser5.addActionListener(new java.awt.event.ActionListener() {
+        inputUserNumDoc.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        inputUserNumDoc.setForeground(new java.awt.Color(134, 134, 134));
+        inputUserNumDoc.setToolTipText("");
+        numeroIdentificacion = new TextPrompt("Numero de documento",this.inputUserNumDoc);
+        inputUserNumDoc.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        inputUserNumDoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputUser5ActionPerformed(evt);
+                inputUserNumDocActionPerformed(evt);
             }
         });
 
@@ -149,25 +151,25 @@ public class TercerosRegisterView extends javax.swing.JFrame {
             numDocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(numDocLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputUser5, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(inputUserNumDoc, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addContainerGap())
         );
         numDocLayout.setVerticalGroup(
             numDocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(numDocLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputUser5)
+                .addComponent(inputUserNumDoc)
                 .addContainerGap())
         );
 
-        inputUser6.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        inputUser6.setForeground(new java.awt.Color(134, 134, 134));
-        inputUser6.setToolTipText("");
-        this.telefono = new TextPrompt("Telefono",this.inputUser6);
-        inputUser6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        inputUser6.addActionListener(new java.awt.event.ActionListener() {
+        inputUserTel.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        inputUserTel.setForeground(new java.awt.Color(134, 134, 134));
+        inputUserTel.setToolTipText("");
+        this.telefono = new TextPrompt("Telefono",this.inputUserTel);
+        inputUserTel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        inputUserTel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputUser6ActionPerformed(evt);
+                inputUserTelActionPerformed(evt);
             }
         });
 
@@ -177,29 +179,47 @@ public class TercerosRegisterView extends javax.swing.JFrame {
             phoneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(phoneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputUser6, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(inputUserTel, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addContainerGap())
         );
         phoneLayout.setVerticalGroup(
             phoneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(phoneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputUser6)
+                .addComponent(inputUserTel)
                 .addContainerGap())
         );
+
+        materialButton1.setBackground(new java.awt.Color(119, 177, 236));
+        materialButton1.setText("CREAR USUARIO");
+        materialButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                materialButton1MouseClicked(evt);
+            }
+        });
+        materialButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                materialButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(69, 69, 69)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(numDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(direction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nomCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(numDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(direction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nomCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -215,7 +235,9 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                 .addComponent(direction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -234,25 +256,39 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void inputUser2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUser2ActionPerformed
+    private void inputUserDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUserDirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputUser2ActionPerformed
+    }//GEN-LAST:event_inputUserDirActionPerformed
 
-    private void inputUser4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUser4ActionPerformed
+    private void inputUserNomUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUserNomUserActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputUser4ActionPerformed
+    }//GEN-LAST:event_inputUserNomUserActionPerformed
 
-    private void inputUser5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUser5ActionPerformed
+    private void inputUserNumDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUserNumDocActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputUser5ActionPerformed
+    }//GEN-LAST:event_inputUserNumDocActionPerformed
 
-    private void inputUser6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUser6ActionPerformed
+    private void inputUserTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUserTelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputUser6ActionPerformed
+    }//GEN-LAST:event_inputUserTelActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void materialButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialButton1MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_materialButton1MouseClicked
+
+    private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("[TercerosRegisterView]: Creando Usuario");
+        UserController creacionTercero = new UserController();
+        creacionTercero.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputUserNumDoc.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+    }//GEN-LAST:event_materialButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,14 +328,13 @@ public class TercerosRegisterView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private views.Input direction;
-    private views.Input input3;
-    private javax.swing.JTextField inputUser1;
-    private javax.swing.JTextField inputUser2;
-    private javax.swing.JTextField inputUser4;
-    private javax.swing.JTextField inputUser5;
-    private javax.swing.JTextField inputUser6;
+    private javax.swing.JTextField inputUserDir;
+    private javax.swing.JTextField inputUserNomUser;
+    private javax.swing.JTextField inputUserNumDoc;
+    private javax.swing.JTextField inputUserTel;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
+    private libraries.MaterialButton materialButton1;
     private views.Input nomCompleto;
     private views.Input numDoc;
     private views.Input phone;
