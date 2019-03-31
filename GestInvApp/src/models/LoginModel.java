@@ -20,18 +20,18 @@ public class LoginModel extends ConexionBD{
 
     private String user;
     private String pass;
-    public LoginModel(){
-      super();
-    }
 
     public boolean validate(){
-      Connection con = this.conexion;
+      ConexionBD conexionPoll = new ConexionBD();
+      Connection conexion = null;
       try {
-          PreparedStatement query = con.prepareStatement("SELECT * FROM usuario WHERE lower(login_usuario) = lower(?) and contraseña = ?");
+        // BasicDataSource nos reserva una conexion y nos la devuelve.
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+
+          PreparedStatement query = conexion.prepareStatement("SELECT * FROM usuario WHERE lower(login_usuario) = lower(?) and contraseña = ?");
           query.setString(1,user);
           query.setString(2,pass);
           ResultSet response = query.executeQuery();
-          this.closeConection();
           if(response.next()){
             return true;
           }
@@ -41,6 +41,15 @@ public class LoginModel extends ConexionBD{
       } catch (SQLException ex) {
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
           return false;
+      } finally {
+         // En realidad no cierra la conexion, sino que avisa al pool de que
+         // esta conexión queda libre.
+         try {
+           if (conexion != null){
+             conexion.close();
+             System.out.println("[loginModel2] conexion liberada");
+           }
+         } catch(Exception e) { }
       }
     }
 
@@ -59,5 +68,4 @@ public class LoginModel extends ConexionBD{
     public String getPass(){
       return this.pass;
     }
-
 }

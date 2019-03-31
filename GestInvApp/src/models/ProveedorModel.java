@@ -20,18 +20,18 @@ import java.util.ArrayList;
  */
 public class ProveedorModel {
 
-    private ConexionBD con;
-    private Connection conex;
 
     public ProveedorModel(){
-        con = new ConexionBD();
-        conex = con.getConexion();
+
     }
 
     public ArrayList getProveedores(){
       ArrayList<ArrayList> proveedores = new ArrayList<ArrayList>();
+      Connection conexion = null;
       try{
-        Statement query = conex.createStatement();
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
         ResultSet response = query.executeQuery("SELECT t.tercero_id, t.tipo_id, t.numero_id, t.direccion, t.nombre_tercero, t.telefono, p.estado FROM tercero as t INNER JOIN proveedor as p ON p.tercero_id = t.tercero_id");
         while(response.next()){
             int i= 1;
@@ -47,6 +47,9 @@ public class ProveedorModel {
       catch(SQLException ex){
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
           return proveedores;
+      }
+      finally{
+        try{ if(conexion != null) conexion.close();}catch(Exception e){ System.out.println("[ProveedorModel] Error: no fue posible liberar la conexión");}
       }
     }
 }
