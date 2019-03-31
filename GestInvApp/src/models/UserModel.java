@@ -140,7 +140,7 @@ public class UserModel {
     public int getNumero_id() {
         return numero_id;
     }
-    
+
     /**
      * @author: Carlos Andres Cordoba Ramos
      * @param tipoDoc
@@ -148,14 +148,14 @@ public class UserModel {
      * @param dir
      * @param name
      * @param tel
-     * 
+     *
      */
     public void insertarUsuario(String tipoDoc,int numDoc,String dir,String name,String tel){
+        Connection conexion = null;
         try {
-            ConexionBD con = new ConexionBD();
-            Connection conex = con.getConexion();
-            Statement query = conex.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                  ResultSet.CONCUR_UPDATABLE);
+            ConexionBD conectionPoll = new ConexionBD();
+            conexion = conectionPoll.getBasicDataSource().getConnection();
+            Statement query = conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
            // ResultSet response = query.executeQuery("INSERT INTO tercero VALUES ('"+tipoDoc+"',"+numDoc+",'"+dir+"','"+name+"','"+tel+"';");
             ResultSet response = query.executeQuery("SELECT * FROM tercero");
             response.moveToInsertRow();
@@ -166,10 +166,13 @@ public class UserModel {
             response.updateString("telefono",tel);
             response.insertRow();
             response.moveToCurrentRow();
-      
+
             System.out.println("inserto");
         } catch (SQLException ex) {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+          try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[UserModel] Error: no se pudo liberar la conexión"); }
         }
     }
 }
