@@ -7,6 +7,7 @@ package views;
 import controllers.CurrentSesionController;
 import javax.swing.DefaultComboBoxModel;
 import controllers.ProductsController;
+import java.util.ArrayList;
 
 /**
  *
@@ -334,7 +335,19 @@ public class ProductsRegisterView extends javax.swing.JFrame {
     private void aceptEvent(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptEvent
         // TODO add your handling code here:
         ProductsController control = new ProductsController();
-        control.save(codigo.getText(),marca.getText(), nombre.getText(), precioCompra.getText(), precioVenta.getText(),cantidad.getText(), proveedor.getSelectedItem().toString() );
+        ArrayList<String> result = control.save(codigo.getText(),marca.getText(), nombre.getText(), precioCompra.getText(), precioVenta.getText(),cantidad.getText(), proveedor.getSelectedItem().toString() );
+        if(result.get(0).equals("true")){
+          System.out.println("[ProductsRegisterView] producto guardado");
+          codigo.setText("");
+          marca.setText("");
+          nombre.setText("");
+          precioCompra.setText("");
+          precioVenta.setText("");
+          cantidad.setText("");
+        }
+        else{
+          System.out.println("[ProductsRegisterView] "+result.get(1));
+        }
     }//GEN-LAST:event_aceptEvent
 
     /**
