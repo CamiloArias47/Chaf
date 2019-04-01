@@ -8,20 +8,22 @@ package views;
 import controllers.CurrentSesionController;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ContainerEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
+import controllers.UserController;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import libraries.ButtonColumn;
 
 /**
  *
@@ -40,7 +42,7 @@ public class UserView extends javax.swing.JFrame {
     private LabelRenderer renderizador = new LabelRenderer();
     private int userIdLogged; //id del usuario logueado
     private Object[][] rows;
-    
+    private UserController ctrlUser = new UserController();
      /**
      * Creates new form UsuariosView
      */
@@ -74,7 +76,6 @@ public class UserView extends javax.swing.JFrame {
         activarIcon     = new ImageIcon(getClass().getResource("/img/activar.png"));
         actImg          = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
         activar.setIcon(actImg);
-
         this.setResizable(false);
         initComponents();
         
@@ -91,17 +92,25 @@ public class UserView extends javax.swing.JFrame {
     }
     
     public Object[][] initRows(int filas){
+     //// variables para traer el login del usuario, 
+     ///  ya que el metodo getUserForTable pide como parametros
+     ///  el indice de la columna de la consulta y un iterador
+     /**/ int loginUserOnConsult = 0;
+     /**/ int nameUserOnConsult = 1;
      this.rows = new Object[filas][5];
      for(int i = 0;i < filas;i++){
-         for(int j = 1;j< 5 ;j++){
+         for(int j = 0;j< 5 ;j++){
             switch(j){
+                    case 0: rows[i][j] = this.ctrlUser.getUserForTable(loginUserOnConsult, i);
+                    break;
+                    case 1: rows[i][j] = this.ctrlUser.getUserForTable(nameUserOnConsult, i);
+                    break;    
                     case 2: rows[i][j] = this.editar;
                     break;
                     case 3: rows[i][j] = this.eliminar;
                     break;
                     case 4: rows[i][j] = this.activar;
-                    break;
-                    default: rows[i][j] = null;
+                    break;                   
             }
          }
      }
@@ -152,7 +161,7 @@ public class UserView extends javax.swing.JFrame {
         });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            initRows(200)
+            initRows(/*this.ctrlUser.getUsersOnTable()*/ 2)
             ,
             new String [] {
                 "Usuario", "Nombre", "Editar","Desactivar","Activar"
@@ -174,6 +183,11 @@ public class UserView extends javax.swing.JFrame {
         this.jTable1.getColumn("Activar").setCellRenderer(renderizador);
         this.jTable1.getColumn("Activar").setMaxWidth(sizeColumn);
         this.jTable1.setRowHeight(30);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         nameUser.setText("jLabel1");
@@ -244,6 +258,10 @@ public class UserView extends javax.swing.JFrame {
         // TODO add your handling code here:
  
     }//GEN-LAST:event_materialButton1MouseClicked
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
 
     public class LabelRenderer extends DefaultTableCellRenderer implements TableCellRenderer{
      public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){

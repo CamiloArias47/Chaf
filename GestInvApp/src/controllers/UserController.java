@@ -13,15 +13,25 @@ import models.UserModel;
  * @author Carlos Andres
  */
 public class UserController {
-    private UserModel modeloUser;
+    private UserModel modeloUser = new UserModel();
+    private ArrayList usuarios;
     
     public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
-        this.modeloUser = new UserModel();
+
         //faltan validaciones
         this.modeloUser.insertarUsuario(tipoDoc, numDoc, dir, name, tel);
     }
     
-    public ArrayList getUserForTable(){
-        return (String) usuarios.get(0);
+    public String getUserForTable(int tipoDato,int iterador){
+       //tipo dato:
+       // 0 = login del usuario
+       // 1 = nombre del usuario 
+       usuarios = this.modeloUser.getUsersExist();
+       ArrayList datos = (ArrayList) usuarios.get(iterador);
+       return (String) datos.get(tipoDato);
+    }
+    
+    public int getUsersOnTable(){
+        return modeloUser.getCantidadUsers();
     }
 }

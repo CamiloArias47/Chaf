@@ -18,11 +18,11 @@ public class UserModel {
 
     String tipo_id, direccion, nombre, telefono;
     int tercero_id, numero_id;
-    int cantidadUsers  = 0;
+    int cantidadUsers;
     ArrayList<ArrayList> usuarios = new ArrayList<ArrayList>();
 
     public UserModel(){
-
+        this.setCantidadUsers();
     }
 
     public UserModel(String tipo_id, String direccion, String nombre, String telefono, int tercero_id, int numero_id) {
@@ -164,7 +164,12 @@ public class UserModel {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    /* aqui quede, hay que pasarle los datos a la vista*/
+    /*
+    @author Carlos Andres Cordoba
+    Metodo que devuelve login y nombre de un usuario que existe en la
+    tabla Usuario
+    */
+    
     public ArrayList getUsersExist(){
       try{
         ConexionBD con = new ConexionBD();
@@ -173,7 +178,6 @@ public class UserModel {
         ResultSet response = query.executeQuery("SELECT u.login_usuario,t.nombre_tercero AS nombre FROM tercero AS t \n" +
                                                 "NATURAL JOIN usuario AS u");
         while(response.next()){
-            this.cantidadUsers++;
             int i= 1;
             ArrayList<String> usuario = new ArrayList<String>();
             while(i<3){
@@ -181,8 +185,6 @@ public class UserModel {
                 i++;
             }
             this.usuarios.add(usuario);
-            
-            
         }
         System.out.print(cantidadUsers);
         return usuarios;
@@ -194,6 +196,21 @@ public class UserModel {
     }
     
     public int getCantidadUsers(){
-        return this.cantidadUsers;
+       return this.cantidadUsers; 
+    }
+
+    private void setCantidadUsers() {
+        try {
+            ConexionBD con = new ConexionBD();
+            Connection conex = con.getConexion();
+            Statement query = conex.createStatement();
+            ResultSet response = query.executeQuery("SELECT u.login_usuario,t.nombre_tercero AS nombre FROM tercero AS t \n" +
+                    "NATURAL JOIN usuario AS u");
+            while(response.next()){
+                this.cantidadUsers++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
