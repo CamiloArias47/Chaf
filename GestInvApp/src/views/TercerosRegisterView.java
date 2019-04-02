@@ -39,7 +39,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         tipoDoc = new views.Input();
-        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBox1 = new javax.swing.JComboBox<>();
         nomCompleto = new views.Input();
         inputUserDir = new javax.swing.JTextField();
         direction = new views.Input();
@@ -49,12 +49,15 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         phone = new views.Input();
         inputUserTel = new javax.swing.JTextField();
         materialButton1 = new libraries.MaterialButton();
+        numDoc1 = new views.Input();
+        jComboBox3 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jComboBox1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(153, 153, 153));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CC", "NIT", "TI", "AS", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TIPO DE DOCUMENTO", "CC", "NIT", "TI", "AS" }));
+        jComboBox1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -203,6 +206,33 @@ public class TercerosRegisterView extends javax.swing.JFrame {
             }
         });
 
+        jComboBox3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jComboBox3.setForeground(new java.awt.Color(153, 153, 153));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TIPO USUARIO", "CLIENTE", "PROVEEDOR", "USUARIO" }));
+        jComboBox3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout numDoc1Layout = new javax.swing.GroupLayout(numDoc1);
+        numDoc1.setLayout(numDoc1Layout);
+        numDoc1Layout.setHorizontalGroup(
+            numDoc1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, numDoc1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jComboBox3, 0, 314, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        numDoc1Layout.setVerticalGroup(
+            numDoc1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, numDoc1Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(jComboBox3)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -212,15 +242,16 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(69, 69, 69)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(numDoc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(numDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(direction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nomCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
+                        .addGap(93, 93, 93)
                         .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(317, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,9 +266,11 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                 .addComponent(direction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(16, 16, 16)
+                .addComponent(numDoc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -284,11 +317,19 @@ public class TercerosRegisterView extends javax.swing.JFrame {
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
         System.out.println("[TercerosRegisterView]: Creando Usuario");
+        if(this.jComboBox3.getSelectedItem() == "USUARIO"){
+        RegisterUserPwdView newUser = new RegisterUserPwdView();
         UserController creacionTercero = new UserController();
         creacionTercero.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputUserNumDoc.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
+        newUser.setVisible(true);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        }
 
     }//GEN-LAST:event_materialButton1ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -332,12 +373,16 @@ public class TercerosRegisterView extends javax.swing.JFrame {
     private javax.swing.JTextField inputUserNomUser;
     private javax.swing.JTextField inputUserNumDoc;
     private javax.swing.JTextField inputUserTel;
+    private javax.swing.JTextField inputUserTel1;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JPanel jPanel1;
     private libraries.MaterialButton materialButton1;
     private views.Input nomCompleto;
     private views.Input numDoc;
+    private views.Input numDoc1;
     private views.Input phone;
+    private views.Input phone1;
     private views.Input tipoDoc;
     // End of variables declaration//GEN-END:variables
 }
