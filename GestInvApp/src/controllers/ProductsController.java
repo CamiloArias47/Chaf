@@ -5,7 +5,7 @@
  */
 package controllers;
 
-import models.ProveedorModel;
+import models.ProvidersModel;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -72,7 +72,7 @@ public class ProductsController {
   **/
   public DefaultComboBoxModel getComboBoxProveedores(){
     DefaultComboBoxModel model = new DefaultComboBoxModel();
-    ProveedorModel proveedor = new ProveedorModel();
+    ProvidersModel proveedor = new ProvidersModel();
     ArrayList<ArrayList> proveedores = proveedor.getProveedores();
     for (int i = 0;i < proveedores.size() ;i++ ) {
         model.addElement(proveedores.get(i).get(4));

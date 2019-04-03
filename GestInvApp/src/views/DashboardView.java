@@ -226,6 +226,13 @@ public class DashboardView extends javax.swing.JFrame {
 
     private void materialButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton5ActionPerformed
         // TODO add your handling code here:
+        System.out.println("[DashboardView]: entrando a modulo de Clientes");
+        CustomersView customersView = new CustomersView();
+        customersView.setUserIdLogged(this.userIdLogged);
+        customersView.setInfoUser();
+        customersView.setVisible(true);
+        customersView.setLayout(null);
+        customersView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_materialButton5ActionPerformed
 
     private void materialButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton4ActionPerformed

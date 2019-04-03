@@ -159,7 +159,7 @@ public class UserModel {
             response.insertRow();
             response.moveToCurrentRow();
       
-            System.out.println("inserto");
+            System.out.println("[UserModel]: se inserto el tercero: " + name);
         } catch (SQLException ex) {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
         }

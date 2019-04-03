@@ -7,6 +7,7 @@ package views;
 
 import controllers.UserController;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import libraries.TextPrompt;
 
 
@@ -17,17 +18,17 @@ import libraries.TextPrompt;
  */
 public class TercerosRegisterView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form UserRegisterView
-     */
+    private String moduloInicio ="";
+    /* PlaceHolder */
     private TextPrompt numeroIdentificacion,direccion,nombreCompleto,telefono;
     
-    public TercerosRegisterView() {
-        
+    public TercerosRegisterView(String invokeModule) {
+        this.moduloInicio = invokeModule;
+        System.out.println("[TercerosRegisterView]: Me invocaron desde : " + this.moduloInicio );
         initComponents();
       
     }
-
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -316,15 +317,24 @@ public class TercerosRegisterView extends javax.swing.JFrame {
 
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
-        System.out.println("[TercerosRegisterView]: Creando Usuario");
-        if(this.jComboBox3.getSelectedItem() == "USUARIO"){
-        RegisterUserPwdView newUser = new RegisterUserPwdView();
-        UserController creacionTercero = new UserController();
-        creacionTercero.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputUserNumDoc.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
-        newUser.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        System.out.println("[TercerosRegisterView]: Creando Tercero");
+        if(moduloInicio.equals("USUARIO")){
+            System.out.println("[TercerosRegisterView]: Creando Usuario");
+            if(this.jComboBox3.getSelectedItem().equals("USUARIO")){
+            RegisterUserPwdView newUser = new RegisterUserPwdView();
+            UserController creacionTercero = new UserController();
+            creacionTercero.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputUserNumDoc.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
+            newUser.setVisible(true);
+            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }else {
+                JOptionPane.showMessageDialog(this,"Solo se pueden Crear Usuarios en este modulo");
+            }
+        }else if(moduloInicio.equals("PROVEEDOR")){
+            System.out.println("[TercerosRegisterView]: Creando Proveedor");
+            
+        }else if(moduloInicio.equals("CLIENTE")){
+            System.out.println("[TercerosRegisterView]: Creando Cliente");
         }
-
     }//GEN-LAST:event_materialButton1ActionPerformed
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
@@ -334,38 +344,38 @@ public class TercerosRegisterView extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TercerosRegisterView().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new TercerosRegisterView().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private views.Input direction;

@@ -18,12 +18,12 @@ import java.util.ArrayList;
  *
  * @author camilo
  */
-public class ProveedorModel {
+public class ProvidersModel {
 
     private ConexionBD con;
     private Connection conex;
 
-    public ProveedorModel(){
+    public ProvidersModel(){
         con = new ConexionBD();
         conex = con.getConexion();
     }
