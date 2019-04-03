@@ -6,6 +6,8 @@
 package controllers;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import models.ProveedorModel;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -31,9 +33,10 @@ public class ProductsController {
   private ImageIcon editarIcon,eliminarIcon,activarIcon;
   private Icon edImg,elimImg,actImg;
   private ProductsView productView;
+  private Object tabla[][];
 
   public ProductsController(){
-     product = new ProductModel();
+
   }
 
   public void setUserIdLogged(int id){
@@ -68,6 +71,23 @@ public class ProductsController {
     formRegister.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   }
 
+  /*
+  *Muestra el formulario para editar un producto
+  *@param {String} id producto_id del producto a editar
+  **/
+  public void showFormEdit(String id){
+    product = new ProductModel(id);
+
+    ProductsRegisterView formRegister = new ProductsRegisterView();
+    formRegister.setTipeAction("edit");
+    formRegister.setInfoUser();
+    formRegister.setComboBoxProveedores(this.getComboBoxProveedores());
+    formRegister.setData(id, product.getDescripcion(), product.getCosto(), product.getPrecio_venta());
+    formRegister.setVisible(true);
+    formRegister.setLayout(null);
+    formRegister.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+  }
+
 
   /*
   * obtiene un ArrayList con los proveedores y los convierte en un modelo para mostrar en el combobox
@@ -90,6 +110,14 @@ public class ProductsController {
     editarIcon      = new ImageIcon(getClass().getResource("/img/editar.png"));
     edImg           = new ImageIcon(editarIcon.getImage().getScaledInstance(20, 20, 0));
     editar.setIcon(edImg);
+    editar.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        // display/center the jdialog when the button is pressed
+        JOptionPane.showMessageDialog(null, "Se ha guardado el producto");
+      }
+    });
 
     //Creacion de boton eliminar
     eliminar        = new JButton();
@@ -107,24 +135,31 @@ public class ProductsController {
     activar.setIcon(actImg);
   }
 
+  /*
+  *Establece el onjeto con los productos
+  **/
+  public void setTabla(){
+      product = new ProductModel();
+      ArrayList<ArrayList> productos = product.getProducts();
+        tabla = new Object[productos.size()][7];
+        int j = 0;
+        for (int i = 0; i < productos.size() ; i++ ) {
+          tabla[j][0] = productos.get(i).get(0).toString();
+          tabla[j][1] = productos.get(i).get(1).toString();
+          tabla[j][2] = productos.get(i).get(2).toString();
+          tabla[j][3] = productos.get(i).get(3).toString();
+          tabla[j][4] = this.editar;
+          tabla[j][5] = this.eliminar;
+          tabla[j][6] = this.activar;
+          j++;
+        }
+  }
 
   /*
   *
   **/
   public DefaultTableModel getModelProducts(){
-    ArrayList<ArrayList> productos = product.getProducts();
-    Object tabla[][] = new Object[productos.size()][7];
-    int j = 0;
-    for (int i = 0; i < productos.size() ; i++ ) {
-      tabla[j][0] = productos.get(i).get(0).toString();
-      tabla[j][1] = productos.get(i).get(1).toString();
-      tabla[j][2] = productos.get(i).get(2).toString();
-      tabla[j][3] = productos.get(i).get(3).toString();
-      tabla[j][4] = this.editar;
-      tabla[j][5] = this.eliminar;
-      tabla[j][6] = this.activar;
-      j++;
-    }
+    this.setTabla();
 
     DefaultTableModel model = new DefaultTableModel(
       tabla,
@@ -176,11 +211,42 @@ public class ProductsController {
     if(!validate(code,brand,name,priceBuy,priceSell,amoung,provider)){
       message = "Completa los campos";
     }
+    else{
+      product = new ProductModel();
 
-    if(product.save(code,brand,name,priceBuy,priceSell,amoung,provider)){
-      saved = "true";
-      message = "Producto guardado";
-      JOptionPane.showMessageDialog(null, "Se ha guardado el producto");
+      if(product.save(code,brand,name,priceBuy,priceSell,amoung,provider)){
+        saved = "true";
+        message = "Producto guardado";
+        JOptionPane.showMessageDialog(null, "Se ha guardado el producto");
+      }
+    }
+
+    result.add(saved);
+    result.add(message);
+
+    return result;
+  }
+
+  /*
+  *actualiza un producto
+  **/
+  public ArrayList<String> update(String id, String code, String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
+    ArrayList<String> result = new ArrayList<String>();
+    String saved = "false";
+    String message = "";
+
+    if(!validate(code,brand,name,priceBuy,priceSell,amoung,provider)){
+      message = "Completa los campos";
+    }
+    else{
+      product = new ProductModel();
+
+      if(product.update(id,code,brand,name,priceBuy,priceSell,amoung,provider)){
+        saved = "true";
+        message = "Producto guardado";
+        JOptionPane.showMessageDialog(null, "Se ha guardado el producto");
+      }
+
     }
 
     result.add(saved);

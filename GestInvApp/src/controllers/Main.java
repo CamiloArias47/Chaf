@@ -7,7 +7,6 @@ package controllers;
 
 import javax.swing.JFrame;
 import views.Login;
-import views.TercerosRegisterView;
 /**
  *
  * @author camilo

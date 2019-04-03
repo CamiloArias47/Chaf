@@ -12,6 +12,7 @@ import java.util.Date;
 import controllers.CurrentSesionController;
 import controllers.ProductsController;
 import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -121,6 +122,11 @@ public class ProductsView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mouseClicledTB(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -168,6 +174,18 @@ public class ProductsView extends javax.swing.JFrame {
         productCtl.setUserIdLogged(this.userIdLogged);
         productCtl.showFormRegister();
     }//GEN-LAST:event_btnRegesterActionPerformed
+
+    private void mouseClicledTB(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClicledTB
+        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+        int col = jTable1.getSelectedColumn();
+
+        if(col == 4){
+         ProductsController productCtl = new ProductsController();
+         Object id = jTable1.getModel().getValueAt(row, 0);
+         productCtl.showFormEdit(id.toString());
+        }
+    }//GEN-LAST:event_mouseClicledTB
 
     public class LabelRenderer extends DefaultTableCellRenderer implements TableCellRenderer{
      public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){
