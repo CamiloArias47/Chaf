@@ -175,6 +175,56 @@ public class ProductModel {
       }
     }
 
+    /*
+    *Elimina un producto
+    **/
+    public boolean delete(String id){
+      boolean deleted = false;
+      Connection conexion = null;
+      try{
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
+        int result = query.executeUpdate("UPDATE producto SET eliminado = 'si'");
+        if(result > 0){
+          deleted = true;
+        }
+        return deleted;
+      }
+      catch(SQLException ex){
+        Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        return deleted;
+      }
+      finally{
+        try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no se pudo liberar la conexion:"+e); }
+      }
+    }
+
+    /*
+    * Reactiva un producto
+    **/
+    public boolean restore(String id){
+      boolean restored = false;
+      Connection conexion = null;
+      try{
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
+        int result = query.executeUpdate("UPDATE producto SET eliminado = 'no'");
+        if(result > 0){
+          restored = true;
+        }
+        return restored;
+      }
+      catch(SQLException ex){
+        Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        return restored;
+      }
+      finally(){
+        try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no se pudo liberar la conexion:"+e); }
+      }
+    }
+
 
     //:::::::Getters:::::::::::::::::::
 
