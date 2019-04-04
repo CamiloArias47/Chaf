@@ -7,6 +7,7 @@ package views;
 
 import controllers.CustomersController;
 import controllers.UserController;
+import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import libraries.TextPrompt;
@@ -320,12 +321,22 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println("[TercerosRegisterView]: Creando Tercero");
         if(moduloInicio.equals("USUARIO")){
+            String usua = null;
+            char[] pd = null;
             System.out.println("[TercerosRegisterView]: Creando Usuario");
             if(this.jComboBox3.getSelectedItem().equals("USUARIO")){
             RegisterUserPwdView newUser = new RegisterUserPwdView();
-            UserController creacionTercero = new UserController();
-            creacionTercero.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputUserNumDoc.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
+            UserController creacionUsuario = new UserController();
             newUser.setVisible(true);
+            while(newUser.getDefaultCloseOperation() != JFrame.EXIT_ON_CLOSE){
+                /*validacion de insercion de usuario y contraseña*/
+                usua = newUser.getUser();
+                pd = newUser.getPwd();
+                System.out.println(usua+"::"+Arrays.toString(pd));
+            }
+            
+//creacionUsuario.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputUserNumDoc.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
+            
             this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }else {
                 JOptionPane.showMessageDialog(this,"Solo se pueden Crear Usuarios en este modulo");

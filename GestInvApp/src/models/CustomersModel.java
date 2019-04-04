@@ -35,9 +35,9 @@ public class CustomersModel {
     
     public void insertarCliente(String tipoDoc,int numDoc,String dir,String name,String tel){
         try {
-            ConexionBD con = new ConexionBD();
-            Connection conex = con.getConexion();
-            Statement query = conex.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+            
+            Connection con = conex.getConexion();
+            Statement query = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                                   ResultSet.CONCUR_UPDATABLE);
            // ResultSet response = query.executeQuery("INSERT INTO tercero VALUES ('"+tipoDoc+"',"+numDoc+",'"+dir+"','"+name+"','"+tel+"';");
             ResultSet response = query.executeQuery("SELECT * FROM tercero");
@@ -63,9 +63,9 @@ public class CustomersModel {
     
     public ArrayList getUsersExist(){
       try{
-        ConexionBD con = new ConexionBD();
-        Connection conex = con.getConexion();
-        Statement query = conex.createStatement();
+        
+        con = conex.getConexion();
+        Statement query = con.createStatement();
         ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id,t.nombre_tercero AS nombre FROM tercero AS t \n" +
                     "NATURAL JOIN cliente AS u");
         while(response.next()){
@@ -107,7 +107,7 @@ public class CustomersModel {
     
     public void insertCliente(String tipoDoc,int numDoc,String dir,String name,String tel){
       UserModel user = new UserModel();
-      user.insertarUsuario(tipoDoc,numDoc,dir,name,tel);
+      //user.insertarUsuario(tipoDoc,numDoc,dir,name,tel);
       int tercero_id;
        try {
             ConexionBD con = new ConexionBD();

@@ -3,6 +3,7 @@ package models;
 
 import models.ConexionBD;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
@@ -142,24 +143,21 @@ public class UserModel {
      * @param tel
      * 
      */
-    public void insertarUsuario(String tipoDoc,int numDoc,String dir,String name,String tel){
+    public void insertarUsuario(String tipoDoc,int numDoc,String dir,String name,String tel,String login,String pwd){
         try {
             ConexionBD con = new ConexionBD();
             Connection conex = con.getConexion();
-            Statement query = conex.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                  ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement query = conex.prepareStatement("SELECT insertarUsuario(?,?,?,?,?,?,?)");
+                       
            // ResultSet response = query.executeQuery("INSERT INTO tercero VALUES ('"+tipoDoc+"',"+numDoc+",'"+dir+"','"+name+"','"+tel+"';");
-            ResultSet response = query.executeQuery("SELECT * FROM tercero");
-            response.moveToInsertRow();
-            response.updateString("tipo_id",tipoDoc);
-            response.updateInt("numero_id", numDoc);
-            response.updateString("direccion",dir);
-            response.updateString("nombre_tercero",name);
-            response.updateString("telefono",tel);
-            response.insertRow();
-            response.moveToCurrentRow();
-      
-            System.out.println("[UserModel]: se inserto el tercero: " + name);
+           query.setString(1, tipoDoc);
+           query.setInt(2, numDoc);
+           query.setString(3, dir);
+           query.setString(4,name);
+           query.setString(5, tel);
+           query.setString(6, login);
+           query.setString(7, pwd);
+           System.out.println("[UserModel]: se inserto el tercero: " + name);
         } catch (SQLException ex) {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
         }

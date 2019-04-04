@@ -5,6 +5,7 @@
  */
 package views;
 
+import javax.swing.JOptionPane;
 import libraries.TextPrompt;
 
 /**
@@ -14,12 +15,24 @@ import libraries.TextPrompt;
 public class RegisterUserPwdView extends javax.swing.JFrame {
 
     private TextPrompt usuarioPH,passwordPH,repitaPasswordPH;
+    private String user;
+    private char[] pwd;
     /**
      * Creates new form RegisterUserPwdView
      */
     public RegisterUserPwdView() {
         initComponents();
     }
+
+    public String getUser() {
+        return user;
+    }
+
+    public char[] getPwd() {
+        return pwd;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -198,6 +211,15 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
 
     private void materialButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton2ActionPerformed
         // TODO add your handling code here:
+        if(!(this.inputPassword.getPassword().length == 0) && !(this.inputPassword1.getPassword().length == 0) && (this.inputUser.getText() != null)){
+            this.user = this.inputUser.getText();
+            this.pwd = this.inputPassword1.getPassword();
+            System.out.println("pwd::" + pwd + "\nuser::"+user);
+        }else {
+            JOptionPane.showMessageDialog(this, "Llene todos los datos por favor");
+        }
+        
+        // compara las contraseñas:: !(Arrays.equals(createPassword.getPassword(), confirmPassword.getPassword()))
     }//GEN-LAST:event_materialButton2ActionPerformed
 
     private void inputUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUserActionPerformed
