@@ -18,16 +18,18 @@ import models.UserModel;
 
 /**
  *
- * @author david
+ * @author Carlos Andres Cordoba Ramos
  */
 public class CustomersModel {
     
+    private Connection con;
     private int cantidadClientes;
     private ArrayList<ArrayList> clientes = new ArrayList<ArrayList>();
-   
+    private  ConexionBD conex = new ConexionBD();
     
     public  CustomersModel (){
         this.setCantidadClientes();
+        con = conex.getConexion();
     }
     
     
@@ -64,12 +66,12 @@ public class CustomersModel {
         ConexionBD con = new ConexionBD();
         Connection conex = con.getConexion();
         Statement query = conex.createStatement();
-        ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id, t.direccion,t.nombre_tercero,t.telefono AS nombre FROM tercero AS t \n" +
+        ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id,t.nombre_tercero AS nombre FROM tercero AS t \n" +
                     "NATURAL JOIN cliente AS u");
         while(response.next()){
             int i= 1;
             ArrayList<String> cliente = new ArrayList<String>();
-            while(i<3){
+            while(i<4){
                 cliente.add(response.getString(i));
                 i++;
             }
@@ -98,6 +100,35 @@ public class CustomersModel {
             while(response.next()){
                 this.cantidadClientes++;
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+       }
+    }
+    
+    public void insertCliente(String tipoDoc,int numDoc,String dir,String name,String tel){
+      UserModel user = new UserModel();
+      user.insertarUsuario(tipoDoc,numDoc,dir,name,tel);
+      int tercero_id;
+       try {
+            ConexionBD con = new ConexionBD();
+            Connection conex = con.getConexion();
+            Statement query = conex.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                  ResultSet.CONCUR_UPDATABLE);
+           // ResultSet response = query.executeQuery("INSERT INTO tercero VALUES ('"+tipoDoc+"',"+numDoc+",'"+dir+"','"+name+"','"+tel+"';");
+            ResultSet response = query.executeQuery("SELECT * FROM tercero WHERE tercero_id ="+numDoc);
+            /* aqui esta el error*/
+            tercero_id = (int) response.getInt(1);
+            while(!response.next()){
+            response = query.executeQuery("SELECT * FROM cliente");
+            response.moveToInsertRow();
+            response.updateInt("tercero_id",tercero_id);
+            response.updateBoolean("estado", true);
+            response.insertRow();
+            response.moveToCurrentRow();
+      
+            }
+            
+            System.out.println("[CustomersModel]: se inserto el cliente: " + name);
         } catch (SQLException ex) {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
         }

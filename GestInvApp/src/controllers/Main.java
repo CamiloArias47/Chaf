@@ -6,6 +6,7 @@
 package controllers;
 
 import javax.swing.JFrame;
+import models.CustomersModel;
 import views.Login;
 
 /**
@@ -18,6 +19,5 @@ public class Main {
           login.setVisible(true);
           login.setLayout(null);
           login.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
-    
     }         
 }

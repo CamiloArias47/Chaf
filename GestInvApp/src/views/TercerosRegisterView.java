@@ -5,6 +5,7 @@
  */
 package views;
 
+import controllers.CustomersController;
 import controllers.UserController;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -334,6 +335,13 @@ public class TercerosRegisterView extends javax.swing.JFrame {
             
         }else if(moduloInicio.equals("CLIENTE")){
             System.out.println("[TercerosRegisterView]: Creando Cliente");
+             if(this.jComboBox3.getSelectedItem().equals("CLIENTE")){ 
+            CustomersController ctrlClientes = new CustomersController();
+            ctrlClientes.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputUserNumDoc.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
+            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }else {
+                JOptionPane.showMessageDialog(this,"Solo se pueden Crear Clientes en este modulo");
+            }
         }
     }//GEN-LAST:event_materialButton1ActionPerformed
 

@@ -193,7 +193,7 @@ public class UserView extends javax.swing.JFrame {
     
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
-        System.out.println("[TercerosRegisterView]: entrando a creacion de Usuarios");
+        System.out.println("[UserView]: entrando a creacion de Usuarios");
         TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO");
         creacionTercero.setVisible(true);
         creacionTercero.setLayout(null);

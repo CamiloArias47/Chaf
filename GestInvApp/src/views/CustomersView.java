@@ -53,9 +53,9 @@ public class CustomersView extends javax.swing.JFrame {
      /**/ int clientTypeDoc = 0;
      /**/ int clientNumDoc = 1;
      /**/ int nameClient = 2;
-     this.rows = new Object[filas][5];
+     this.rows = new Object[filas][6];
      for(int i = 0;i < filas;i++){
-         for(int j = 0;j< 5 ;j++){
+         for(int j = 0;j< 6 ;j++){
             switch(j){
                     case 0: rows[i][j] = this.ctrlCustomers.getClientsForTable(clientTypeDoc, i);
                     break;
@@ -94,14 +94,14 @@ public class CustomersView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            initRows(/*this.ctrlUser.getUsersOnTable()*/ 2)
+            initRows(this.ctrlCustomers.getUsersOnTable())
             ,
             new String [] {
                 "TIPO ID", "NUMERO","RAZON SOCIAL", "Editar","Desactivar","Activar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false,false,false,false
+                false, false, false,true,false,false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -109,6 +109,13 @@ public class CustomersView extends javax.swing.JFrame {
             }
 
         });
+        this.jTable1.getColumn("Editar").setCellRenderer(this.dp.getRender());
+        this.jTable1.getColumn("Editar").setMaxWidth(this.dp.getSizeColumn());
+        this.jTable1.getColumn("Desactivar").setCellRenderer(this.dp.getRender());
+        this.jTable1.getColumn("Desactivar").setMaxWidth(this.dp.getSizeColumn() + 20);
+        this.jTable1.getColumn("Activar").setCellRenderer(this.dp.getRender());
+        this.jTable1.getColumn("Activar").setMaxWidth(this.dp.getSizeColumn());
+        this.jTable1.setRowHeight(30);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -182,7 +189,7 @@ public class CustomersView extends javax.swing.JFrame {
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
         System.out.println("[TercerosRegisterView]: entrando a creacion de Usuarios");
-        TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO");
+        TercerosRegisterView creacionTercero = new TercerosRegisterView("CLIENTE");
         creacionTercero.setVisible(true);
         creacionTercero.setLayout(null);
         creacionTercero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

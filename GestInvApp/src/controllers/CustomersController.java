@@ -27,4 +27,10 @@ public class CustomersController {
         ArrayList datos = (ArrayList) clientes.get(iterador);
         return (String) datos.get(tipoDato);
     }
+    public int getUsersOnTable(){
+        return this.modeloCustomer.getCantidadClientes();
+    }
+      public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
+          this.modeloCustomer.insertCliente(tipoDoc, numDoc, dir, name, tel);
+      }
 }
