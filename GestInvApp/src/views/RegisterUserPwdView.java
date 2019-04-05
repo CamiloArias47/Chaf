@@ -5,7 +5,10 @@
  */
 package views;
 
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 import libraries.TextPrompt;
 
 /**
@@ -17,10 +20,12 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
     private TextPrompt usuarioPH,passwordPH,repitaPasswordPH;
     private String user;
     private char[] pwd;
+    private TercerosRegisterView mainClass;
     /**
      * Creates new form RegisterUserPwdView
      */
-    public RegisterUserPwdView() {
+    public RegisterUserPwdView(TercerosRegisterView padre) {
+        mainClass = padre;
         initComponents();
     }
 
@@ -214,7 +219,16 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
         if(!(this.inputPassword.getPassword().length == 0) && !(this.inputPassword1.getPassword().length == 0) && (this.inputUser.getText() != null)){
             this.user = this.inputUser.getText();
             this.pwd = this.inputPassword1.getPassword();
-            System.out.println("pwd::" + pwd + "\nuser::"+user);
+             System.out.println("Se insertaron los siguientes datos: " +mainClass.getTipoDocUser()+"::"+mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"+mainClass.getNombreUser()+
+                    "::"+ mainClass.getTelUser()+"::"+ this.user+"::"+String.valueOf(pwd));
+            this.mainClass.getUserController().insertUser(mainClass.getTipoDocUser(),mainClass.getNumeroIdentificacion(),mainClass.getUserDir(),mainClass.getNombreUser(),
+                                                   mainClass.getTelUser(), this.user,String.valueOf(pwd));
+            
+            System.out.println(mainClass.getTipoDocUser()+"::"+mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"+mainClass.getNombreUser()+
+                    "::"+ mainClass.getTelUser()+"::"+ this.user+"::"+String.valueOf(pwd));
+            JOptionPane.showMessageDialog(this,"Usuario creado");
+            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         }else {
             JOptionPane.showMessageDialog(this, "Llene todos los datos por favor");
         }
@@ -254,11 +268,11 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegisterUserPwdView().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new RegisterUserPwdView().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

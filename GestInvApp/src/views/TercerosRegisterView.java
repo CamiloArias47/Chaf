@@ -16,21 +16,50 @@ import libraries.TextPrompt;
 
 /**
  *
- * @author david
+ * @author Carlos Andres Cordoba Ramos
  */
 public class TercerosRegisterView extends javax.swing.JFrame {
 
     private String moduloInicio ="";
     /* PlaceHolder */
     private TextPrompt numeroIdentificacion,direccion,nombreCompleto,telefono;
+    private UserController creacionUsuario;
     
     public TercerosRegisterView(String invokeModule) {
         this.moduloInicio = invokeModule;
         System.out.println("[TercerosRegisterView]: Me invocaron desde : " + this.moduloInicio );
+        if(this.moduloInicio.equals("USUARIO")){
+            creacionUsuario = new UserController();
+        }
         initComponents();
       
     }
-  
+    
+    public UserController getUserController(){
+        return this.creacionUsuario;
+                
+    }
+   
+    public String getTipoDocUser(){
+        return (String)this.jComboBox1.getSelectedItem();
+    }      
+    
+    public int getNumeroIdentificacion(){
+        return Integer.parseInt(this.inputUserNumDoc.getText());
+    }
+    
+    public String getUserDir(){
+       return this.inputUserDir.getText();
+    }
+    public String getNombreUser(){       
+        return this.inputUserNomUser.getText();
+    }
+    
+    public String getTelUser(){
+        return this.inputUserTel.getText();
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -325,15 +354,9 @@ public class TercerosRegisterView extends javax.swing.JFrame {
             char[] pd = null;
             System.out.println("[TercerosRegisterView]: Creando Usuario");
             if(this.jComboBox3.getSelectedItem().equals("USUARIO")){
-            RegisterUserPwdView newUser = new RegisterUserPwdView();
-            UserController creacionUsuario = new UserController();
+            RegisterUserPwdView newUser = new RegisterUserPwdView(this);
             newUser.setVisible(true);
-            while(newUser.getDefaultCloseOperation() != JFrame.EXIT_ON_CLOSE){
-                /*validacion de insercion de usuario y contraseña*/
-                usua = newUser.getUser();
-                pd = newUser.getPwd();
-                System.out.println(usua+"::"+Arrays.toString(pd));
-            }
+    
             
 //creacionUsuario.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputUserNumDoc.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
             

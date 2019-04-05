@@ -16,10 +16,11 @@ public class UserController {
     private UserModel modeloUser = new UserModel();
     private ArrayList usuarios;
     
-    public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
+    public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel,String login,String pwd){
 
         //faltan validaciones
-        //this.modeloUser.insertarUsuario(tipoDoc, numDoc, dir, name, tel);
+        this.modeloUser.insertarUsuario(tipoDoc, numDoc, dir, name, tel,login,pwd);
+        
     }
     
     public String getUserForTable(int tipoDato,int iterador){

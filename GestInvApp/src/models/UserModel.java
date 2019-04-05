@@ -151,12 +151,13 @@ public class UserModel {
                        
            // ResultSet response = query.executeQuery("INSERT INTO tercero VALUES ('"+tipoDoc+"',"+numDoc+",'"+dir+"','"+name+"','"+tel+"';");
            query.setString(1, tipoDoc);
-           query.setInt(2, numDoc);
+           query.setInt(2,(int) numDoc);
            query.setString(3, dir);
            query.setString(4,name);
            query.setString(5, tel);
            query.setString(6, login);
            query.setString(7, pwd);
+           query.execute();
            System.out.println("[UserModel]: se inserto el tercero: " + name);
         } catch (SQLException ex) {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
