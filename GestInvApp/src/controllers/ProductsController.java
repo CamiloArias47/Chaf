@@ -255,4 +255,30 @@ public class ProductsController {
     return result;
   }
 
+  /*
+  *
+  **/
+  public ArrayList<String> delete(String id){
+    ArrayList<String> result = new ArrayList<String>();
+    String deleted = "false";
+    String message = "No se eliminó e producto";
+
+    product = new ProductModel();
+
+    if(product.delete(id)){
+      deleted = "true";
+      message = "Producto eliminado";
+    }
+
+    result.add(deleted);
+    result.add(message);
+    return result;
+  }
+
+  public ArrayList<String> activate(String id){
+    ArrayList<String> result = new ArrayList<String>();
+    String deleted = "false";
+    String message = "No se eliminó e producto";
+  }
+
 }
