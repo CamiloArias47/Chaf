@@ -1,6 +1,7 @@
 package models;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,20 +36,16 @@ public class CustomersModel {
     
     public void insertarCliente(String tipoDoc,int numDoc,String dir,String name,String tel){
         try {
-            
-            Connection con = conex.getConexion();
-            Statement query = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                  ResultSet.CONCUR_UPDATABLE);
-           // ResultSet response = query.executeQuery("INSERT INTO tercero VALUES ('"+tipoDoc+"',"+numDoc+",'"+dir+"','"+name+"','"+tel+"';");
-            ResultSet response = query.executeQuery("SELECT * FROM tercero");
-            response.moveToInsertRow();
-            response.updateString("tipo_id",tipoDoc);
-            response.updateInt("numero_id", numDoc);
-            response.updateString("direccion",dir);
-            response.updateString("nombre_tercero",name);
-            response.updateString("telefono",tel);
-            response.insertRow();
-            response.moveToCurrentRow();
+            ConexionBD con = new ConexionBD();
+            Connection conex = con.getConexion();
+            PreparedStatement query = conex.prepareStatement(" SELECT insertar_cliente(?,?,?,?,?)");
+                    
+           query.setString(1, tipoDoc);
+           query.setInt(2,(int) numDoc);
+           query.setString(3, dir);
+           query.setString(4,name);
+           query.setString(5, tel);   
+           query.execute();
       
             System.out.println("[CustomersModel]: se inserto el tercero: " + name);
         } catch (SQLException ex) {

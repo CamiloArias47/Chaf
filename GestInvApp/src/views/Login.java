@@ -17,8 +17,6 @@ import controllers.CurrentSesionController;
 public class Login extends javax.swing.JFrame {
 
     private views.DashboardView dashboard;
-    private CHAFDependenciesViews dp = new CHAFDependenciesViews();
-
     /**
      * Creates new form Login
      */
@@ -46,7 +44,6 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(this.dp.getDefaultSizaCHAF());
         setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/chaf.png"))); // NOI18N

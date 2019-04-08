@@ -83,6 +83,27 @@ public class UserModel {
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
+    
+       public void whereNumDoc(String field, int value){
+      ConexionBD con = new ConexionBD();
+      Connection conex = con.getConexion();
+      try {
+          Statement query = conex.createStatement();
+          ResultSet response = query.executeQuery("SELECT * FROM tercero WHERE "+field+" = '"+value+"'");
+
+          if(response.next()){
+            this.tercero_id = response.getInt(1);
+            this.tipo_id = response.getString(2);
+            this.numero_id = response.getInt(3);
+            this.direccion = response.getString(4);
+            this.nombre = response.getString(5);
+            this.telefono = response.getString(6);
+          }
+
+      } catch (SQLException ex) {
+          Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
 
     /*
     * Busca un usuario en la base de datos segun el campo y el valor que se le pase
@@ -143,7 +164,9 @@ public class UserModel {
      * @param tel
      * 
      */
-    public void insertarUsuario(String tipoDoc,int numDoc,String dir,String name,String tel,String login,String pwd){
+    public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel,String login,String pwd){
+        
+        
         try {
             ConexionBD con = new ConexionBD();
             Connection conex = con.getConexion();
@@ -154,7 +177,7 @@ public class UserModel {
            query.setInt(2,(int) numDoc);
            query.setString(3, dir);
            query.setString(4,name);
-           query.setString(5, tel);
+           query.setString(5, tel);           
            query.setString(6, login);
            query.setString(7, pwd);
            query.execute();
@@ -163,6 +186,7 @@ public class UserModel {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /*
     @author Carlos Andres Cordoba
     Metodo que devuelve login y nombre de un usuario que existe en la

@@ -350,17 +350,11 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println("[TercerosRegisterView]: Creando Tercero");
         if(moduloInicio.equals("USUARIO")){
-            String usua = null;
-            char[] pd = null;
             System.out.println("[TercerosRegisterView]: Creando Usuario");
             if(this.jComboBox3.getSelectedItem().equals("USUARIO")){
-            RegisterUserPwdView newUser = new RegisterUserPwdView(this);
-            newUser.setVisible(true);
-    
-            
-//creacionUsuario.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputUserNumDoc.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
-            
-            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                RegisterUserPwdView newUser = new RegisterUserPwdView(this);
+                newUser.setVisible(true);
+                this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }else {
                 JOptionPane.showMessageDialog(this,"Solo se pueden Crear Usuarios en este modulo");
             }
@@ -369,10 +363,14 @@ public class TercerosRegisterView extends javax.swing.JFrame {
             
         }else if(moduloInicio.equals("CLIENTE")){
             System.out.println("[TercerosRegisterView]: Creando Cliente");
-             if(this.jComboBox3.getSelectedItem().equals("CLIENTE")){ 
-            CustomersController ctrlClientes = new CustomersController();
-            ctrlClientes.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputUserNumDoc.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
-            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            if(this.jComboBox3.getSelectedItem().equals("CLIENTE")){ 
+                CustomersController ctrlClientes = new CustomersController();
+                ctrlClientes.insertUser((String) this.jComboBox1.getSelectedItem(),
+                                        Integer.parseInt(this.inputUserNumDoc.getText()), 
+                                        this.inputUserDir.getText(), 
+                                        this.inputUserNomUser.getText(), 
+                                        this.inputUserTel.getText());
+                this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }else {
                 JOptionPane.showMessageDialog(this,"Solo se pueden Crear Clientes en este modulo");
             }

@@ -19,7 +19,7 @@ public class UserController {
     public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel,String login,String pwd){
 
         //faltan validaciones
-        this.modeloUser.insertarUsuario(tipoDoc, numDoc, dir, name, tel,login,pwd);
+        this.modeloUser.insertUser(tipoDoc, numDoc, dir, name,tel,login,pwd);
         
     }
     

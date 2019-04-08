@@ -221,8 +221,13 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
             this.pwd = this.inputPassword1.getPassword();
              System.out.println("Se insertaron los siguientes datos: " +mainClass.getTipoDocUser()+"::"+mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"+mainClass.getNombreUser()+
                     "::"+ mainClass.getTelUser()+"::"+ this.user+"::"+String.valueOf(pwd));
-            this.mainClass.getUserController().insertUser(mainClass.getTipoDocUser(),mainClass.getNumeroIdentificacion(),mainClass.getUserDir(),mainClass.getNombreUser(),
-                                                   mainClass.getTelUser(), this.user,String.valueOf(pwd));
+            this.mainClass.getUserController().insertUser(mainClass.getTipoDocUser(),
+                                                          mainClass.getNumeroIdentificacion(),
+                                                          mainClass.getUserDir(),
+                                                          mainClass.getNombreUser(),
+                                                          mainClass.getTelUser(), 
+                                                          this.user,
+                                                          String.valueOf(pwd));
             
             System.out.println(mainClass.getTipoDocUser()+"::"+mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"+mainClass.getNombreUser()+
                     "::"+ mainClass.getTelUser()+"::"+ this.user+"::"+String.valueOf(pwd));

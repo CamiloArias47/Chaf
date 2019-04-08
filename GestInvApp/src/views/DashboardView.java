@@ -95,7 +95,7 @@ public class DashboardView extends javax.swing.JFrame {
                 materialButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(materialButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 259, 43));
+        jPanel1.add(materialButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 259, 50));
 
         materialButton2.setBackground(new java.awt.Color(102, 153, 255));
         materialButton2.setText("COTIZACIONES");
@@ -105,7 +105,7 @@ public class DashboardView extends javax.swing.JFrame {
                 materialButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(materialButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, 259, 50));
+        jPanel1.add(materialButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 259, 50));
 
         BtnProduct.setBackground(new java.awt.Color(102, 153, 255));
         BtnProduct.setText("PRODUCTOS");
@@ -115,7 +115,7 @@ public class DashboardView extends javax.swing.JFrame {
                 BtnProductActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 259, 49));
+        jPanel1.add(BtnProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 259, 50));
 
         materialButton4.setBackground(new java.awt.Color(102, 153, 255));
         materialButton4.setText("PROVEEDORES");
@@ -127,7 +127,7 @@ public class DashboardView extends javax.swing.JFrame {
                 materialButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(materialButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 259, 51));
+        jPanel1.add(materialButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 259, 51));
 
         materialButton5.setBackground(new java.awt.Color(102, 153, 255));
         materialButton5.setText("CLIENTES");
