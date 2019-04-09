@@ -37,7 +37,7 @@ public class CustomersView extends javax.swing.JFrame {
         initComponents();
     }
     
-     public void setUserIdLogged(int id){
+    public void setUserIdLogged(int id){
       this.userIdLogged = id;
     }
     

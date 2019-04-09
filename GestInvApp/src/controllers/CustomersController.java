@@ -31,6 +31,6 @@ public class CustomersController {
         return this.modeloCustomer.getCantidadClientes();
     }
       public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
-          this.modeloCustomer.insertCliente(tipoDoc, numDoc, dir, name, tel);
+          this.modeloCustomer.insertarCliente(tipoDoc, numDoc, dir, name, tel);
       }
 }

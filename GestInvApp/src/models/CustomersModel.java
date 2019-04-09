@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.ConexionBD;
-import models.UserModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,30 +21,28 @@ import models.UserModel;
  */
 public class CustomersModel {
     
-    private Connection con;
     private int cantidadClientes;
     private ArrayList<ArrayList> clientes = new ArrayList<ArrayList>();
-    private  ConexionBD conex = new ConexionBD();
+    private  ConexionBD con;
+    private Connection conex;
     
     public  CustomersModel (){
         this.setCantidadClientes();
-        con = conex.getConexion();
+        conex = con.getConexion();
     }
     
     
     public void insertarCliente(String tipoDoc,int numDoc,String dir,String name,String tel){
+        con = new ConexionBD();
+        conex = con.getConexion();
         try {
-            ConexionBD con = new ConexionBD();
-            Connection conex = con.getConexion();
             PreparedStatement query = conex.prepareStatement(" SELECT insertar_cliente(?,?,?,?,?)");
-                    
-           query.setString(1, tipoDoc);
-           query.setInt(2,(int) numDoc);
-           query.setString(3, dir);
-           query.setString(4,name);
-           query.setString(5, tel);   
-           query.execute();
-      
+            query.setString(1, tipoDoc);
+            query.setInt(2,(int) numDoc);
+            query.setString(3, dir);
+            query.setString(4,name);
+            query.setString(5, tel);   
+            query.execute();
             System.out.println("[CustomersModel]: se inserto el tercero: " + name);
         } catch (SQLException ex) {
             Logger.getLogger(CustomersModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,10 +55,10 @@ public class CustomersModel {
     */
     
     public ArrayList getUsersExist(){
+      con = new ConexionBD();
+      conex = con.getConexion();
       try{
-        
-        con = conex.getConexion();
-        Statement query = con.createStatement();
+        Statement query = conex.createStatement();
         ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id,t.nombre_tercero AS nombre FROM tercero AS t \n" +
                     "NATURAL JOIN cliente AS u");
         while(response.next()){
@@ -88,9 +84,9 @@ public class CustomersModel {
     }
 
     private void setCantidadClientes() {
-        try {
-            ConexionBD con = new ConexionBD();
-            Connection conex = con.getConexion();
+        con = new ConexionBD();
+        conex = con.getConexion();
+        try {      
             Statement query = conex.createStatement();
             ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id, t.direccion,t.nombre_tercero,t.telefono AS nombre FROM tercero AS t \n" +
                     "NATURAL JOIN cliente AS u");
@@ -100,34 +96,5 @@ public class CustomersModel {
         } catch (SQLException ex) {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
        }
-    }
-    
-    public void insertCliente(String tipoDoc,int numDoc,String dir,String name,String tel){
-      UserModel user = new UserModel();
-      //user.insertarUsuario(tipoDoc,numDoc,dir,name,tel);
-      int tercero_id;
-       try {
-            ConexionBD con = new ConexionBD();
-            Connection conex = con.getConexion();
-            Statement query = conex.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                  ResultSet.CONCUR_UPDATABLE);
-           // ResultSet response = query.executeQuery("INSERT INTO tercero VALUES ('"+tipoDoc+"',"+numDoc+",'"+dir+"','"+name+"','"+tel+"';");
-            ResultSet response = query.executeQuery("SELECT * FROM tercero WHERE tercero_id ="+numDoc);
-            /* aqui esta el error*/
-            tercero_id = (int) response.getInt(1);
-            while(!response.next()){
-            response = query.executeQuery("SELECT * FROM cliente");
-            response.moveToInsertRow();
-            response.updateInt("tercero_id",tercero_id);
-            response.updateBoolean("estado", true);
-            response.insertRow();
-            response.moveToCurrentRow();
-      
-            }
-            
-            System.out.println("[CustomersModel]: se inserto el cliente: " + name);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

@@ -6,6 +6,7 @@
 package views;
 
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
@@ -204,10 +205,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
 
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
-//        System.out.println("[RegisterUserPwdView]: Creando Usuario");
-//        UserController creacionTercero = new UserController();
-//        creacionTercero.insertUser((String) this.jComboBox1.getSelectedItem(),Integer.parseInt(this.inputPwd.getText()), this.inputUserDir.getText(), this.inputUserNomUser.getText(), this.inputUserTel.getText());
-//        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_materialButton1ActionPerformed
 
     private void materialButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialButton2MouseClicked
@@ -217,28 +215,31 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
     private void materialButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton2ActionPerformed
         // TODO add your handling code here:
         if(!(this.inputPassword.getPassword().length == 0) && !(this.inputPassword1.getPassword().length == 0) && (this.inputUser.getText() != null)){
-            this.user = this.inputUser.getText();
-            this.pwd = this.inputPassword1.getPassword();
-             System.out.println("Se insertaron los siguientes datos: " +mainClass.getTipoDocUser()+"::"+mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"+mainClass.getNombreUser()+
-                    "::"+ mainClass.getTelUser()+"::"+ this.user+"::"+String.valueOf(pwd));
-            this.mainClass.getUserController().insertUser(mainClass.getTipoDocUser(),
-                                                          mainClass.getNumeroIdentificacion(),
-                                                          mainClass.getUserDir(),
-                                                          mainClass.getNombreUser(),
-                                                          mainClass.getTelUser(), 
-                                                          this.user,
-                                                          String.valueOf(pwd));
-            
-            System.out.println(mainClass.getTipoDocUser()+"::"+mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"+mainClass.getNombreUser()+
-                    "::"+ mainClass.getTelUser()+"::"+ this.user+"::"+String.valueOf(pwd));
-            JOptionPane.showMessageDialog(this,"Usuario creado");
-            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            if(!(Arrays.equals(this.inputPassword.getPassword(), this.inputPassword1.getPassword()))){
+             //Inicio validacion de passwords   
+                JOptionPane.showMessageDialog(this, "Las Contraseñas no coinciden!!");
+            }else{
+                this.user = this.inputUser.getText();
+                this.pwd = this.inputPassword1.getPassword();
+                this.mainClass.getUserController().insertUser(mainClass.getTipoDocUser(),
+                                                              mainClass.getNumeroIdentificacion(),
+                                                              mainClass.getUserDir(),
+                                                              mainClass.getNombreUser(),
+                                                              mainClass.getTelUser(), 
+                                                              this.user,
+                                                              String.valueOf(pwd));
+                System.out.println("´[RegisterUserPwdView] Datos insertados::"+mainClass.getTipoDocUser()+"::"
+                                    +mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"
+                                    +mainClass.getNombreUser()+"::"+ mainClass.getTelUser()+"::"+ this.user+
+                                    "::"+String.valueOf(pwd));
+                JOptionPane.showMessageDialog(this,"Usuario creado");
+                this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            }
+            //fin validacion passwords
         }else {
             JOptionPane.showMessageDialog(this, "Llene todos los datos por favor");
         }
-        
-        // compara las contraseñas:: !(Arrays.equals(createPassword.getPassword(), confirmPassword.getPassword()))
     }//GEN-LAST:event_materialButton2ActionPerformed
 
     private void inputUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUserActionPerformed

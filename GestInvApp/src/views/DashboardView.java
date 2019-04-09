@@ -39,9 +39,7 @@ public class DashboardView extends javax.swing.JFrame {
         initComponents();
 
     }
-
-
-
+    
     public void setCurrentUser(String user){
         this.sesionActual.setText(user);
     }
@@ -170,7 +168,7 @@ public class DashboardView extends javax.swing.JFrame {
         jPanel1.add(materialButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 11, 85, 46));
 
         sesionActual.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
-        sesionActual.setText("jlabel1");
+        sesionActual.setText("");
         sesionActual.setMaximumSize(new java.awt.Dimension(41, 40));
         jPanel1.add(sesionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 36, -1, 38));
 
@@ -207,6 +205,11 @@ public class DashboardView extends javax.swing.JFrame {
 
     private void materialButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton8ActionPerformed
         // TODO add your handling code here:
+           this.dispose();
+           Login login = new Login();
+           login.setVisible(true);  
+           login.setLayout(null);
+           login.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
     }//GEN-LAST:event_materialButton8ActionPerformed
 
     private void materialButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton7ActionPerformed
@@ -237,6 +240,13 @@ public class DashboardView extends javax.swing.JFrame {
 
     private void materialButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton4ActionPerformed
         // TODO add your handling code here:
+        System.out.println("[DashboardView]: entrando a modulo de Proveedores");
+        ProvidersView  providerView = new ProvidersView();
+        providerView.setUserIdLogged(this.userIdLogged);
+        providerView.setInfoUser();
+        providerView.setVisible(true);
+        providerView.setLayout(null);
+        providerView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_materialButton4ActionPerformed
 
     private void BtnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnProductActionPerformed

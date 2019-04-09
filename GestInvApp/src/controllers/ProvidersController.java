@@ -5,10 +5,31 @@
  */
 package controllers;
 
+import java.util.ArrayList;
+import models.CustomersModel;
+import models.ProvidersModel;
+
 /**
  *
- * @author david
+ * @author Carlos Andres Cordoba
  */
 public class ProvidersController {
+   private ProvidersModel modeloProvider = new ProvidersModel();
+    private ArrayList clientes;
     
+    public String getProvidersForTable(int tipoDato,int iterador){
+        //tipo dato:
+        // 0 = tipo documento proveedor
+        // 1 = numero de documento del proveedor
+        // 2 = nombre del proveedor
+        clientes = this.modeloProvider.getProvidersExist();
+        ArrayList datos = (ArrayList) clientes.get(iterador);
+        return (String) datos.get(tipoDato);
+    }
+    public int getUsersOnTable(){
+        return this.modeloProvider.getCantProveedores();
+    }
+      public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
+          this.modeloProvider.insertarProveedor(tipoDoc, numDoc, dir, name, tel);
+      } 
 }

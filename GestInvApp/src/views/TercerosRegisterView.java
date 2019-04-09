@@ -6,13 +6,12 @@
 package views;
 
 import controllers.CustomersController;
+import controllers.ProvidersController;
 import controllers.UserController;
 import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import libraries.TextPrompt;
-
-
 
 /**
  *
@@ -59,6 +58,9 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         return this.inputUserTel.getText();
     }
     
+    public void refrescar(){
+        this.initComponents();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,7 +73,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         tipoDoc = new views.Input();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
         nomCompleto = new views.Input();
         inputUserDir = new javax.swing.JTextField();
         direction = new views.Input();
@@ -82,13 +84,13 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         inputUserTel = new javax.swing.JTextField();
         materialButton1 = new libraries.MaterialButton();
         numDoc1 = new views.Input();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jComboBox1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(153, 153, 153));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TIPO DE DOCUMENTO", "CC", "NIT", "TI", "AS" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TIPO DE DOCUMENTO", "CC", "NIT", "TI", "AS" }));
         jComboBox1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,7 +242,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
 
         jComboBox3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jComboBox3.setForeground(new java.awt.Color(153, 153, 153));
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TIPO USUARIO", "CLIENTE", "PROVEEDOR", "USUARIO" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TIPO USUARIO", "CLIENTE", "PROVEEDOR", "USUARIO" }));
         jComboBox3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,7 +285,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(317, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,7 +311,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,7 +362,17 @@ public class TercerosRegisterView extends javax.swing.JFrame {
             }
         }else if(moduloInicio.equals("PROVEEDOR")){
             System.out.println("[TercerosRegisterView]: Creando Proveedor");
-            
+            if(this.jComboBox3.getSelectedItem().equals("PROVEEDOR")){ 
+                ProvidersController ctrlProvider = new ProvidersController();
+                ctrlProvider.insertUser((String) this.jComboBox1.getSelectedItem(),
+                                        Integer.parseInt(this.inputUserNumDoc.getText()), 
+                                        this.inputUserDir.getText(), 
+                                        this.inputUserNomUser.getText(), 
+                                        this.inputUserTel.getText());
+                this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }else {
+                JOptionPane.showMessageDialog(this,"Solo se pueden Crear Proveedores en este modulo");
+            }
         }else if(moduloInicio.equals("CLIENTE")){
             System.out.println("[TercerosRegisterView]: Creando Cliente");
             if(this.jComboBox3.getSelectedItem().equals("CLIENTE")){ 
@@ -381,40 +393,6 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(TercerosRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new TercerosRegisterView().setVisible(true);
-//            }
-//        });
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -423,7 +401,6 @@ public class TercerosRegisterView extends javax.swing.JFrame {
     private javax.swing.JTextField inputUserNomUser;
     private javax.swing.JTextField inputUserNumDoc;
     private javax.swing.JTextField inputUserTel;
-    private javax.swing.JTextField inputUserTel1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JPanel jPanel1;
@@ -432,7 +409,6 @@ public class TercerosRegisterView extends javax.swing.JFrame {
     private views.Input numDoc;
     private views.Input numDoc1;
     private views.Input phone;
-    private views.Input phone1;
     private views.Input tipoDoc;
     // End of variables declaration//GEN-END:variables
 }
