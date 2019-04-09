@@ -175,16 +175,12 @@ public class Login extends javax.swing.JFrame {
     private void submitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitMouseClicked
         // TODO add your handling code here:
         LoginController ctlLogin = new LoginController();
-        DashboardController ctlDashboard = new DashboardController();
         ctlLogin.clickLogin(inputUser.getText(),inputPassword.getText());
+
         if(ctlLogin.getLogged()){
-          CurrentSesionController sesion = new CurrentSesionController(ctlLogin.getIdUserLogged());
-          dashboard = new DashboardView();
-          dashboard.setUserIdLogged(ctlLogin.getIdUserLogged()); //le pasamos el id del usuario al dashboard, para que lo pueda pasar a los otros modulos
-          dashboard.setVisible(true);
-          dashboard.setLayout(null);
-          dashboard.setCurrentUser(sesion.getName());
-          dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+          DashboardController ctlDashboard = new DashboardController();
+          ctlDashboard.setIdUserLogged(ctlLogin.getIdUserLogged() );
+          ctlDashboard.showView();
           this.setVisible(false);
         }
     }//GEN-LAST:event_submitMouseClicked

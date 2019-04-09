@@ -68,10 +68,12 @@ public class UserModel {
     *@param {int} id id de el usuario.
     **/
     public void setUser(int id){
-        con = new ConexionBD();
-        conex = con.getConexion();
+      ConexionBD conexionPoll = new ConexionBD();
+      Connection conexion = null;
+
         try {
-            Statement query = conex.createStatement();
+            conexion = conexionPoll.getBasicDataSource().getConnection();
+            Statement query = conexion.createStatement();
             ResultSet response = query.executeQuery("SELECT * FROM tercero WHERE tercero_id = '"+id+"'");
 
             if(response.next()){
@@ -86,16 +88,21 @@ public class UserModel {
         } catch (SQLException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
         }
+        finally{
+          try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[UserModel] Error: no se pudo liberar la conexión");}
+        }
     }
 
     /*
     * Busca un usuario en la base de datos segun el campo y el valor que se le pase
     **/
     public void where(String field, String value){
-      con = new ConexionBD();
-      conex = con.getConexion();
+
+      Connection conexion = null;
       try {
-          Statement query = conex.createStatement();
+          ConexionBD conexionPoll = new ConexionBD();
+          conexion = conexionPoll.getBasicDataSource().getConnection();
+          Statement query = conexion.createStatement();
           ResultSet response = query.executeQuery("SELECT * FROM tercero WHERE "+field+" = '"+value+"'");
 
           if(response.next()){
@@ -110,18 +117,22 @@ public class UserModel {
       } catch (SQLException ex) {
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
       }
+      finally{
+        try{ if(conexion != null) conexion.close();}catch(Exception e){ System.out.println("[UserModel] Error: no fue posible liberar la conexión");}
+      }
     }
     
     /*
     * Busca un usuario en la base de datos segun el campo y el valor que se le pase
     **/
     public void whereUserName(String value){
-      con = new ConexionBD();
-      conex = con.getConexion();
-      try {
-          Statement query = conex.createStatement();
-          ResultSet response = query.executeQuery("SELECT t.tercero_id, t.tipo_id, t.numero_id, t.direccion, t.nombre_tercero, t.telefono, u.login_usuario FROM tercero as t INNER JOIN usuario as u ON u.tercero_id = t.tercero_id WHERE u.login_usuario = '"+value+"'");
 
+      ConexionBD conexionPoll = new ConexionBD();
+      Connection conexion = null;
+      try {
+          conexion = conexionPoll.getBasicDataSource().getConnection();
+          Statement query = conexion.createStatement();
+          ResultSet response = query.executeQuery("SELECT t.tercero_id, t.tipo_id, t.numero_id, t.direccion, t.nombre_tercero, t.telefono, u.login_usuario FROM tercero as t INNER JOIN usuario as u ON u.tercero_id = t.tercero_id WHERE u.login_usuario = '"+value+"'");
           if(response.next()){
             this.tercero_id = response.getInt(1);
             this.tipo_id = response.getString(2);
@@ -134,6 +145,9 @@ public class UserModel {
       } catch (SQLException ex) {
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
       }
+      finally{
+        try{ if (conexion != null) conexion.close();}catch(Exception e) { System.out.println("[UserModel] Error: error liberando conexión");}
+      }
     }
    
     /**
@@ -145,7 +159,7 @@ public class UserModel {
         
         try {
             con = new ConexionBD();
-            conex = con.getConexion();
+            conex = con.getBasicDataSource().getConnection();
             PreparedStatement query = conex.prepareStatement("SELECT insertarUsuario(?,?,?,?,?,?,?)");
             query.setString(1, tipoDoc);
             query.setInt(2,(int) numDoc);
@@ -169,7 +183,7 @@ public class UserModel {
     public ArrayList getUsersExist(){
       try{
         con = new ConexionBD();
-         conex = con.getConexion();
+        conex = con.getBasicDataSource().getConnection();
         Statement query = conex.createStatement();
         ResultSet response = query.executeQuery("SELECT u.login_usuario,t.nombre_tercero AS nombre FROM tercero AS t \n" +
                                                 "NATURAL JOIN usuario AS u");
@@ -195,10 +209,10 @@ public class UserModel {
        return this.cantidadUsers; 
     }
 
-    private void setCantidadUsers() {
+      private void setCantidadUsers() {
         try {
             con = new ConexionBD();
-            conex = con.getConexion();
+            conex = con.getBasicDataSource().getConnection();
             Statement query = conex.createStatement();
             ResultSet response = query.executeQuery("SELECT u.login_usuario,t.nombre_tercero AS nombre FROM tercero AS t \n" +
                     "NATURAL JOIN usuario AS u");
@@ -207,6 +221,41 @@ public class UserModel {
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+
+    /**
+     * @author: Carlos Andres Cordoba Ramos
+     * @param tipoDoc
+     * @param numDoc
+     * @param dir
+     * @param name
+     * @param tel
+     *
+     */
+    public void insertarUsuario(String tipoDoc,int numDoc,String dir,String name,String tel){
+        Connection conexion = null;
+        try {
+            ConexionBD conectionPoll = new ConexionBD();
+            conexion = conectionPoll.getBasicDataSource().getConnection();
+            Statement query = conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+           // ResultSet response = query.executeQuery("INSERT INTO tercero VALUES ('"+tipoDoc+"',"+numDoc+",'"+dir+"','"+name+"','"+tel+"';");
+            ResultSet response = query.executeQuery("SELECT * FROM tercero");
+            response.moveToInsertRow();
+            response.updateString("tipo_id",tipoDoc);
+            response.updateInt("numero_id", numDoc);
+            response.updateString("direccion",dir);
+            response.updateString("nombre_tercero",name);
+            response.updateString("telefono",tel);
+            response.insertRow();
+            response.moveToCurrentRow();
+
+            System.out.println("inserto");
+        } catch (SQLException ex) {
+            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+          try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[UserModel] Error: no se pudo liberar la conexión"); }
         }
     }
 }

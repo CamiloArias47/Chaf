@@ -6,6 +6,7 @@
 package models;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
@@ -19,20 +20,46 @@ import java.util.logging.Logger;
  */
 public class ProductModel {
 
-    Connection con;
-
     public ProductModel(){
-      ConexionBD conex = new ConexionBD();
-      con = conex.getConexion();
+
     }
+
+    /*
+    *Obtiene el ultimo id de producto
+    **/
+    public int getLastId(){
+      Connection conexion = null;
+      try{
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
+        ResultSet result = query.executeQuery("SELECT MAX(producto_id) FROM producto");
+        if(result.next()){
+          return result.getInt(1);
+        }else{
+            return 0;
+        }
+      }
+      catch(SQLException ex){
+        Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        return 0;
+      }
+      finally{
+        try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no se pudo liberar la conexion: "+e); }
+      }
+    }
+
 
     /*
     * Obtiene los productos de la base de datos
     **/
     public ArrayList getProducts(){
       ArrayList<ArrayList> products = new ArrayList<ArrayList>();
+      Connection conexion = null;
       try{
-        Statement query = con.createStatement();
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
         ResultSet result = query.executeQuery("SELECT * FROM producto");
         while (result.next()) {
           ArrayList<String> product = new ArrayList<String>();
@@ -48,6 +75,9 @@ public class ProductModel {
         Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
         return products;
       }
+      finally{
+        try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no fue posible liberar la conexión "+e); }
+      }
     }
 
     /*
@@ -55,15 +85,29 @@ public class ProductModel {
     **/
     public boolean save(String code, String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
       boolean saved = false;
+      Connection conexion = null;
       try{
-        Statement query = con.createStatement();
-        ResultSet result = query.executeQuery("INSERT INTO producto VALUES ()");
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        PreparedStatement query = conexion.prepareStatement("INSERT INTO producto (descripcion, costo, precio_venta) VALUES (?,?,?)");
+        query.setString(1,name);
+        query.setInt(2,Integer.parseInt(priceBuy));
+        query.setInt(3,Integer.parseInt(priceSell));
+        int result = query.executeUpdate();
+        if( result > 0){
+          return true;
+        }
+        else{
+          return false;
+        }
 
-        return true;
       }
       catch(SQLException ex){
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
           return false;
+      }
+      finally{
+        try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no se pudo liberar la conexión:"+e); }
       }
     }
 

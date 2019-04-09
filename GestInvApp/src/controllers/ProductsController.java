@@ -6,12 +6,14 @@
 package controllers;
 
 import models.ProvidersModel;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import views.ProductsView;
 import views.ProductsRegisterView;
@@ -25,10 +27,10 @@ public class ProductsController {
 
   private int userIdLogged; //id del usuario logueado
   private ProductModel product;
-  private JLabel editar,eliminar,activar;
+  private JButton editar,eliminar,activar;
   private ImageIcon editarIcon,eliminarIcon,activarIcon;
   private Icon edImg,elimImg,actImg;
-  private JLabel[] opciones = new JLabel[3];
+  private ProductsView productView;
 
   public ProductsController(){
      product = new ProductModel();
@@ -43,7 +45,7 @@ public class ProductsController {
   **/
   public void showView(){
     System.out.println("[DashboardView]: productos cliked");
-    ProductsView productView = new ProductsView();
+    productView = new ProductsView();
     productView.setUserIdLogged(this.userIdLogged);
     productView.setInfoUser();
     productView.setVisible(true);
@@ -81,24 +83,28 @@ public class ProductsController {
   }
 
   private void setButons(){
-    editar = new JLabel();
-    editarIcon = new ImageIcon(getClass().getResource("/img/editar.png"));
-    edImg = new ImageIcon(editarIcon.getImage().getScaledInstance(20, 20, 0));
+
+     //Creacion de boton editar
+    editar          = new JButton();
+    editar.setBackground(Color.white);
+    editarIcon      = new ImageIcon(getClass().getResource("/img/editar.png"));
+    edImg           = new ImageIcon(editarIcon.getImage().getScaledInstance(20, 20, 0));
     editar.setIcon(edImg);
 
-    eliminar = new JLabel();
-    eliminarIcon = new ImageIcon(getClass().getResource("/img/desactivar.png"));
-    elimImg = new ImageIcon(eliminarIcon.getImage().getScaledInstance(20, 20, 0));
+    //Creacion de boton eliminar
+    eliminar        = new JButton();
+    eliminar.setBackground(Color.white);
+    eliminarIcon    = new ImageIcon(getClass().getResource("/img/desactivar.png"));
+    elimImg         = new ImageIcon(eliminarIcon.getImage().getScaledInstance(20, 20, 0));
     eliminar.setIcon(elimImg);
 
-    activar = new JLabel();
-    activarIcon = new ImageIcon(getClass().getResource("/img/activar.png"));
-    actImg = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
-    activar.setIcon(actImg);
 
-    opciones[0]= editar;
-    opciones[1]= eliminar;
-    opciones[2]= activar;
+    //Creacion de boton activar
+    activar         = new JButton();
+    activar.setBackground(Color.white);
+    activarIcon     = new ImageIcon(getClass().getResource("/img/activar.png"));
+    actImg          = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
+    activar.setIcon(actImg);
   }
 
 
@@ -114,9 +120,9 @@ public class ProductsController {
       tabla[j][1] = productos.get(i).get(1).toString();
       tabla[j][2] = productos.get(i).get(2).toString();
       tabla[j][3] = productos.get(i).get(3).toString();
-      tabla[j][4] = this.opciones[0];
-      tabla[j][5] = this.opciones[1];
-      tabla[j][6] = this.opciones[2];
+      tabla[j][4] = this.editar;
+      tabla[j][5] = this.eliminar;
+      tabla[j][6] = this.activar;
       j++;
     }
 
@@ -165,11 +171,20 @@ public class ProductsController {
   public ArrayList<String> save(String code, String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
     ArrayList<String> result = new ArrayList<String>();
     String saved = "false";
+    String message = "";
 
     if(!validate(code,brand,name,priceBuy,priceSell,amoung,provider)){
-      result.add(saved);
-      result.add("Completa los campos");
+      message = "Completa los campos";
     }
+
+    if(product.save(code,brand,name,priceBuy,priceSell,amoung,provider)){
+      saved = "true";
+      message = "Producto guardado";
+      JOptionPane.showMessageDialog(null, "Se ha guardado el producto");
+    }
+
+    result.add(saved);
+    result.add(message);
 
     return result;
   }

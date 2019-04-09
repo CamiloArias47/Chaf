@@ -27,8 +27,6 @@ public class ProvidersModel {
     private ArrayList<ArrayList> proveedores = new ArrayList<ArrayList>();
 
     public ProvidersModel(){
-        con = new ConexionBD();
-        conex = con.getConexion();
         this.setCantidadProveedores();
     }
     
@@ -36,10 +34,13 @@ public class ProvidersModel {
         return this.cantidadProveedores;
     }
 
-    public ArrayList getProveedores(){
+     public ArrayList getProveedores(){
       ArrayList<ArrayList> proveedores = new ArrayList<ArrayList>();
+      Connection conexion = null;
       try{
-        Statement query = conex.createStatement();
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
         ResultSet response = query.executeQuery("SELECT t.tercero_id, t.tipo_id, t.numero_id, t.direccion, t.nombre_tercero, t.telefono, p.estado FROM tercero as t INNER JOIN proveedor as p ON p.tercero_id = t.tercero_id");
         while(response.next()){
             int i= 1;
@@ -56,12 +57,15 @@ public class ProvidersModel {
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
           return proveedores;
       }
-    }  
+      finally{
+        try{ if(conexion != null) conexion.close();}catch(Exception e){ System.out.println("[ProveedorModel] Error: no fue posible liberar la conexión");}
+      }
+    }
     
     public void insertarProveedor(String tipoDoc,int numDoc,String dir,String name,String tel){
         con = new ConexionBD();
-        conex = con.getConexion();
         try {
+            conex = con.getBasicDataSource().getConnection();
             PreparedStatement query = conex.prepareStatement(" SELECT insertar_proveedor(?,?,?,?,?)");
             query.setString(1, tipoDoc);
             query.setInt(2,(int) numDoc);
@@ -82,8 +86,9 @@ public class ProvidersModel {
     
     public ArrayList getProvidersExist(){
       con = new ConexionBD();
-      conex = con.getConexion();
+      
       try{
+        conex = con.getBasicDataSource().getConnection();
         Statement query = conex.createStatement();
         ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id,t.nombre_tercero AS nombre FROM tercero AS t \n" +
                     "NATURAL JOIN proveedor AS u");
@@ -107,8 +112,9 @@ public class ProvidersModel {
     
     private void setCantidadProveedores() {
         con = new ConexionBD();
-        conex = con.getConexion();
+        
         try {      
+            conex = con.getBasicDataSource().getConnection();
             Statement query = conex.createStatement();
             ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id, t.direccion,t.nombre_tercero,t.telefono AS nombre FROM tercero AS t \n" +
                     "NATURAL JOIN proveedor AS u");

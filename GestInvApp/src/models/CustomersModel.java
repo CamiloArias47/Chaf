@@ -28,14 +28,14 @@ public class CustomersModel {
     
     public  CustomersModel (){
         this.setCantidadClientes();
-        conex = con.getConexion();
     }
     
     
     public void insertarCliente(String tipoDoc,int numDoc,String dir,String name,String tel){
         con = new ConexionBD();
-        conex = con.getConexion();
+        
         try {
+            conex = con.getBasicDataSource().getConnection();
             PreparedStatement query = conex.prepareStatement(" SELECT insertar_cliente(?,?,?,?,?)");
             query.setString(1, tipoDoc);
             query.setInt(2,(int) numDoc);
@@ -56,8 +56,8 @@ public class CustomersModel {
     
     public ArrayList getUsersExist(){
       con = new ConexionBD();
-      conex = con.getConexion();
       try{
+        conex = con.getBasicDataSource().getConnection();
         Statement query = conex.createStatement();
         ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id,t.nombre_tercero AS nombre FROM tercero AS t \n" +
                     "NATURAL JOIN cliente AS u");
@@ -85,8 +85,8 @@ public class CustomersModel {
 
     private void setCantidadClientes() {
         con = new ConexionBD();
-        conex = con.getConexion();
         try {      
+            conex = con.getBasicDataSource().getConnection();
             Statement query = conex.createStatement();
             ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id, t.direccion,t.nombre_tercero,t.telefono AS nombre FROM tercero AS t \n" +
                     "NATURAL JOIN cliente AS u");
