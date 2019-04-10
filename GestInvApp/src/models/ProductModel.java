@@ -24,12 +24,16 @@ public class ProductModel {
     private String descripcion;
     private int costo;
     private int precio_venta;
+    private int marca_id;
+    private int proveedor;
+    private int cantidad;
+    private String nombreProveedor;
+    private String nombreMarca;
 
     public ProductModel(){
     }
 
     public ProductModel(String id){
-      System.out.println("[DEBUG] contrustor con parametro");
       Connection conexion = null;
       try{
         ConexionBD conexionPool = new ConexionBD();
@@ -41,7 +45,20 @@ public class ProductModel {
           this.descripcion = result.getString(2);
           this.costo = result.getInt(3);
           this.precio_venta = result.getInt(4);
-          System.out.println("[DEBUG] "+producto_id+", "+descripcion+", "+costo+", "+precio_venta);
+          this.marca_id = result.getInt(5);
+          this.proveedor = result.getInt(6);
+          this.cantidad = result.getInt(7);
+
+          Statement query2 = conexion.createStatement();
+          ResultSet result2 = query2.executeQuery("SELECT nombre FROM marca WHERE marca_id = "+marca_id);
+          this.nombreMarca = result2.next() ? result.getString(1) : "";
+          System.out.println("[DEBUG] nombre marca = "+nombreMarca);
+
+          Statement query3 = conexion.createStatement();
+          ResultSet result3 = query3.executeQuery("SELECT nombre_tercero FROM tercero WHERE tercero_id = "+proveedor);
+          this.nombreProveedor = result3.next() ? result.getString(1) : "";
+          System.out.println("[DEBUG] nombre proveedor = "+nombreProveedor);
+
         }
         else{
           System.out.println("[DEBUG] result.next() vacio");
@@ -91,10 +108,10 @@ public class ProductModel {
         ConexionBD conexionPoll = new ConexionBD();
         conexion = conexionPoll.getBasicDataSource().getConnection();
         Statement query = conexion.createStatement();
-        ResultSet result = query.executeQuery("SELECT * FROM producto ORDER BY producto_id ASC");
+          ResultSet result = query.executeQuery("SELECT p.producto_id, p.descripcion, p.costo, p.precio_venta, m.nombre, t.nombre_tercero, p.cantidad FROM producto AS p INNER JOIN marca as m ON p.marca_id = m.marca_id INNER JOIN tercero as t ON p.proveedor = t.tercero_id ORDER BY producto_id ASC");
         while (result.next()) {
           ArrayList<String> product = new ArrayList<String>();
-          for (int i = 1; i<=4 ;i++ ) {
+          for (int i = 1; i<=7 ;i++ ) {
             product.add(result.getString(i));
           }
           products.add(product);
@@ -114,16 +131,19 @@ public class ProductModel {
     /*
     *Guarda un producto en la base de datos;
     **/
-    public boolean save(String code, String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
+    public boolean save(int brand_id, String name, String priceBuy, String priceSell, int amoung, int provider){
       boolean saved = false;
       Connection conexion = null;
       try{
         ConexionBD conexionPoll = new ConexionBD();
         conexion = conexionPoll.getBasicDataSource().getConnection();
-        PreparedStatement query = conexion.prepareStatement("INSERT INTO producto (descripcion, costo, precio_venta) VALUES (?,?,?)");
+        PreparedStatement query = conexion.prepareStatement("INSERT INTO producto (descripcion, costo, precio_venta, marca_id, proveedor, cantidad) VALUES (?,?,?,?,?,?)");
         query.setString(1,name);
         query.setInt(2,Integer.parseInt(priceBuy));
         query.setInt(3,Integer.parseInt(priceSell));
+        query.setInt(4,brand_id);
+        query.setInt(5,provider);
+        query.setInt(6,amoung);
         int result = query.executeUpdate();
         if( result > 0){
           return true;
@@ -146,17 +166,20 @@ public class ProductModel {
     /*
     *Actualiza un producto en la base de datos;
     **/
-    public boolean update(String id, String code, String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
+    public boolean update(String id, int brand, String name, String priceBuy, String priceSell, String amoung, int provider){
       boolean saved = false;
       Connection conexion = null;
       try{
         ConexionBD conexionPoll = new ConexionBD();
         conexion = conexionPoll.getBasicDataSource().getConnection();
-        PreparedStatement query = conexion.prepareStatement("UPDATE producto SET descripcion = ?, costo = ?, precio_venta = ? WHERE producto_id = ?");
+        PreparedStatement query = conexion.prepareStatement("UPDATE producto SET descripcion = ?, costo = ?, precio_venta = ?, marca_id = ?, proveedor = ?, cantidad = ? WHERE producto_id = ?");
         query.setString(1,name);
         query.setInt(2,Integer.parseInt(priceBuy));
         query.setInt(3,Integer.parseInt(priceSell));
-        query.setInt(4,Integer.parseInt(id));
+        query.setInt(4,brand);
+        query.setInt(5,provider);
+        query.setInt(6,Integer.parseInt(amoung) );
+        query.setInt(7,Integer.parseInt(id));
         int result = query.executeUpdate();
         if( result > 0){
           return true;
@@ -220,7 +243,7 @@ public class ProductModel {
         Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
         return restored;
       }
-      finally(){
+      finally{
         try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no se pudo liberar la conexion:"+e); }
       }
     }
@@ -244,6 +267,17 @@ public class ProductModel {
         return precio_venta;
     }
 
+    public int getCantidad(){
+      return cantidad;
+    }
+
+    public String getNombreProveedor(){
+      return nombreProveedor;
+    }
+
+    public String getNombreMarca(){
+      return nombreMarca;
+    }
 
 
 }

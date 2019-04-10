@@ -20,9 +20,31 @@ import java.util.ArrayList;
  */
 public class ProveedorModel {
 
+    private int tercero_id;
+    private boolean estado;
 
     public ProveedorModel(){
 
+    }
+
+    public ProveedorModel(String name){
+      Connection conexion = null;
+      try{
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
+        ResultSet response = query.executeQuery("SELECT t.tercero_id, p.estado FROM tercero as t INNER JOIN proveedor as p ON p.tercero_id = t.tercero_id WHERE t.nombre_tercero = '"+name+"'");
+        while(response.next()){
+          tercero_id = response.getInt(1);
+          estado = response.getBoolean(2);
+        }
+      }
+      catch(SQLException ex){
+          Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      finally{
+        try{ if(conexion != null) conexion.close();}catch(Exception e){ System.out.println("[ProveedorModel] Error: no fue posible liberar la conexión");}
+      }
     }
 
     public ArrayList getProveedores(){
@@ -51,5 +73,16 @@ public class ProveedorModel {
       finally{
         try{ if(conexion != null) conexion.close();}catch(Exception e){ System.out.println("[ProveedorModel] Error: no fue posible liberar la conexión");}
       }
+    }
+
+
+    //:::::::::::::::GETERS:::::::::::::::::::::::::::::
+
+    public int getTercero_id(){
+      return tercero_id;
+    }
+
+    public boolean getEstado(){
+      return estado;
     }
 }

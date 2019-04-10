@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.MarcaModel;
 import views.ProductsView;
 import views.ProductsRegisterView;
 import models.ProductModel;
@@ -34,6 +35,7 @@ public class ProductsController {
   private Icon edImg,elimImg,actImg;
   private ProductsView productView;
   private Object tabla[][];
+  private ProductsRegisterView formRegister = null;
 
   public ProductsController(){
 
@@ -47,7 +49,6 @@ public class ProductsController {
   *Muestra el modulo de productos
   **/
   public void showView(){
-    System.out.println("[DashboardView]: productos cliked");
     productView = new ProductsView();
     productView.setUserIdLogged(this.userIdLogged);
     productView.setInfoUser();
@@ -63,9 +64,10 @@ public class ProductsController {
   *Muestra el formulario de registro
   **/
   public void showFormRegister(){
-    ProductsRegisterView formRegister = new ProductsRegisterView();
+    if(formRegister == null) formRegister = new ProductsRegisterView();
     formRegister.setInfoUser();
     formRegister.setComboBoxProveedores(this.getComboBoxProveedores());
+    formRegister.setComboBoxBrands(this.getComboBoxMarcas());
     formRegister.setVisible(true);
     formRegister.setLayout(null);
     formRegister.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -78,11 +80,12 @@ public class ProductsController {
   public void showFormEdit(String id){
     product = new ProductModel(id);
 
-    ProductsRegisterView formRegister = new ProductsRegisterView();
+    if(formRegister == null) formRegister = new ProductsRegisterView();
     formRegister.setTipeAction("edit");
     formRegister.setInfoUser();
+    formRegister.setComboBoxBrands(this.getComboBoxMarcas());
     formRegister.setComboBoxProveedores(this.getComboBoxProveedores());
-    formRegister.setData(id, product.getDescripcion(), product.getCosto(), product.getPrecio_venta());
+    formRegister.setData(id, product.getDescripcion(), product.getCosto(), product.getPrecio_venta(), product.getCantidad(), product.getNombreProveedor(), product.getNombreMarca());
     formRegister.setVisible(true);
     formRegister.setLayout(null);
     formRegister.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -102,8 +105,18 @@ public class ProductsController {
     return model;
   }
 
-  private void setButons(){
+  public DefaultComboBoxModel getComboBoxMarcas(){
+    DefaultComboBoxModel model = new DefaultComboBoxModel();
+    MarcaModel marca = new MarcaModel();
+    ArrayList<ArrayList> marcas = marca.getBrands();
+    for (int i = 0;i < marcas.size() ;i++ ) {
+        model.addElement(marcas.get(i).get(1));
+    }
+    model.addElement("otra");
+    return model;
+  }
 
+  private void setButons(){
      //Creacion de boton editar
     editar          = new JButton();
     editar.setBackground(Color.white);
@@ -141,16 +154,19 @@ public class ProductsController {
   public void setTabla(){
       product = new ProductModel();
       ArrayList<ArrayList> productos = product.getProducts();
-        tabla = new Object[productos.size()][7];
+        tabla = new Object[productos.size()][10];
         int j = 0;
         for (int i = 0; i < productos.size() ; i++ ) {
           tabla[j][0] = productos.get(i).get(0).toString();
           tabla[j][1] = productos.get(i).get(1).toString();
-          tabla[j][2] = productos.get(i).get(2).toString();
-          tabla[j][3] = productos.get(i).get(3).toString();
-          tabla[j][4] = this.editar;
-          tabla[j][5] = this.eliminar;
-          tabla[j][6] = this.activar;
+          tabla[j][2] = productos.get(i).get(4).toString();
+          tabla[j][3] = productos.get(i).get(2).toString();
+          tabla[j][4] = productos.get(i).get(3).toString();
+          tabla[j][5] = productos.get(i).get(5).toString();
+          tabla[j][6] = productos.get(i).get(6).toString();
+          tabla[j][7] = this.editar;
+          tabla[j][8] = this.eliminar;
+          tabla[j][9] = this.activar;
           j++;
         }
   }
@@ -164,14 +180,14 @@ public class ProductsController {
     DefaultTableModel model = new DefaultTableModel(
       tabla,
       new String[]{
-        "Id","Nombre","Precio Compra","Precio Venta","Editar","Desactivar","Activar"
+        "Id","Nombre","Marca","Precio Compra","Precio Venta","Proveedor","Cantidad","Editar","Desactivar","Activar"
       }
     ){
           Class[] types = new Class [] {
-              java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+              java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
           };
           boolean[] canEdit = new boolean [] {
-              false, false, false, false, false, false, false
+              false, false, false, false, false, false, false, false, false, false
           };
 
           public Class getColumnClass(int columnIndex) {
@@ -189,8 +205,8 @@ public class ProductsController {
   /*
   *valida wue los campos del registro e producto esten completos
   **/
-  public boolean validate(String code, String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
-    if(code.equals("") || brand.equals("") || name.equals("") || priceBuy.equals("") || priceSell.equals("") || amoung.equals("") ){
+  public boolean validate(String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
+    if(brand.equals("") || name.equals("") || priceBuy.equals("") || priceSell.equals("") || amoung.equals("") ){
       return false;
     }
 
@@ -203,18 +219,24 @@ public class ProductsController {
   /*
   *guarda un producto nuevo
   **/
-  public ArrayList<String> save(String code, String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
+  public ArrayList<String> save(String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
     ArrayList<String> result = new ArrayList<String>();
     String saved = "false";
     String message = "";
 
-    if(!validate(code,brand,name,priceBuy,priceSell,amoung,provider)){
+    if(!validate(brand,name,priceBuy,priceSell,amoung,provider)){
       message = "Completa los campos";
     }
     else{
+      MarcaModel model = new MarcaModel(brand);
+      int idBrand = model.getId();
+
+      ProveedorModel proveedor = new ProveedorModel(provider);
+      int idProvider = proveedor.getTercero_id();
+
       product = new ProductModel();
 
-      if(product.save(code,brand,name,priceBuy,priceSell,amoung,provider)){
+      if(product.save(idBrand,name,priceBuy,priceSell,Integer.parseInt(amoung),idProvider) ){
         saved = "true";
         message = "Producto guardado";
         JOptionPane.showMessageDialog(null, "Se ha guardado el producto");
@@ -230,18 +252,23 @@ public class ProductsController {
   /*
   *actualiza un producto
   **/
-  public ArrayList<String> update(String id, String code, String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
+  public ArrayList<String> update(String id, String brand, String name, String priceBuy, String priceSell, String amoung, String provider){
     ArrayList<String> result = new ArrayList<String>();
     String saved = "false";
     String message = "";
 
-    if(!validate(code,brand,name,priceBuy,priceSell,amoung,provider)){
+    if(!validate(brand,name,priceBuy,priceSell,amoung,provider)){
       message = "Completa los campos";
     }
     else{
+      MarcaModel model = new MarcaModel(brand);
+      int idBrand = model.getId();
+
+      ProveedorModel proveedor = new ProveedorModel(provider);
+      int idProvider = proveedor.getTercero_id();
       product = new ProductModel();
 
-      if(product.update(id,code,brand,name,priceBuy,priceSell,amoung,provider)){
+      if(product.update(id,idBrand,name,priceBuy,priceSell,amoung,idProvider)){
         saved = "true";
         message = "Producto guardado";
         JOptionPane.showMessageDialog(null, "Se ha guardado el producto");
@@ -279,6 +306,16 @@ public class ProductsController {
     ArrayList<String> result = new ArrayList<String>();
     String deleted = "false";
     String message = "No se eliminó e producto";
+    return result;
+  }
+
+  public boolean saveBrand(String brandName){
+    boolean saved = false;
+    MarcaModel marca = new MarcaModel();
+    if(marca.save(brandName)){
+      saved = true;
+    }
+    return saved;
   }
 
 }

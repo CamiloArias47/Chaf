@@ -180,7 +180,7 @@ public class ProductsView extends javax.swing.JFrame {
         int row = jTable1.getSelectedRow();
         int col = jTable1.getSelectedColumn();
 
-        if(col == 4){
+        if(col == 7){
          ProductsController productCtl = new ProductsController();
          Object id = jTable1.getModel().getValueAt(row, 0);
          productCtl.showFormEdit(id.toString());
