@@ -7,12 +7,8 @@ package controllers;
 
 import models.ProvidersModel;
 import java.awt.Color;
-<<<<<<< HEAD
-=======
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import models.ProveedorModel;
->>>>>>> master
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
