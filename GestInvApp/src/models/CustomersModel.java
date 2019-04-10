@@ -55,10 +55,11 @@ public class CustomersModel {
     */
     
     public ArrayList getUsersExist(){
-      con = new ConexionBD();
+      Connection conexion = null;
       try{
-        conex = con.getBasicDataSource().getConnection();
-        Statement query = conex.createStatement();
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
         ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id,t.nombre_tercero AS nombre FROM tercero AS t \n" +
                     "NATURAL JOIN cliente AS u");
         while(response.next()){
@@ -71,11 +72,15 @@ public class CustomersModel {
             this.clientes.add(cliente);
         }
         System.out.print(cantidadClientes);
+        conexion.close();
         return clientes;
       }
       catch(SQLException ex){
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
           return clientes;
+      }
+       finally{
+        try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no fue posible liberar la conexión "+e); }
       }
     }
     

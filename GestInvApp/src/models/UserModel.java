@@ -181,10 +181,11 @@ public class UserModel {
     tabla Usuario
     */  
     public ArrayList getUsersExist(){
+      Connection conexion = null;
       try{
-        con = new ConexionBD();
-        conex = con.getBasicDataSource().getConnection();
-        Statement query = conex.createStatement();
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
         ResultSet response = query.executeQuery("SELECT u.login_usuario,t.nombre_tercero AS nombre FROM tercero AS t \n" +
                                                 "NATURAL JOIN usuario AS u");
         while(response.next()){
@@ -196,12 +197,14 @@ public class UserModel {
             }
             this.usuarios.add(usuario);
         }
-        System.out.print(cantidadUsers);
+        conexion.close();
         return usuarios;
       }
       catch(SQLException ex){
           Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
           return usuarios;
+      }finally{
+        try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no fue posible liberar la conexión "+e); }
       }
     }
     
@@ -210,7 +213,8 @@ public class UserModel {
     }
 
       private void setCantidadUsers() {
-        try {
+        Connection conexion = null;
+          try {
             con = new ConexionBD();
             conex = con.getBasicDataSource().getConnection();
             Statement query = conex.createStatement();

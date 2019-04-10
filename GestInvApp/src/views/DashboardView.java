@@ -20,6 +20,7 @@ import views.ProductsView;
 import controllers.CurrentSesionController;
 import javax.swing.JFrame;
 import controllers.ProductsController;
+import javax.swing.JOptionPane;
 
 
 
@@ -31,7 +32,8 @@ public class DashboardView extends javax.swing.JFrame {
     private Date date = Calendar.getInstance().getTime();
     private DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
     private String fechaActual = dateFormat.format(date);
-
+    private CHAFDependenciesViews dp = new CHAFDependenciesViews();
+    private String mensajeModulos = "Los desarrolladores de CHAF estamos construyendo este modulo, gracias por comprender";            
     private int userIdLogged; //id del usuario logueado, se lo pasamos a otros modulos
 
     public DashboardView() {
@@ -214,6 +216,11 @@ public class DashboardView extends javax.swing.JFrame {
 
     private void materialButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton7ActionPerformed
         // TODO add your handling code here:
+       JOptionPane.showMessageDialog(
+                        this,
+                        this.mensajeModulos,
+                        "Advertencia", JOptionPane.INFORMATION_MESSAGE,
+                        dp.getChafLogo());
     }//GEN-LAST:event_materialButton7ActionPerformed
 
     private void materialButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton6ActionPerformed
@@ -258,10 +265,20 @@ public class DashboardView extends javax.swing.JFrame {
 
     private void materialButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton2ActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(
+                        this,
+                        this.mensajeModulos,
+                        "Advertencia", JOptionPane.INFORMATION_MESSAGE,
+                        dp.getChafLogo());
     }//GEN-LAST:event_materialButton2ActionPerformed
 
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(
+                        this,
+                        this.mensajeModulos,
+                        "Advertencia", JOptionPane.INFORMATION_MESSAGE,
+                        dp.getChafLogo());
     }//GEN-LAST:event_materialButton1ActionPerformed
 
     /**

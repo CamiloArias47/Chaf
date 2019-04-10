@@ -9,6 +9,7 @@ package views;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -87,6 +88,13 @@ public class CHAFDependenciesViews {
         public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){
             return (Component)value;   
      }
-    }      
+    }
+     
+     public ImageIcon getChafLogo(){
+         ImageIcon icon = new ImageIcon(this.getClass().getResource("../img/chaf.png"));
+         Image img = icon.getImage();
+         Image newimg = img.getScaledInstance(60, 40,  java.awt.Image.SCALE_SMOOTH);
+         ImageIcon chafIcon = new ImageIcon(newimg);
+         return chafIcon;
+     }
 }
-    

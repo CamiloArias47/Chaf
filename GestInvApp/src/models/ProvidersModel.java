@@ -51,6 +51,8 @@ public class ProvidersModel {
             }
             proveedores.add(proveedor);
         }
+        
+        conexion.close();
         return proveedores;
       }
       catch(SQLException ex){
@@ -78,37 +80,37 @@ public class ProvidersModel {
             Logger.getLogger(CustomersModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    /*
-    @author Carlos Andres Cordoba
-    Metodo que devuelve los clientes existentes
-    tabla Usuario
-    */
-    
-    public ArrayList getProvidersExist(){
-      con = new ConexionBD();
-      
-      try{
-        conex = con.getBasicDataSource().getConnection();
-        Statement query = conex.createStatement();
-        ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id,t.nombre_tercero AS nombre FROM tercero AS t \n" +
-                    "NATURAL JOIN proveedor AS u");
-        while(response.next()){
-            int i= 1;
-            ArrayList<String> proveedor = new ArrayList<String>();
-            while(i<4){
-                proveedor.add(response.getString(i));
-                i++;
-            }
-            this.proveedores.add(proveedor);
-        }
-        System.out.print(this.cantidadProveedores);
-        return proveedores;
-      }
-      catch(SQLException ex){
-          Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
-          return proveedores;
-      }
-    }  
+//    /*
+//    @author Carlos Andres Cordoba
+//    Metodo que devuelve los proveedores existentes
+//    tabla Usuario
+//    */
+//    
+//    public ArrayList getProvidersExist(){
+//      con = new ConexionBD();
+//      
+//      try{
+//        conex = con.getBasicDataSource().getConnection();
+//        Statement query = conex.createStatement();
+//        ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id,t.nombre_tercero AS nombre FROM tercero AS t \n" +
+//                    "NATURAL JOIN proveedor AS u");
+//        while(response.next()){
+//            int i= 1;
+//            ArrayList<String> proveedor = new ArrayList<String>();
+//            while(i<4){
+//                proveedor.add(response.getString(i));
+//                i++;
+//            }
+//            this.proveedores.add(proveedor);
+//        }
+//        System.out.print(this.cantidadProveedores);
+//        return proveedores;
+//      }
+//      catch(SQLException ex){
+//          Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+//          return proveedores;
+//      }
+//    }  
     
     private void setCantidadProveedores() {
         con = new ConexionBD();

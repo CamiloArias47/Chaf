@@ -19,10 +19,10 @@ public class ProvidersController {
     
     public String getProvidersForTable(int tipoDato,int iterador){
         //tipo dato:
-        // 0 = tipo documento proveedor
-        // 1 = numero de documento del proveedor
-        // 2 = nombre del proveedor
-        clientes = this.modeloProvider.getProvidersExist();
+        // 1 = tipo documento proveedor
+        // 2 = numero de documento del proveedor
+        // 4 = nombre del proveedor
+        clientes = this.modeloProvider.getProveedores();
         ArrayList datos = (ArrayList) clientes.get(iterador);
         return (String) datos.get(tipoDato);
     }

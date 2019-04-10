@@ -40,9 +40,9 @@ public class ProvidersView extends javax.swing.JFrame {
         //// variables para traer el login del usuario, 
         ///  ya que el metodo getUserForTable pide como parametros
         ///  el indice de la columna de la consulta y un iterador
-        /**/ int providerTypeDoc = 0;
-        /**/ int providerNumDoc = 1;
-        /**/ int nameProvider = 2;
+        /**/ int providerTypeDoc = 1;
+        /**/ int providerNumDoc = 2;
+        /**/ int nameProvider = 4;
         this.rows = new Object[filas][6];
         for(int i = 0;i < filas;i++){
             for(int j = 0;j< 6 ;j++){
