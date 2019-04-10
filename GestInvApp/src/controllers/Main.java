@@ -8,7 +8,10 @@ package controllers;
 import javax.swing.JFrame;
 import models.CustomersModel;
 import views.Login;
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 /**
  *
  * @author camilo

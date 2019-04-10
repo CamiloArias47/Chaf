@@ -16,13 +16,21 @@ import java.util.ArrayList;
 public class ProductsRegisterView extends javax.swing.JFrame {
 
     private int userIdLogged; //id del usuario logueado
-
+    private String typeAction = "create";
+    private String product_idEdit;
 
     /**
      * Creates new form ProductsRegisterView
      */
     public ProductsRegisterView() {
         initComponents();
+    }
+
+    /*
+    *Establece que accion debe realizar el formulario
+    **/
+    public void setTipeAction(String type){
+      this.typeAction = type;
     }
 
     public void setUserIdLogged(int id){
@@ -33,6 +41,13 @@ public class ProductsRegisterView extends javax.swing.JFrame {
       CurrentSesionController sesion = new CurrentSesionController(this.userIdLogged);
       this.userName.setText(sesion.getName());
       this.userRol.setText(sesion.getRol());
+    }
+
+    public void setData(String id, String name, int costo, int precio_venta){
+      this.product_idEdit = id;
+      nombre.setText(name);
+      precioCompra.setText(String.valueOf(costo));
+      precioVenta.setText(String.valueOf(precio_venta));
     }
 
     public void setComboBoxProveedores(DefaultComboBoxModel modelProveedores){
@@ -335,16 +350,25 @@ public class ProductsRegisterView extends javax.swing.JFrame {
 
     private void aceptEvent(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptEvent
         // TODO add your handling code here:
+        ArrayList<String> result = new ArrayList<String>();
         ProductsController control = new ProductsController();
-        ArrayList<String> result = control.save(codigo.getText(),marca.getText(), nombre.getText(), precioCompra.getText(), precioVenta.getText(),cantidad.getText(), proveedor.getSelectedItem().toString() );
+        if(typeAction.equals("edit")){
+          result = control.update(product_idEdit, codigo.getText(),marca.getText(), nombre.getText(), precioCompra.getText(), precioVenta.getText(),cantidad.getText(), proveedor.getSelectedItem().toString() );
+        }
+        else{
+          result = control.save(codigo.getText(),marca.getText(), nombre.getText(), precioCompra.getText(), precioVenta.getText(),cantidad.getText(), proveedor.getSelectedItem().toString() );
+        }
+
         if(result.get(0).equals("true")){
           System.out.println("[ProductsRegisterView] producto guardado");
-          codigo.setText("");
-          marca.setText("");
-          nombre.setText("");
-          precioCompra.setText("");
-          precioVenta.setText("");
-          cantidad.setText("");
+          if(typeAction.equals("create")){
+            codigo.setText("");
+            marca.setText("");
+            nombre.setText("");
+            precioCompra.setText("");
+            precioVenta.setText("");
+            cantidad.setText("");
+          }
         }
         else{
           System.out.println("[ProductsRegisterView] "+result.get(1));
