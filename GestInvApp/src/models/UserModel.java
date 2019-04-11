@@ -3,9 +3,11 @@ package models;
 
 import models.ConexionBD;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,9 +19,39 @@ public class UserModel {
 
     private String tipo_id, direccion, nombre, telefono;
     private int tercero_id, numero_id;
+    private int cantidadUsers;
+    private ArrayList<ArrayList> usuarios = new ArrayList<ArrayList>();
+    private ConexionBD con;
+    private Connection conex;
 
     public UserModel(){
+        this.setCantidadUsers();
+    }
+    
+    //Getters
 
+    public String getTipo_id() {
+        return tipo_id;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public int getTercero_id() {
+        return tercero_id;
+    }
+
+    public int getNumero_id() {
+        return numero_id;
     }
 
     public UserModel(String tipo_id, String direccion, String nombre, String telefono, int tercero_id, int numero_id) {
@@ -38,6 +70,7 @@ public class UserModel {
     public void setUser(int id){
       ConexionBD conexionPoll = new ConexionBD();
       Connection conexion = null;
+
         try {
             conexion = conexionPoll.getBasicDataSource().getConnection();
             Statement query = conexion.createStatement();
@@ -64,6 +97,7 @@ public class UserModel {
     * Busca un usuario en la base de datos segun el campo y el valor que se le pase
     **/
     public void where(String field, String value){
+
       Connection conexion = null;
       try {
           ConexionBD conexionPoll = new ConexionBD();
@@ -87,11 +121,12 @@ public class UserModel {
         try{ if(conexion != null) conexion.close();}catch(Exception e){ System.out.println("[UserModel] Error: no fue posible liberar la conexión");}
       }
     }
-
+    
     /*
     * Busca un usuario en la base de datos segun el campo y el valor que se le pase
     **/
     public void whereUserName(String value){
+
       ConexionBD conexionPoll = new ConexionBD();
       Connection conexion = null;
       try {
@@ -114,32 +149,84 @@ public class UserModel {
         try{ if (conexion != null) conexion.close();}catch(Exception e) { System.out.println("[UserModel] Error: error liberando conexión");}
       }
     }
-
-    //Getters
-
-    public String getTipo_id() {
-        return tipo_id;
+   
+    /**
+     * @author: Carlos Andres Cordoba Ramos
+     * Descripcion: Inserta un usuario en la tabla usuario y en la tabla tercero
+     * utilizando una funcion definida en la BD.
+     */
+    public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel,String login,String pwd){
+        
+        try {
+            con = new ConexionBD();
+            conex = con.getBasicDataSource().getConnection();
+            PreparedStatement query = conex.prepareStatement("SELECT insertarUsuario(?,?,?,?,?,?,?)");
+            query.setString(1, tipoDoc);
+            query.setInt(2,(int) numDoc);
+            query.setString(3, dir);
+            query.setString(4,name);
+            query.setString(5, tel);           
+            query.setString(6, login);
+            query.setString(7, pwd);
+            query.execute();
+            System.out.println("[UserModel]: se inserto el tercero: " + name);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public String getDireccion() {
-        return direccion;
+    /*
+    @author Carlos Andres Cordoba
+    Metodo que devuelve login y nombre de un usuario que existe en la
+    tabla Usuario
+    */  
+    public ArrayList getUsersExist(){
+      Connection conexion = null;
+      try{
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
+        ResultSet response = query.executeQuery("SELECT u.login_usuario,t.nombre_tercero AS nombre FROM tercero AS t \n" +
+                                                "NATURAL JOIN usuario AS u");
+        while(response.next()){
+            int i= 1;
+            ArrayList<String> usuario = new ArrayList<String>();
+            while(i<3){
+                usuario.add(response.getString(i));
+                i++;
+            }
+            this.usuarios.add(usuario);
+        }
+        conexion.close();
+        return usuarios;
+      }
+      catch(SQLException ex){
+          Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+          return usuarios;
+      }finally{
+        try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no fue posible liberar la conexión "+e); }
+      }
+    }
+    
+    public int getCantidadUsers(){
+       return this.cantidadUsers; 
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public int getTercero_id() {
-        return tercero_id;
-    }
-
-    public int getNumero_id() {
-        return numero_id;
-    }
+      private void setCantidadUsers() {
+        Connection conexion = null;
+          try {
+            con = new ConexionBD();
+            conex = con.getBasicDataSource().getConnection();
+            Statement query = conex.createStatement();
+            ResultSet response = query.executeQuery("SELECT u.login_usuario,t.nombre_tercero AS nombre FROM tercero AS t \n" +
+                    "NATURAL JOIN usuario AS u");
+            while(response.next()){
+                this.cantidadUsers++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
 
     /**
      * @author: Carlos Andres Cordoba Ramos

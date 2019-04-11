@@ -6,22 +6,9 @@
 package views;
 
 import controllers.CurrentSesionController;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ContainerEvent;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import controllers.UserController;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
+
 
 /**
  *
@@ -29,55 +16,17 @@ import javax.swing.table.TableCellRenderer;
  */
 public class UserView extends javax.swing.JFrame {
     /* botones */
-    private JButton editar,eliminar,activar;
-    private ImageIcon editarIcon,eliminarIcon,activarIcon;
-    private Icon edImg,elimImg,actImg;
-    /* array de jlabel donde se alojaran las opciones del modulo*/
-//    private JButton[] opciones = new JButton[3];
-    /* tamaño de las columnas de editar y activar*/
-    private int sizeColumn = 40;
-    /*renderizador encargado de "convertir" los datos del jlabel para que se vean las imgns en el jtable  */
-    private LabelRenderer renderizador = new LabelRenderer();
+    
     private int userIdLogged; //id del usuario logueado
     private Object[][] rows;
-    
+    private UserController ctrlUser = new UserController();
+    private CHAFDependenciesViews dp = new CHAFDependenciesViews ();
      /**
      * Creates new form UsuariosView
      */
     public UserView() {
         
-        /**
-         Creacion de boton editar
-         */
-        editar          = new JButton(); 
-        editar.setBackground(Color.white);
-        editarIcon      = new ImageIcon(getClass().getResource("/img/editar.png"));
-        edImg           = new ImageIcon(editarIcon.getImage().getScaledInstance(20, 20, 0));
-        editar.setIcon(edImg);
-        
-        /**
-         Creacion de boton eliminar
-         */             
-        
-        eliminar        = new JButton();
-        eliminar.setBackground(Color.white);
-        eliminarIcon    = new ImageIcon(getClass().getResource("/img/desactivar.png"));
-        elimImg         = new ImageIcon(eliminarIcon.getImage().getScaledInstance(20, 20, 0));
-        eliminar.setIcon(elimImg);
-        
-        /**
-         Creacion de boton activar
-         */
-        
-        activar         = new JButton();
-        activar.setBackground(Color.white);
-        activarIcon     = new ImageIcon(getClass().getResource("/img/activar.png"));
-        actImg          = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
-        activar.setIcon(actImg);
-
-        this.setResizable(false);
-        initComponents();
-        
+    initComponents();
     }
     
     public void setUserIdLogged(int id){
@@ -91,17 +40,25 @@ public class UserView extends javax.swing.JFrame {
     }
     
     public Object[][] initRows(int filas){
+     //// variables para traer el login del usuario, 
+     ///  ya que el metodo getUserForTable pide como parametros
+     ///  el indice de la columna de la consulta y un iterador
+     /**/ int loginUserOnConsult = 0;
+     /**/ int nameUserOnConsult = 1;
      this.rows = new Object[filas][5];
      for(int i = 0;i < filas;i++){
-         for(int j = 1;j< 5 ;j++){
+         for(int j = 0;j< 5 ;j++){
             switch(j){
-                    case 2: rows[i][j] = this.editar;
+                    case 0: rows[i][j] = this.ctrlUser.getUserForTable(loginUserOnConsult, i);
                     break;
-                    case 3: rows[i][j] = this.eliminar;
+                    case 1: rows[i][j] = this.ctrlUser.getUserForTable(nameUserOnConsult, i);
+                    break;    
+                    case 2: rows[i][j] = this.dp.getEditar();
                     break;
-                    case 4: rows[i][j] = this.activar;
+                    case 3: rows[i][j] = this.dp.getEliminar();
                     break;
-                    default: rows[i][j] = null;
+                    case 4: rows[i][j] = this.dp.getActivar();
+                    break;                   
             }
          }
      }
@@ -152,7 +109,7 @@ public class UserView extends javax.swing.JFrame {
         });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            initRows(200)
+            initRows(this.ctrlUser.getUsersOnTable())
             ,
             new String [] {
                 "Usuario", "Nombre", "Editar","Desactivar","Activar"
@@ -167,13 +124,18 @@ public class UserView extends javax.swing.JFrame {
             }
 
         });
-        this.jTable1.getColumn("Editar").setCellRenderer(renderizador);
-        this.jTable1.getColumn("Editar").setMaxWidth(sizeColumn);
-        this.jTable1.getColumn("Desactivar").setCellRenderer(renderizador);
-        this.jTable1.getColumn("Desactivar").setMaxWidth(sizeColumn + 20);
-        this.jTable1.getColumn("Activar").setCellRenderer(renderizador);
-        this.jTable1.getColumn("Activar").setMaxWidth(sizeColumn);
+        this.jTable1.getColumn("Editar").setCellRenderer(this.dp.getRender());
+        this.jTable1.getColumn("Editar").setMaxWidth(this.dp.getSizeColumn());
+        this.jTable1.getColumn("Desactivar").setCellRenderer(this.dp.getRender());
+        this.jTable1.getColumn("Desactivar").setMaxWidth(this.dp.getSizeColumn() + 20);
+        this.jTable1.getColumn("Activar").setCellRenderer(this.dp.getRender());
+        this.jTable1.getColumn("Activar").setMaxWidth(this.dp.getSizeColumn());
         this.jTable1.setRowHeight(30);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         nameUser.setText("jLabel1");
@@ -231,8 +193,8 @@ public class UserView extends javax.swing.JFrame {
     
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
-        System.out.println("[TercerosRegisterView]: entrando a creacion de Usuarios");
-        TercerosRegisterView creacionTercero = new TercerosRegisterView();
+        System.out.println("[UserView]: entrando a creacion de Usuarios");
+        TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO");
         creacionTercero.setVisible(true);
         creacionTercero.setLayout(null);
         creacionTercero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -245,13 +207,12 @@ public class UserView extends javax.swing.JFrame {
  
     }//GEN-LAST:event_materialButton1MouseClicked
 
-    public class LabelRenderer extends DefaultTableCellRenderer implements TableCellRenderer{
-     public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){
-      return (Component)value;   
-     }
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+    
      
-     
- }
+ 
     /**
      * @param args the command line arguments
      */
