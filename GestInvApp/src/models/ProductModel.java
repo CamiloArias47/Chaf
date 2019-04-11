@@ -108,10 +108,10 @@ public class ProductModel {
         ConexionBD conexionPoll = new ConexionBD();
         conexion = conexionPoll.getBasicDataSource().getConnection();
         Statement query = conexion.createStatement();
-          ResultSet result = query.executeQuery("SELECT p.producto_id, p.descripcion, p.costo, p.precio_venta, m.nombre, t.nombre_tercero, p.cantidad FROM producto AS p INNER JOIN marca as m ON p.marca_id = m.marca_id INNER JOIN tercero as t ON p.proveedor = t.tercero_id ORDER BY producto_id ASC");
+          ResultSet result = query.executeQuery("SELECT p.producto_id, p.descripcion, p.costo, p.precio_venta, m.nombre, t.nombre_tercero, p.cantidad, p.estado FROM producto AS p INNER JOIN marca as m ON p.marca_id = m.marca_id INNER JOIN tercero as t ON p.proveedor = t.tercero_id ORDER BY producto_id ASC");
         while (result.next()) {
           ArrayList<String> product = new ArrayList<String>();
-          for (int i = 1; i<=7 ;i++ ) {
+          for (int i = 1; i<=8 ;i++ ) {
             product.add(result.getString(i));
           }
           products.add(product);
@@ -201,14 +201,14 @@ public class ProductModel {
     /*
     *Elimina un producto
     **/
-    public boolean delete(String id){
+    public boolean delete(int id){
       boolean deleted = false;
       Connection conexion = null;
       try{
         ConexionBD conexionPoll = new ConexionBD();
         conexion = conexionPoll.getBasicDataSource().getConnection();
         Statement query = conexion.createStatement();
-        int result = query.executeUpdate("UPDATE producto SET eliminado = 'si'");
+        int result = query.executeUpdate("UPDATE producto SET estado = 'I' WHERE producto_id = "+id);
         if(result > 0){
           deleted = true;
         }
@@ -226,14 +226,14 @@ public class ProductModel {
     /*
     * Reactiva un producto
     **/
-    public boolean restore(String id){
+    public boolean restore(int id){
       boolean restored = false;
       Connection conexion = null;
       try{
         ConexionBD conexionPoll = new ConexionBD();
         conexion = conexionPoll.getBasicDataSource().getConnection();
         Statement query = conexion.createStatement();
-        int result = query.executeUpdate("UPDATE producto SET eliminado = 'no'");
+        int result = query.executeUpdate("UPDATE producto SET estado = 'A' WHERE producto_id = "+id);
         if(result > 0){
           restored = true;
         }

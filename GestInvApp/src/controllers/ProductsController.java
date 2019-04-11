@@ -29,13 +29,15 @@ import models.ProductModel;
 public class ProductsController {
 
   private int userIdLogged; //id del usuario logueado
-  private ProductModel product;
+  private ProductModel product = null;
   private JButton editar,eliminar,activar;
   private ImageIcon editarIcon,eliminarIcon,activarIcon;
   private Icon edImg,elimImg,actImg;
-  private ProductsView productView;
+  private ProductsView productView = null;
   private Object tabla[][];
   private ProductsRegisterView formRegister = null;
+  private ProveedorModel proveedor = null;
+  private MarcaModel marca = null;
 
   public ProductsController(){
 
@@ -49,7 +51,7 @@ public class ProductsController {
   *Muestra el modulo de productos
   **/
   public void showView(){
-    productView = new ProductsView();
+    if(productView == null) productView = new ProductsView();
     productView.setUserIdLogged(this.userIdLogged);
     productView.setInfoUser();
     productView.setVisible(true);
@@ -78,7 +80,7 @@ public class ProductsController {
   *@param {String} id producto_id del producto a editar
   **/
   public void showFormEdit(String id){
-    product = new ProductModel(id);
+    if(product == null) product = new ProductModel(id);
 
     if(formRegister == null) formRegister = new ProductsRegisterView();
     formRegister.setTipeAction("edit");
@@ -97,7 +99,7 @@ public class ProductsController {
   **/
   public DefaultComboBoxModel getComboBoxProveedores(){
     DefaultComboBoxModel model = new DefaultComboBoxModel();
-    ProveedorModel proveedor = new ProveedorModel();
+    if(proveedor == null) proveedor = new ProveedorModel();
     ArrayList<ArrayList> proveedores = proveedor.getProveedores();
     for (int i = 0;i < proveedores.size() ;i++ ) {
         model.addElement(proveedores.get(i).get(4));
@@ -107,7 +109,7 @@ public class ProductsController {
 
   public DefaultComboBoxModel getComboBoxMarcas(){
     DefaultComboBoxModel model = new DefaultComboBoxModel();
-    MarcaModel marca = new MarcaModel();
+    if(marca == null) marca = new MarcaModel();
     ArrayList<ArrayList> marcas = marca.getBrands();
     for (int i = 0;i < marcas.size() ;i++ ) {
         model.addElement(marcas.get(i).get(1));
@@ -123,14 +125,8 @@ public class ProductsController {
     editarIcon      = new ImageIcon(getClass().getResource("/img/editar.png"));
     edImg           = new ImageIcon(editarIcon.getImage().getScaledInstance(20, 20, 0));
     editar.setIcon(edImg);
-    editar.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(ActionEvent e)
-      {
-        // display/center the jdialog when the button is pressed
-        JOptionPane.showMessageDialog(null, "Se ha guardado el producto");
-      }
-    });
+    editar.setName("Editar");
+
 
     //Creacion de boton eliminar
     eliminar        = new JButton();
@@ -138,6 +134,7 @@ public class ProductsController {
     eliminarIcon    = new ImageIcon(getClass().getResource("/img/desactivar.png"));
     elimImg         = new ImageIcon(eliminarIcon.getImage().getScaledInstance(20, 20, 0));
     eliminar.setIcon(elimImg);
+    eliminar.setName("eliminar");
 
 
     //Creacion de boton activar
@@ -146,15 +143,16 @@ public class ProductsController {
     activarIcon     = new ImageIcon(getClass().getResource("/img/activar.png"));
     actImg          = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
     activar.setIcon(actImg);
+    activar.setName("activar");
   }
 
   /*
   *Establece el onjeto con los productos
   **/
   public void setTabla(){
-      product = new ProductModel();
+      if(product == null) product = new ProductModel();
       ArrayList<ArrayList> productos = product.getProducts();
-        tabla = new Object[productos.size()][10];
+        tabla = new Object[productos.size()][9];
         int j = 0;
         for (int i = 0; i < productos.size() ; i++ ) {
           tabla[j][0] = productos.get(i).get(0).toString();
@@ -165,8 +163,7 @@ public class ProductsController {
           tabla[j][5] = productos.get(i).get(5).toString();
           tabla[j][6] = productos.get(i).get(6).toString();
           tabla[j][7] = this.editar;
-          tabla[j][8] = this.eliminar;
-          tabla[j][9] = this.activar;
+          tabla[j][8] = productos.get(i).get(7).toString().equals("A") ? this.eliminar : this.activar;
           j++;
         }
   }
@@ -180,14 +177,14 @@ public class ProductsController {
     DefaultTableModel model = new DefaultTableModel(
       tabla,
       new String[]{
-        "Id","Nombre","Marca","Precio Compra","Precio Venta","Proveedor","Cantidad","Editar","Desactivar","Activar"
+        "Id","Nombre","Marca","Precio Compra","Precio Venta","Proveedor","Cantidad","Editar","Desactivar/Activar"
       }
     ){
           Class[] types = new Class [] {
-              java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+              java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
           };
           boolean[] canEdit = new boolean [] {
-              false, false, false, false, false, false, false, false, false, false
+              false, false, false, false, false, false, false, false, false
           };
 
           public Class getColumnClass(int columnIndex) {
@@ -266,12 +263,12 @@ public class ProductsController {
 
       ProveedorModel proveedor = new ProveedorModel(provider);
       int idProvider = proveedor.getTercero_id();
-      product = new ProductModel();
+      if(product == null) product = new ProductModel();
 
       if(product.update(id,idBrand,name,priceBuy,priceSell,amoung,idProvider)){
         saved = "true";
         message = "Producto guardado";
-        JOptionPane.showMessageDialog(null, "Se ha guardado el producto");
+        JOptionPane.showMessageDialog(null, "Se ha actualizado el producto");
       }
 
     }
@@ -285,12 +282,12 @@ public class ProductsController {
   /*
   *
   **/
-  public ArrayList<String> delete(String id){
+  public ArrayList<String> delete(int id){
     ArrayList<String> result = new ArrayList<String>();
     String deleted = "false";
     String message = "No se eliminó e producto";
 
-    product = new ProductModel();
+    if(product == null) product = new ProductModel();
 
     if(product.delete(id)){
       deleted = "true";
@@ -302,10 +299,20 @@ public class ProductsController {
     return result;
   }
 
-  public ArrayList<String> activate(String id){
+  public ArrayList<String> activate(int id){
     ArrayList<String> result = new ArrayList<String>();
-    String deleted = "false";
+    String activated = "false";
     String message = "No se eliminó e producto";
+
+    if(product == null) product = new ProductModel();
+
+    if(product.restore(id)){
+      activated = "true";
+      message = "Producto activado";
+    }
+
+    result.add(activated);
+    result.add(message);
     return result;
   }
 
