@@ -27,7 +27,7 @@ public class UserModel {
     public UserModel(){
         this.setCantidadUsers();
     }
-    
+
     //Getters
 
     public String getTipo_id() {
@@ -121,7 +121,7 @@ public class UserModel {
         try{ if(conexion != null) conexion.close();}catch(Exception e){ System.out.println("[UserModel] Error: no fue posible liberar la conexión");}
       }
     }
-    
+
     /*
     * Busca un usuario en la base de datos segun el campo y el valor que se le pase
     **/
@@ -149,23 +149,24 @@ public class UserModel {
         try{ if (conexion != null) conexion.close();}catch(Exception e) { System.out.println("[UserModel] Error: error liberando conexión");}
       }
     }
-   
+
     /**
      * @author: Carlos Andres Cordoba Ramos
      * Descripcion: Inserta un usuario en la tabla usuario y en la tabla tercero
      * utilizando una funcion definida en la BD.
      */
     public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel,String login,String pwd){
-        
+
+        Connection conex = null;
         try {
-            con = new ConexionBD();
+            ConexionBD con = new ConexionBD();
             conex = con.getBasicDataSource().getConnection();
             PreparedStatement query = conex.prepareStatement("SELECT insertarUsuario(?,?,?,?,?,?,?)");
             query.setString(1, tipoDoc);
             query.setInt(2,(int) numDoc);
             query.setString(3, dir);
             query.setString(4,name);
-            query.setString(5, tel);           
+            query.setString(5, tel);
             query.setString(6, login);
             query.setString(7, pwd);
             query.execute();
@@ -173,13 +174,16 @@ public class UserModel {
         } catch (SQLException ex) {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        finally{
+          try{ if (conex != null) conex.close();}catch(Exception e) { System.out.println("[UserModel] Error: error liberando conexión");}
+        }
     }
 
     /*
     @author Carlos Andres Cordoba
     Metodo que devuelve login y nombre de un usuario que existe en la
     tabla Usuario
-    */  
+    */
     public ArrayList getUsersExist(){
       Connection conexion = null;
       try{
@@ -207,26 +211,29 @@ public class UserModel {
         try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no fue posible liberar la conexión "+e); }
       }
     }
-    
+
     public int getCantidadUsers(){
-       return this.cantidadUsers; 
+       return this.cantidadUsers;
     }
 
-      private void setCantidadUsers() {
-        Connection conexion = null;
-          try {
-            con = new ConexionBD();
-            conex = con.getBasicDataSource().getConnection();
-            Statement query = conex.createStatement();
-            ResultSet response = query.executeQuery("SELECT u.login_usuario,t.nombre_tercero AS nombre FROM tercero AS t \n" +
-                    "NATURAL JOIN usuario AS u");
-            while(response.next()){
-                this.cantidadUsers++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
+    private void setCantidadUsers() {
+      Connection conexion = null;
+        try {
+          ConexionBD con = new ConexionBD();
+          conex = con.getBasicDataSource().getConnection();
+          Statement query = conex.createStatement();
+          ResultSet response = query.executeQuery("SELECT u.login_usuario,t.nombre_tercero AS nombre FROM tercero AS t \n" +
+                  "NATURAL JOIN usuario AS u");
+          while(response.next()){
+              this.cantidadUsers++;
+          }
+      } catch (SQLException ex) {
+          Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      finally{
+        try{ if(conex != null) conex.close(); }catch(Exception e){ System.out.println("[UserModel] Error: no fue posible liberar la conexión "+e); }
+      }
+    }
 
     /**
      * @author: Carlos Andres Cordoba Ramos
