@@ -12,6 +12,7 @@ import java.util.Date;
 import controllers.CurrentSesionController;
 import controllers.ProductsController;
 import java.awt.Component;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -30,6 +31,7 @@ public class ProductsView extends javax.swing.JFrame {
     private int userIdLogged; //id del usuario logueado
     private LabelRenderer renderizador = new LabelRenderer();
     private int sizeColumn = 40;
+    private ProductsController productCtl = null;
 
     /**
      * Creates new form ProductsView
@@ -55,10 +57,8 @@ public class ProductsView extends javax.swing.JFrame {
     public void renderTable(){
       this.jTable1.getColumn("Editar").setCellRenderer(renderizador);
       this.jTable1.getColumn("Editar").setMaxWidth(sizeColumn);
-      this.jTable1.getColumn("Desactivar").setCellRenderer(renderizador);
-      this.jTable1.getColumn("Desactivar").setMaxWidth(sizeColumn + 20);
-      this.jTable1.getColumn("Activar").setCellRenderer(renderizador);
-      this.jTable1.getColumn("Activar").setMaxWidth(sizeColumn);
+      this.jTable1.getColumn("Desactivar/Activar").setCellRenderer(renderizador);
+      this.jTable1.getColumn("Desactivar/Activar").setMaxWidth(sizeColumn + 20);
       this.jTable1.setRowHeight(30);
     }
 
@@ -170,7 +170,7 @@ public class ProductsView extends javax.swing.JFrame {
 
     private void btnRegesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegesterActionPerformed
         // TODO add your handling code here:
-        ProductsController productCtl = new ProductsController();
+        if(productCtl == null) productCtl = new ProductsController();
         productCtl.setUserIdLogged(this.userIdLogged);
         productCtl.showFormRegister();
     }//GEN-LAST:event_btnRegesterActionPerformed
@@ -180,10 +180,29 @@ public class ProductsView extends javax.swing.JFrame {
         int row = jTable1.getSelectedRow();
         int col = jTable1.getSelectedColumn();
 
-        if(col == 4){
+        if(col == 7){
          ProductsController productCtl = new ProductsController();
          Object id = jTable1.getModel().getValueAt(row, 0);
          productCtl.showFormEdit(id.toString());
+        }
+
+        if(col == 8){
+          int seleccion;
+          String id = jTable1.getModel().getValueAt(row, 0).toString();
+          Object typeButton = jTable1.getModel().getValueAt(row, 8);
+
+          if(productCtl == null) productCtl = new ProductsController();
+          if(typeButton.toString().substring(20, 27).equals("elimina")){
+            seleccion = JOptionPane.showConfirmDialog(null, "¿Desea desactivar el producto?", "Desactivar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            ArrayList<String> result = productCtl.delete(Integer.parseInt(id));
+            JOptionPane.showMessageDialog(null,result.get(1) );  
+          }
+          else{
+            seleccion = JOptionPane.showConfirmDialog(null, "¿Desea activar el producto?", "Activar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            ArrayList<String> result = productCtl.activate(Integer.parseInt(id));
+            JOptionPane.showMessageDialog(null,result.get(1) );
+          }
+
         }
     }//GEN-LAST:event_mouseClicledTB
 

@@ -8,6 +8,7 @@ import controllers.CurrentSesionController;
 import javax.swing.DefaultComboBoxModel;
 import controllers.ProductsController;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +19,7 @@ public class ProductsRegisterView extends javax.swing.JFrame {
     private int userIdLogged; //id del usuario logueado
     private String typeAction = "create";
     private String product_idEdit;
+    private ProductsController control = null;
 
     /**
      * Creates new form ProductsRegisterView
@@ -43,15 +45,25 @@ public class ProductsRegisterView extends javax.swing.JFrame {
       this.userRol.setText(sesion.getRol());
     }
 
-    public void setData(String id, String name, int costo, int precio_venta){
+    public void setData(String id, String name, int costo, int precio_venta, int cantidad, String proveedor, String marca){
       this.product_idEdit = id;
       nombre.setText(name);
       precioCompra.setText(String.valueOf(costo));
       precioVenta.setText(String.valueOf(precio_venta));
+      this.marca.setSelectedItem(marca);
+      this.proveedor.setSelectedItem(proveedor);
+      this.cantidad.setText(Integer.toString(cantidad));
     }
 
     public void setComboBoxProveedores(DefaultComboBoxModel modelProveedores){
+      //this.proveedor.removeAll();
       this.proveedor.setModel(modelProveedores);
+    }
+
+    public void setComboBoxBrands(DefaultComboBoxModel model){
+      System.out.println("[DEBUG] establecer marcas, model:"+model.getSize());
+      this.marca.removeAll();
+      this.marca.setModel(model);
     }
 
     /**
@@ -66,10 +78,8 @@ public class ProductsRegisterView extends javax.swing.JFrame {
         fecha = new javax.swing.JLabel();
         userName = new javax.swing.JLabel();
         userRol = new javax.swing.JLabel();
-        input1 = new views.Input();
-        codigo = new javax.swing.JTextField();
         input2 = new views.Input();
-        marca = new javax.swing.JTextField();
+        marca = new javax.swing.JComboBox<>();
         input3 = new views.Input();
         nombre = new javax.swing.JTextField();
         input4 = new views.Input();
@@ -82,7 +92,6 @@ public class ProductsRegisterView extends javax.swing.JFrame {
         proveedor = new javax.swing.JComboBox<>();
         materialButton1 = new libraries.MaterialButton();
         aceptBtn = new libraries.MaterialButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -98,26 +107,14 @@ public class ProductsRegisterView extends javax.swing.JFrame {
 
         userRol.setText("rol");
 
-        codigo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-        javax.swing.GroupLayout input1Layout = new javax.swing.GroupLayout(input1);
-        input1.setLayout(input1Layout);
-        input1Layout.setHorizontalGroup(
-            input1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(input1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(codigo, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        input1Layout.setVerticalGroup(
-            input1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, input1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
+        marca.setBackground(new java.awt.Color(254, 254, 254));
+        marca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         marca.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                marcaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout input2Layout = new javax.swing.GroupLayout(input2);
         input2.setLayout(input2Layout);
@@ -125,7 +122,7 @@ public class ProductsRegisterView extends javax.swing.JFrame {
             input2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(marca, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addComponent(marca, 0, 342, Short.MAX_VALUE)
                 .addContainerGap())
         );
         input2Layout.setVerticalGroup(
@@ -249,8 +246,6 @@ public class ProductsRegisterView extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Codigo");
-
         jLabel2.setText("Marca");
 
         jLabel3.setText("Nombre");
@@ -280,8 +275,6 @@ public class ProductsRegisterView extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(input1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(input2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(input3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(input4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -299,17 +292,12 @@ public class ProductsRegisterView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fecha)
-                    .addComponent(jLabel1))
+                .addComponent(fecha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(userName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userRol))
-                    .addComponent(input1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(userName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userRol)
+                .addGap(14, 14, 14)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(input2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,25 +333,23 @@ public class ProductsRegisterView extends javax.swing.JFrame {
 
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_materialButton1ActionPerformed
 
     private void aceptEvent(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptEvent
         // TODO add your handling code here:
         ArrayList<String> result = new ArrayList<String>();
-        ProductsController control = new ProductsController();
+        if(control == null) control = new ProductsController();
         if(typeAction.equals("edit")){
-          result = control.update(product_idEdit, codigo.getText(),marca.getText(), nombre.getText(), precioCompra.getText(), precioVenta.getText(),cantidad.getText(), proveedor.getSelectedItem().toString() );
+          result = control.update(product_idEdit,marca.getSelectedItem().toString(), nombre.getText(), precioCompra.getText(), precioVenta.getText(),cantidad.getText(), proveedor.getSelectedItem().toString() );
         }
         else{
-          result = control.save(codigo.getText(),marca.getText(), nombre.getText(), precioCompra.getText(), precioVenta.getText(),cantidad.getText(), proveedor.getSelectedItem().toString() );
+          result = control.save(marca.getSelectedItem().toString(), nombre.getText(), precioCompra.getText(), precioVenta.getText(),cantidad.getText(), proveedor.getSelectedItem().toString() );
         }
 
         if(result.get(0).equals("true")){
           System.out.println("[ProductsRegisterView] producto guardado");
           if(typeAction.equals("create")){
-            codigo.setText("");
-            marca.setText("");
             nombre.setText("");
             precioCompra.setText("");
             precioVenta.setText("");
@@ -374,6 +360,21 @@ public class ProductsRegisterView extends javax.swing.JFrame {
           System.out.println("[ProductsRegisterView] "+result.get(1));
         }
     }//GEN-LAST:event_aceptEvent
+
+    private void marcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcaActionPerformed
+        // TODO add your handling code here:
+        if (marca.getSelectedItem() != null && marca.getSelectedItem().toString().equals("otra")){
+          if(control == null) control = new ProductsController();
+          String newBrand = JOptionPane.showInputDialog("Nombre marca");
+          if(control.saveBrand(newBrand)){
+            this.marca.setModel(control.getComboBoxMarcas());
+            this.marca.setSelectedItem(newBrand);
+          }
+          else{
+            JOptionPane.showMessageDialog(null, "No se guardo la marca");
+          }
+        }
+    }//GEN-LAST:event_marcaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -413,23 +414,20 @@ public class ProductsRegisterView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private libraries.MaterialButton aceptBtn;
     private javax.swing.JTextField cantidad;
-    private javax.swing.JTextField codigo;
     private javax.swing.JLabel fecha;
-    private views.Input input1;
     private views.Input input2;
     private views.Input input3;
     private views.Input input4;
     private views.Input input5;
     private views.Input input6;
     private views.Input input7;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField marca;
+    private javax.swing.JComboBox<String> marca;
     private libraries.MaterialButton materialButton1;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField precioCompra;
