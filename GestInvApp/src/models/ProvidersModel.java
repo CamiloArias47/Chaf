@@ -21,15 +21,13 @@ import java.util.ArrayList;
  */
 public class ProvidersModel {
 
-    private ConexionBD con;
-    private Connection conex;
     private int cantidadProveedores;
     private ArrayList<ArrayList> proveedores = new ArrayList<ArrayList>();
 
     public ProvidersModel(){
         this.setCantidadProveedores();
     }
-    
+
     public int getCantProveedores(){
         return this.cantidadProveedores;
     }
@@ -51,7 +49,7 @@ public class ProvidersModel {
             }
             proveedores.add(proveedor);
         }
-        
+
         conexion.close();
         return proveedores;
       }
@@ -63,21 +61,25 @@ public class ProvidersModel {
         try{ if(conexion != null) conexion.close();}catch(Exception e){ System.out.println("[ProveedorModel] Error: no fue posible liberar la conexión");}
       }
     }
-    
+
     public void insertarProveedor(String tipoDoc,int numDoc,String dir,String name,String tel){
-        con = new ConexionBD();
+        Connection conex = null;
         try {
+            ConexionBD con = new ConexionBD();
             conex = con.getBasicDataSource().getConnection();
             PreparedStatement query = conex.prepareStatement(" SELECT insertar_proveedor(?,?,?,?,?)");
             query.setString(1, tipoDoc);
             query.setInt(2,(int) numDoc);
             query.setString(3, dir);
             query.setString(4,name);
-            query.setString(5, tel);   
+            query.setString(5, tel);
             query.execute();
             System.out.println("[ProvidersModel]: se inserto el tercero: " + name);
         } catch (SQLException ex) {
             Logger.getLogger(CustomersModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+          try{ if(conex != null) conex.close();}catch(Exception e){ System.out.println("[ProvidersModel] Error: no fue posible liberar la conexión");}
         }
     }
 //    /*
@@ -85,10 +87,10 @@ public class ProvidersModel {
 //    Metodo que devuelve los proveedores existentes
 //    tabla Usuario
 //    */
-//    
+//
 //    public ArrayList getProvidersExist(){
 //      con = new ConexionBD();
-//      
+//
 //      try{
 //        conex = con.getBasicDataSource().getConnection();
 //        Statement query = conex.createStatement();
@@ -110,12 +112,12 @@ public class ProvidersModel {
 //          Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
 //          return proveedores;
 //      }
-//    }  
-    
+//    }
+
     private void setCantidadProveedores() {
-        con = new ConexionBD();
-        
-        try {      
+        ConexionBD con = new ConexionBD();
+        Connection conex = null;
+        try {
             conex = con.getBasicDataSource().getConnection();
             Statement query = conex.createStatement();
             ResultSet response = query.executeQuery("SELECT t.tipo_id,t.numero_id, t.direccion,t.nombre_tercero,t.telefono AS nombre FROM tercero AS t \n" +
@@ -126,6 +128,9 @@ public class ProvidersModel {
         } catch (SQLException ex) {
             Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
        }
+       finally{
+         try{ if(conex != null) conex.close();}catch(Exception e){ System.out.println("[ProvidersModel] Error: no fue posible liberar la conexión");}
+       }
     }
-    
+
 }
