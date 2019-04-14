@@ -180,7 +180,7 @@ public class Login extends javax.swing.JFrame {
         if(ctlLogin.getLogged()){
           DashboardController ctlDashboard = new DashboardController();
           ctlDashboard.setIdUserLogged(ctlLogin.getIdUserLogged() );
-          ctlDashboard.showView();
+          ctlDashboard.showView(inputUser.getText());
           this.setVisible(false);
         }
     }//GEN-LAST:event_submitMouseClicked

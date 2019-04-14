@@ -23,16 +23,38 @@ public class ProvidersModel {
 
     private int cantidadProveedores;
     private ArrayList<ArrayList> proveedores = new ArrayList<ArrayList>();
+    private int tercero_id;
+    private boolean estado;
 
     public ProvidersModel(){
         this.setCantidadProveedores();
+    }
+    
+    public ProvidersModel(String name){
+      Connection conexion = null;
+      try{
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        Statement query = conexion.createStatement();
+        ResultSet response = query.executeQuery("SELECT t.tercero_id, p.estado FROM tercero as t INNER JOIN proveedor as p ON p.tercero_id = t.tercero_id WHERE t.nombre_tercero = '"+name+"'");
+        while(response.next()){
+          tercero_id = response.getInt(1);
+          estado = response.getBoolean(2);
+        }
+      }
+      catch(SQLException ex){
+          Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      finally{
+        try{ if(conexion != null) conexion.close();}catch(Exception e){ System.out.println("[ProveedorModel] Error: no fue posible liberar la conexión");}
+      }
     }
 
     public int getCantProveedores(){
         return this.cantidadProveedores;
     }
 
-     public ArrayList getProveedores(){
+    public ArrayList getProveedores(){
       ArrayList<ArrayList> proveedores = new ArrayList<ArrayList>();
       Connection conexion = null;
       try{
@@ -62,6 +84,13 @@ public class ProvidersModel {
       }
     }
 
+     public int getTercero_id(){
+      return tercero_id;
+    }
+
+    public boolean getEstado(){
+      return estado;
+    }
     public void insertarProveedor(String tipoDoc,int numDoc,String dir,String name,String tel){
         Connection conex = null;
         try {

@@ -8,7 +8,7 @@ package controllers;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import models.ProveedorModel;
+import models.ProvidersModel;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -36,7 +36,7 @@ public class ProductsController {
   private ProductsView productView = null;
   private Object tabla[][];
   private ProductsRegisterView formRegister = null;
-  private ProveedorModel proveedor = null;
+  private ProvidersModel proveedor = null;
   private MarcaModel marca = null;
 
   public ProductsController(){
@@ -93,13 +93,12 @@ public class ProductsController {
     formRegister.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   }
 
-
   /*
   * obtiene un ArrayList con los proveedores y los convierte en un modelo para mostrar en el combobox
   **/
   public DefaultComboBoxModel getComboBoxProveedores(){
     DefaultComboBoxModel model = new DefaultComboBoxModel();
-    if(proveedor == null) proveedor = new ProveedorModel();
+    if(proveedor == null) proveedor = new ProvidersModel();
     ArrayList<ArrayList> proveedores = proveedor.getProveedores();
     for (int i = 0;i < proveedores.size() ;i++ ) {
         model.addElement(proveedores.get(i).get(4));
@@ -228,7 +227,7 @@ public class ProductsController {
       MarcaModel model = new MarcaModel(brand);
       int idBrand = model.getId();
 
-      ProveedorModel proveedor = new ProveedorModel(provider);
+      ProvidersModel proveedor = new ProvidersModel(provider);
       int idProvider = proveedor.getTercero_id();
 
       product = new ProductModel();
@@ -261,7 +260,7 @@ public class ProductsController {
       MarcaModel model = new MarcaModel(brand);
       int idBrand = model.getId();
 
-      ProveedorModel proveedor = new ProveedorModel(provider);
+      ProvidersModel proveedor = new ProvidersModel(provider);
       int idProvider = proveedor.getTercero_id();
       if(product == null) product = new ProductModel();
 

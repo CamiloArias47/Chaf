@@ -7,7 +7,6 @@ package controllers;
 
 import javax.swing.JFrame;
 import views.DashboardView;
-import java.sql.Connection;
 /**
  *
  * @author Carlos Andres Cordoba Ramos
@@ -22,21 +21,23 @@ public class DashboardController {
     public DashboardController(){
 
     }
+    
+    public void setIdUserLogged(int id){
+      this.userIdLogged = id;
+    }
 
     /*
     *Muestra el dashboard
     **/
-    public void showView(){
+    public void showView(String nombreUser){
       CurrentSesionController sesion = new CurrentSesionController(userIdLogged);
       dashboard = new DashboardView();
       dashboard.setUserIdLogged(userIdLogged); //le pasamos el id del usuario al dashboard, para que lo pueda pasar a los otros modulos
       dashboard.setVisible(true);
       dashboard.setLayout(null);
-      dashboard.setCurrentUser(sesion.getName());
+      dashboard.setCurrentUser(new UserController().getNameUser(nombreUser.toUpperCase()));
+      dashboard.setRol(new UserController().getRol(nombreUser.toUpperCase()));
       dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
-    public void setIdUserLogged(int id){
-      this.userIdLogged = id;
-    }
+    
 }

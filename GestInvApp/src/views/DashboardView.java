@@ -46,6 +46,9 @@ public class DashboardView extends javax.swing.JFrame {
         this.sesionActual.setText(user);
     }
 
+    public void setRol(String rol){
+        this.rolSesionActual.setText(rol);
+    }
     public void setUserIdLogged(int id){
         this.userIdLogged = id;
     }
@@ -73,9 +76,9 @@ public class DashboardView extends javax.swing.JFrame {
         materialButton7 = new libraries.MaterialButton();
         materialButton8 = new libraries.MaterialButton();
         sesionActual = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        rolSesionActual = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -170,20 +173,19 @@ public class DashboardView extends javax.swing.JFrame {
         jPanel1.add(materialButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 11, 85, 46));
 
         sesionActual.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
-        sesionActual.setText("");
-        sesionActual.setMaximumSize(new java.awt.Dimension(41, 40));
-        jPanel1.add(sesionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 36, -1, 38));
+        sesionActual.setText("Fecha: " + fechaActual);
+        jPanel1.add(sesionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, 20));
 
-        jLabel2.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
-        jLabel2.setText("Fecha: " + fechaActual);
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
-        jLabel3.setText("jLabel3");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        rolSesionActual.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        rolSesionActual.setText("aqui va el rol");
+        jPanel1.add(rolSesionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/chaf.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        jLabel3.setText("Fecha: " + fechaActual);
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -319,7 +321,6 @@ public class DashboardView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private libraries.MaterialButton BtnProduct;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private libraries.MaterialButton materialButton1;
@@ -329,6 +330,7 @@ public class DashboardView extends javax.swing.JFrame {
     private libraries.MaterialButton materialButton6;
     private libraries.MaterialButton materialButton7;
     private libraries.MaterialButton materialButton8;
+    private javax.swing.JLabel rolSesionActual;
     private javax.swing.JLabel sesionActual;
     // End of variables declaration//GEN-END:variables
 }

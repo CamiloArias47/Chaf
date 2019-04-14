@@ -23,6 +23,10 @@ public class UserController {
         
     }
     
+    public String getRol(String login){
+        return this.modeloUser.getRoleUser(login);        
+    }
+    
     public String getUserForTable(int tipoDato,int iterador){
        //tipo dato:
        // 0 = login del usuario
@@ -34,5 +38,10 @@ public class UserController {
     
     public int getUsersOnTable(){
         return modeloUser.getCantidadUsers();
+    }
+    
+    public String getNameUser(String login){
+        this.modeloUser.whereUserName(login);
+        return this.modeloUser.getNombre();
     }
 }

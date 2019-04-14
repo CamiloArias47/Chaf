@@ -20,6 +20,7 @@ public class LoginModel extends ConexionBD{
 
     private String user;
     private String pass;
+    private int terceroId;
 
     public boolean validate(){
       ConexionBD conexionPoll = new ConexionBD();
@@ -67,5 +68,13 @@ public class LoginModel extends ConexionBD{
 
     public String getPass(){
       return this.pass;
+    }
+    
+    public void serTerceroId(int terId){
+      this.terceroId = terId;
+    }
+
+    public int getTerceroId(){
+      return this.terceroId;
     }
 }

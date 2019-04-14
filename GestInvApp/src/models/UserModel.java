@@ -93,6 +93,24 @@ public class UserModel {
         }
     }
 
+    public String getRoleUser(String login){
+        String rol = null;
+        try {
+            Connection conex = null;   
+            ConexionBD con = new ConexionBD();
+            conex = con.getBasicDataSource().getConnection();
+            PreparedStatement query = conex.prepareStatement("SELECT obtener_rol(?)");
+            query.setString(1, login);
+            ResultSet response = query.executeQuery();
+            while(response.next()){
+                rol = response.getString(1);
+            }
+            return rol;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rol;
+    }
     /*
     * Busca un usuario en la base de datos segun el campo y el valor que se le pase
     **/
@@ -235,38 +253,4 @@ public class UserModel {
       }
     }
 
-    /**
-     * @author: Carlos Andres Cordoba Ramos
-     * @param tipoDoc
-     * @param numDoc
-     * @param dir
-     * @param name
-     * @param tel
-     *
-     */
-    public void insertarUsuario(String tipoDoc,int numDoc,String dir,String name,String tel){
-        Connection conexion = null;
-        try {
-            ConexionBD conectionPoll = new ConexionBD();
-            conexion = conectionPoll.getBasicDataSource().getConnection();
-            Statement query = conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-           // ResultSet response = query.executeQuery("INSERT INTO tercero VALUES ('"+tipoDoc+"',"+numDoc+",'"+dir+"','"+name+"','"+tel+"';");
-            ResultSet response = query.executeQuery("SELECT * FROM tercero");
-            response.moveToInsertRow();
-            response.updateString("tipo_id",tipoDoc);
-            response.updateInt("numero_id", numDoc);
-            response.updateString("direccion",dir);
-            response.updateString("nombre_tercero",name);
-            response.updateString("telefono",tel);
-            response.insertRow();
-            response.moveToCurrentRow();
-
-            System.out.println("inserto");
-        } catch (SQLException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
-          try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[UserModel] Error: no se pudo liberar la conexión"); }
-        }
-    }
 }
