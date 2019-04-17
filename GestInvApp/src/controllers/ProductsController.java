@@ -34,7 +34,7 @@ public class ProductsController {
   private ImageIcon editarIcon,eliminarIcon,activarIcon;
   private Icon edImg,elimImg,actImg;
   private ProductsView productView = null;
-  private Object tabla[][];
+  //private Object tabla[][];
   private ProductsRegisterView formRegister = null;
   private ProvidersModel proveedor = null;
   private MarcaModel marca = null;
@@ -57,8 +57,7 @@ public class ProductsController {
     productView.setVisible(true);
     productView.setLayout(null);
     this.setButons(); //establecemos los botones de la tabla
-    productView.setProductsTable(this.getModelProducts());
-    productView.renderTable(); //renderiza los botones en las columnas
+    productView.setProductsTable(this.setTabla());
     productView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   }
 
@@ -148,10 +147,11 @@ public class ProductsController {
   /*
   *Establece el onjeto con los productos
   **/
-  public void setTabla(){
+  public ArrayList<ArrayList> setTabla(){
       if(product == null) product = new ProductModel();
       ArrayList<ArrayList> productos = product.getProducts();
-        tabla = new Object[productos.size()][9];
+      return productos;
+      /*  Object[][] tabla = new Object[productos.size()][9];
         int j = 0;
         for (int i = 0; i < productos.size() ; i++ ) {
           tabla[j][0] = productos.get(i).get(0).toString();
@@ -165,11 +165,12 @@ public class ProductsController {
           tabla[j][8] = productos.get(i).get(7).toString().equals("A") ? this.eliminar : this.activar;
           j++;
         }
+      return tabla;*/
   }
 
   /*
   *
-  **/
+
   public DefaultTableModel getModelProducts(){
     this.setTabla();
 
@@ -197,6 +198,7 @@ public class ProductsController {
 
     return model;
   }
+  **/
 
   /*
   *valida wue los campos del registro e producto esten completos

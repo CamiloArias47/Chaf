@@ -11,8 +11,12 @@ import java.util.Calendar;
 import java.util.Date;
 import controllers.CurrentSesionController;
 import controllers.ProductsController;
+import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -32,12 +36,42 @@ public class ProductsView extends javax.swing.JFrame {
     private LabelRenderer renderizador = new LabelRenderer();
     private int sizeColumn = 40;
     private ProductsController productCtl = null;
+    private JButton editar, eliminar, activar;
+    private ImageIcon editarIcon,eliminarIcon,activarIcon;
+    private Icon edImg,elimImg,actImg;
+    private ArrayList<ArrayList> productos;
 
     /**
      * Creates new form ProductsView
      */
     public ProductsView() {
-        initComponents();
+          //Creacion de boton editar
+         editar          = new JButton();
+         editar.setBackground(Color.white);
+         editarIcon      = new ImageIcon(getClass().getResource("/img/editar.png"));
+         edImg           = new ImageIcon(editarIcon.getImage().getScaledInstance(20, 20, 0));
+         editar.setIcon(edImg);
+         editar.setName("Editar");
+
+
+         //Creacion de boton eliminar
+         eliminar        = new JButton();
+         eliminar.setBackground(Color.white);
+         eliminarIcon    = new ImageIcon(getClass().getResource("/img/desactivar.png"));
+         elimImg         = new ImageIcon(eliminarIcon.getImage().getScaledInstance(20, 20, 0));
+         eliminar.setIcon(elimImg);
+         eliminar.setName("eliminar");
+
+
+         //Creacion de boton activar
+         activar         = new JButton();
+         activar.setBackground(Color.white);
+         activarIcon     = new ImageIcon(getClass().getResource("/img/activar.png"));
+         actImg          = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
+         activar.setIcon(actImg);
+         activar.setName("activar");
+
+         initComponents();
     }
 
     public void setUserIdLogged(int id){
@@ -50,8 +84,89 @@ public class ProductsView extends javax.swing.JFrame {
       this.rolUser.setText(sesion.getRol());
     }
 
-    public void setProductsTable(DefaultTableModel model){
+    public void setProductsTable(ArrayList<ArrayList> productos){
+      this.productos = productos;
+      Object[][] tabla = new Object[productos.size()][9];
+      int j = 0;
+      for (int i = 0; i < productos.size() ; i++ ) {
+        tabla[j][0] = productos.get(i).get(0).toString();
+        tabla[j][1] = productos.get(i).get(1).toString();
+        tabla[j][2] = productos.get(i).get(4).toString();
+        tabla[j][3] = productos.get(i).get(2).toString();
+        tabla[j][4] = productos.get(i).get(3).toString();
+        tabla[j][5] = productos.get(i).get(5).toString();
+        tabla[j][6] = productos.get(i).get(6).toString();
+        tabla[j][7] = this.editar;
+        tabla[j][8] = productos.get(i).get(7).toString().equals("A") ? this.eliminar : this.activar;
+        j++;
+      }
+      this.setModelTable(tabla);
+    }
+
+    public void updateTableEditEstatus(int row, String type){
+      Object[][] tabla = new Object[productos.size()][9];
+      int j = 0;
+      System.out.println("[DEBUG] row:"+row);
+      for (int i = 0; i < productos.size() ; i++ ) {
+        tabla[j][0] = productos.get(i).get(0).toString();
+        tabla[j][1] = productos.get(i).get(1).toString();
+        tabla[j][2] = productos.get(i).get(4).toString();
+        tabla[j][3] = productos.get(i).get(2).toString();
+        tabla[j][4] = productos.get(i).get(3).toString();
+        tabla[j][5] = productos.get(i).get(5).toString();
+        tabla[j][6] = productos.get(i).get(6).toString();
+        tabla[j][7] = this.editar;
+        if(row == i){
+          String status = type.equals("showBtnDelete") ? "A": "I";
+          this.updateProductos(productos.get(i), status, i);
+          tabla[j][8] = type.equals("showBtnDelete") ? this.eliminar : this.activar;
+        }
+        else{
+          tabla[j][8] = productos.get(i).get(7).toString().equals("A") ? this.eliminar : this.activar;
+        }
+        j++;
+      }
+      this.setModelTable(tabla);
+    }
+
+    public void setModelTable(Object[][] tabla){
+      DefaultTableModel model = new DefaultTableModel(
+        tabla,
+        new String[]{
+          "Id","Nombre","Marca","Precio Compra","Precio Venta","Proveedor","Cantidad","Editar","Desactivar/Activar"
+        }
+      ){
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        };
+
       jTable1.setModel(model);
+      this.renderTable();
+    }
+
+    public void updateProductos(ArrayList<String> product, String status, int index){
+      ArrayList<String> producto = new ArrayList<String>();
+      producto.add(product.get(0).toString());
+      producto.add(product.get(1).toString());
+      producto.add(product.get(2).toString());
+      producto.add(product.get(3).toString());
+      producto.add(product.get(4).toString());
+      producto.add(product.get(5).toString());
+      producto.add(product.get(6).toString());
+      producto.add(status);
+      this.productos.set(index, producto);
     }
 
     public void renderTable(){
@@ -194,13 +309,19 @@ public class ProductsView extends javax.swing.JFrame {
           if(productCtl == null) productCtl = new ProductsController();
           if(typeButton.toString().substring(20, 27).equals("elimina")){
             seleccion = JOptionPane.showConfirmDialog(null, "¿Desea desactivar el producto?", "Desactivar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            ArrayList<String> result = productCtl.delete(Integer.parseInt(id));
-            JOptionPane.showMessageDialog(null,result.get(1) );  
+            if(seleccion == 0){
+              ArrayList<String> result = productCtl.delete(Integer.parseInt(id));
+              if(result.get(0).equals("true")) this.updateTableEditEstatus(row, "showBtnActivate");
+              JOptionPane.showMessageDialog(null,result.get(1) );
+            }
           }
           else{
             seleccion = JOptionPane.showConfirmDialog(null, "¿Desea activar el producto?", "Activar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            ArrayList<String> result = productCtl.activate(Integer.parseInt(id));
-            JOptionPane.showMessageDialog(null,result.get(1) );
+            if(seleccion == 0){
+              ArrayList<String> result = productCtl.activate(Integer.parseInt(id));
+              if(result.get(0).equals("true")) this.updateTableEditEstatus(row, "showBtnDelete");
+              JOptionPane.showMessageDialog(null,result.get(1) );
+            }
           }
 
         }
