@@ -6,8 +6,11 @@
 package views;
 
 import controllers.CurrentSesionController;
+import controllers.ProductsController;
 import controllers.ProvidersController;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -167,6 +170,41 @@ public class ProvidersView extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
+        int row = this.jTable1.getSelectedRow();
+        int col = this.jTable1.getSelectedColumn();     
+        if(col == 3){
+            System.out.println("col == 3 row ="+row);
+            TercerosRegisterView creacionTercero = new TercerosRegisterView("PROVEEDOR",1);
+            Object id = this.jTable1.getModel().getValueAt(row, 1);
+            ArrayList <String> datos = this.ctrlProvider.showRegisterProvider(Integer.parseInt(id.toString()));
+            creacionTercero.setNumeroIdentificacion(datos.get(1));
+            creacionTercero.setUserDir(datos.get(2));
+            creacionTercero.setNombreUser(datos.get(3));
+            creacionTercero.setTelUser(datos.get(4));
+            creacionTercero.setVisible(true);                    
+        }
+
+        if(col == 5){
+
+          System.out.println("col = 5 row ="+row);
+        }
+        if(col== 3){
+            System.out.println("col = 3 row ="+row);
+            
+        }
+//          if(productCtl == null) productCtl = new ProductsController();
+//          if(typeButton.toString().substring(20, 27).equals("elimina")){
+//            seleccion = JOptionPane.showConfirmDialog(null, "¿Desea desactivar el producto?", "Desactivar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+//            ArrayList<String> result = productCtl.delete(Integer.parseInt(id));
+//            JOptionPane.showMessageDialog(null,result.get(1) );  
+//          }
+//          else{
+//            seleccion = JOptionPane.showConfirmDialog(null, "¿Desea activar el producto?", "Activar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+//            ArrayList<String> result = productCtl.activate(Integer.parseInt(id));
+//            JOptionPane.showMessageDialog(null,result.get(1) );
+//          }
+
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void materialButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialButton1MouseClicked
@@ -176,7 +214,7 @@ public class ProvidersView extends javax.swing.JFrame {
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
         System.out.println("[TercerosRegisterView]: entrando a creacion de Usuarios");
-        TercerosRegisterView creacionTercero = new TercerosRegisterView("PROVEEDOR");
+        TercerosRegisterView creacionTercero = new TercerosRegisterView("PROVEEDOR",0);
         creacionTercero.setVisible(true);
         creacionTercero.setLayout(null);
         creacionTercero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

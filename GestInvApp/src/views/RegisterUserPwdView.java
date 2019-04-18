@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package views;
 
 import java.awt.event.WindowEvent;
@@ -11,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import libraries.TextPrompt;
+import views.TercerosRegisterView;
 
 /**
  *
@@ -59,7 +56,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
         inputPassword1 = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         inputPassword.setToolTipText("");
         inputPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -289,9 +286,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
     private libraries.MaterialButton materialButton1;
     private libraries.MaterialButton materialButton2;
     private views.Input numDoc;
-    private views.Input numDoc1;
     private views.Input numDoc2;
-    private views.Input numDoc3;
     private views.Input numDoc4;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,21 +15,42 @@ import models.ProvidersModel;
  */
 public class ProvidersController {
    private ProvidersModel modeloProvider = new ProvidersModel();
-    private ArrayList clientes;
+    private ArrayList proveedores;
     
     public String getProvidersForTable(int tipoDato,int iterador){
         //tipo dato:
         // 1 = tipo documento proveedor
         // 2 = numero de documento del proveedor
         // 4 = nombre del proveedor
-        clientes = this.modeloProvider.getProveedores();
-        ArrayList datos = (ArrayList) clientes.get(iterador);
+        proveedores = this.modeloProvider.getProveedores();
+        ArrayList datos = (ArrayList) proveedores.get(iterador);
         return (String) datos.get(tipoDato);
     }
     public int getUsersOnTable(){
         return this.modeloProvider.getCantProveedores();
     }
-      public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
-          this.modeloProvider.insertarProveedor(tipoDoc, numDoc, dir, name, tel);
-      } 
+    
+    public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
+        this.modeloProvider.insertarProveedor(tipoDoc, numDoc, dir, name, tel);
+    }
+    
+    public void updateUser(String tipoDoc,int numDoc,String dir,String name,String tel){
+        this.modeloProvider.actualizarProveedor(Integer.parseInt(this.showRegisterProvider(numDoc).get(0)),tipoDoc, numDoc, dir, name, tel);
+    }
+    
+    public ArrayList<String> showRegisterProvider(int numDocProv){
+        ArrayList <String> dataProvider = new ArrayList<String>();
+        this.modeloProvider.getDataProvider(numDocProv);
+        //tercero id
+        dataProvider.add(String.valueOf(this.modeloProvider.getTercero_id()));    
+        // numero documento
+        dataProvider.add(String.valueOf(this.modeloProvider.getNumeroDoc()));
+        // direccion
+        dataProvider.add(this.modeloProvider.getDireccion());
+        // nombre
+        dataProvider.add(this.modeloProvider.getNameProvider());
+        //telefono
+        dataProvider.add(this.modeloProvider.getTelefono());
+        return dataProvider;
+    }
 }

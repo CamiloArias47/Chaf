@@ -7,6 +7,7 @@ package controllers;
 
 import javax.swing.JFrame;
 import views.Login;
+import views.ProvidersView;
 
 /**
  *
@@ -17,6 +18,7 @@ public class Main {
           Login login = new Login();
           login.setVisible(true);
           login.setLayout(null);
-          login.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
+          login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+
     }         
 }
