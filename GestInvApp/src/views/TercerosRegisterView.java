@@ -23,15 +23,27 @@ public class TercerosRegisterView extends javax.swing.JFrame {
     /* PlaceHolder */
     private TextPrompt numeroIdentificacion,direccion,nombreCompleto,telefono;
     private UserController creacionUsuario;
+    /* Variable para si se hace una insercion (0) o una actualizacion(1)*/
+    private int tipoOperacion;
+
     
-    public TercerosRegisterView(String invokeModule) {
+    public TercerosRegisterView(String invokeModule,int typeOperation) {
         this.moduloInicio = invokeModule;
+        this.tipoOperacion = typeOperation;
         System.out.println("[TercerosRegisterView]: Me invocaron desde : " + this.moduloInicio );
-        if(this.moduloInicio.equals("USUARIO")){
+        if(this.moduloInicio.equals("USUARIO") && (this.tipoOperacion == 1 || this.tipoOperacion == 0)){
             creacionUsuario = new UserController();
         }
         initComponents();
-      
+        this.setResizable(false);
+    }
+    
+    public int getTipoOperacion(){
+        return this.tipoOperacion;
+    }
+    
+    public void setTipoOperacion(int valor){
+        this.tipoOperacion = valor;
     }
     
     public UserController getUserController(){
@@ -58,9 +70,21 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         return this.inputUserTel.getText();
     }
     
-    public void refrescar(){
-        this.initComponents();
+    public void setNumeroIdentificacion(String numero){
+        this.inputUserNumDoc.setText(numero);
     }
+    
+    public void setUserDir(String dir){
+       this.inputUserDir.setText(dir);
+    }
+    public void setNombreUser(String name){       
+        this.inputUserNomUser.setText(name);
+    }
+    
+    public void setTelUser(String telefono){
+        this.inputUserTel.setText(telefono);
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -354,37 +378,71 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         if(moduloInicio.equals("USUARIO")){
             System.out.println("[TercerosRegisterView]: Creando Usuario");
             if(this.jComboBox3.getSelectedItem().equals("USUARIO")){
-                RegisterUserPwdView newUser = new RegisterUserPwdView(this);
-                newUser.setVisible(true);
-                this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            }else {
+                if(this.tipoOperacion == 0){    
+                    RegisterUserPwdView newUser = new RegisterUserPwdView(this,this.tipoOperacion);
+                    newUser.setVisible(true);
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }else if(this.tipoOperacion == 1){
+                    RegisterUserPwdView newUser = new RegisterUserPwdView(this,this.tipoOperacion);
+                    newUser.setVisible(true);
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }
+            }
+            else {
                 JOptionPane.showMessageDialog(this,"Solo se pueden Crear Usuarios en este modulo");
             }
         }else if(moduloInicio.equals("PROVEEDOR")){
-            System.out.println("[TercerosRegisterView]: Creando Proveedor");
-            if(this.jComboBox3.getSelectedItem().equals("PROVEEDOR")){ 
-                ProvidersController ctrlProvider = new ProvidersController();
-                ctrlProvider.insertUser((String) this.jComboBox1.getSelectedItem(),
-                                        Integer.parseInt(this.inputUserNumDoc.getText()), 
-                                        this.inputUserDir.getText(), 
-                                        this.inputUserNomUser.getText(), 
-                                        this.inputUserTel.getText());
-                this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            }else {
-                JOptionPane.showMessageDialog(this,"Solo se pueden Crear Proveedores en este modulo");
+            if(this.tipoOperacion == 0){
+                System.out.println("[TercerosRegisterView]: Creando Proveedor");
+                if(this.jComboBox3.getSelectedItem().equals("PROVEEDOR")){ 
+                    ProvidersController ctrlProvider = new ProvidersController();
+                    ctrlProvider.insertUser((String) this.jComboBox1.getSelectedItem(),
+                                            Integer.parseInt(this.inputUserNumDoc.getText()), 
+                                            this.inputUserDir.getText(), 
+                                            this.inputUserNomUser.getText(), 
+                                            this.inputUserTel.getText());
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }else {
+                    JOptionPane.showMessageDialog(this,"Solo se pueden Crear Proveedores en este modulo");
+                }
+            }else if(this.tipoOperacion == 1){
+                System.out.println("[TercerosRegisterView]: actualizando Proveedor");
+                if(this.jComboBox3.getSelectedItem().equals("PROVEEDOR")){ 
+                    ProvidersController ctrlProvider = new ProvidersController();
+                    ctrlProvider.updateUser((String) this.jComboBox1.getSelectedItem(),
+                                            Integer.parseInt(this.inputUserNumDoc.getText()), 
+                                            this.inputUserDir.getText(), 
+                                            this.inputUserNomUser.getText(), 
+                                            this.inputUserTel.getText());
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }else {
+                    JOptionPane.showMessageDialog(this,"Solo se pueden Crear Proveedores en este modulo");
+                }
             }
+            
         }else if(moduloInicio.equals("CLIENTE")){
+            if(this.tipoOperacion == 0){
             System.out.println("[TercerosRegisterView]: Creando Cliente");
-            if(this.jComboBox3.getSelectedItem().equals("CLIENTE")){ 
-                CustomersController ctrlClientes = new CustomersController();
-                ctrlClientes.insertUser((String) this.jComboBox1.getSelectedItem(),
-                                        Integer.parseInt(this.inputUserNumDoc.getText()), 
-                                        this.inputUserDir.getText(), 
-                                        this.inputUserNomUser.getText(), 
-                                        this.inputUserTel.getText());
-                this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            }else {
-                JOptionPane.showMessageDialog(this,"Solo se pueden Crear Clientes en este modulo");
+                if(this.jComboBox3.getSelectedItem().equals("CLIENTE")){ 
+                    CustomersController ctrlClientes = new CustomersController();
+                    ctrlClientes.insertUser((String) this.jComboBox1.getSelectedItem(),
+                                            Integer.parseInt(this.inputUserNumDoc.getText()), 
+                                            this.inputUserDir.getText(), 
+                                            this.inputUserNomUser.getText(), 
+                                            this.inputUserTel.getText());
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);            
+                }else {
+                        JOptionPane.showMessageDialog(this,"Solo se pueden Crear Proveedores en este modulo");
+                }
+            }else if(this.tipoOperacion == 1){
+                System.out.println("[TercerosRegisterView]: Actualizando Cliente");
+                 CustomersController ctrlClientes = new CustomersController();
+                    ctrlClientes.updateUser((String) this.jComboBox1.getSelectedItem(),
+                                            Integer.parseInt(this.inputUserNumDoc.getText()), 
+                                            this.inputUserDir.getText(), 
+                                            this.inputUserNomUser.getText(), 
+                                            this.inputUserTel.getText());
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
             }
         }
     }//GEN-LAST:event_materialButton1ActionPerformed

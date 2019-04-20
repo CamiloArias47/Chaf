@@ -11,10 +11,9 @@ import java.util.Calendar;
 import java.util.Date;
 import controllers.CurrentSesionController;
 import controllers.CustomersController;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /**
  *
  * @author fabianiniprz
@@ -179,6 +178,48 @@ public class CustomersView extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
+        int row = this.jTable1.getSelectedRow();
+        int col = this.jTable1.getSelectedColumn();     
+        
+        switch(col){
+            case 3:{
+                System.out.println("col == 3 row ="+row);
+                TercerosRegisterView creacionTercero = new TercerosRegisterView("CLIENTE",1);
+                Object id = this.jTable1.getModel().getValueAt(row, 1);
+                ArrayList <String> datos = this.ctrlCustomers.showRegisterProvider(Integer.parseInt(id.toString()));
+                creacionTercero.setNumeroIdentificacion(datos.get(1));
+                creacionTercero.setUserDir(datos.get(2));
+                creacionTercero.setNombreUser(datos.get(3));
+                creacionTercero.setTelUser(datos.get(4));
+                creacionTercero.setVisible(true);                    
+            }
+            break;
+            case 4:{
+            // Boton  Desactivar
+                Object id = this.jTable1.getModel().getValueAt(row, 1);
+                int numDoc = Integer.parseInt(id.toString());
+                if(this.ctrlCustomers.getEstadoCliente(numDoc)){
+                    this.ctrlCustomers.cambiarEstado(numDoc,false);
+                    JOptionPane.showMessageDialog(this,"Se Inactivo satisfactoriamente");
+                }else{
+                    JOptionPane.showMessageDialog(this,"Usuario ya se encuentra Inactivo");
+                }
+            }
+            break;
+            case 5:{
+            // Boton  Activar
+                Object id = this.jTable1.getModel().getValueAt(row, 1);
+                int numDoc = Integer.parseInt(id.toString());
+                if(this.ctrlCustomers.getEstadoCliente(numDoc)){
+                    JOptionPane.showMessageDialog(this,"Usuario ya se encuentra Activo");
+                }else{
+                    this.ctrlCustomers.cambiarEstado(numDoc,true);
+                    JOptionPane.showMessageDialog(this,"Se Activo satisfactoriamente");                    
+                }
+            }
+            break;
+        }
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void materialButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialButton1MouseClicked
@@ -189,7 +230,7 @@ public class CustomersView extends javax.swing.JFrame {
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
         System.out.println("[TercerosRegisterView]: entrando a creacion de Usuarios");
-        TercerosRegisterView creacionTercero = new TercerosRegisterView("CLIENTE");
+        TercerosRegisterView creacionTercero = new TercerosRegisterView("CLIENTE",0);
         creacionTercero.setVisible(true);
         creacionTercero.setLayout(null);
         creacionTercero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

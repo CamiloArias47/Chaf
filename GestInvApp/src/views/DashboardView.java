@@ -39,6 +39,7 @@ public class DashboardView extends javax.swing.JFrame {
     public DashboardView() {
 
         initComponents();
+        this.setResizable(false);
 
     }
     

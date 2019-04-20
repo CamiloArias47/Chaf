@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package views;
 
 import java.awt.event.WindowEvent;
@@ -11,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import libraries.TextPrompt;
+import views.TercerosRegisterView;
 
 /**
  *
@@ -22,12 +19,15 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
     private String user;
     private char[] pwd;
     private TercerosRegisterView mainClass;
+    private int tipoOperacion;
     /**
      * Creates new form RegisterUserPwdView
      */
-    public RegisterUserPwdView(TercerosRegisterView padre) {
+    public RegisterUserPwdView(TercerosRegisterView padre,int typeOp) {
         mainClass = padre;
+        this.tipoOperacion = typeOp;
         initComponents();
+        this.setResizable(false);
     }
 
     public String getUser() {
@@ -38,8 +38,6 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
         return pwd;
     }
     
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,7 +57,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
         inputPassword1 = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         inputPassword.setToolTipText("");
         inputPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -219,22 +217,41 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
              //Inicio validacion de passwords   
                 JOptionPane.showMessageDialog(this, "Las Contraseñas no coinciden!!");
             }else{
-                this.user = this.inputUser.getText();
-                this.pwd = this.inputPassword1.getPassword();
-                this.mainClass.getUserController().insertUser(mainClass.getTipoDocUser(),
-                                                              mainClass.getNumeroIdentificacion(),
-                                                              mainClass.getUserDir(),
-                                                              mainClass.getNombreUser(),
-                                                              mainClass.getTelUser(), 
-                                                              this.user,
-                                                              String.valueOf(pwd));
-                System.out.println("´[RegisterUserPwdView] Datos insertados::"+mainClass.getTipoDocUser()+"::"
-                                    +mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"
-                                    +mainClass.getNombreUser()+"::"+ mainClass.getTelUser()+"::"+ this.user+
-                                    "::"+String.valueOf(pwd));
-                JOptionPane.showMessageDialog(this,"Usuario creado");
-                this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                if(this.tipoOperacion == 0){
+                    this.user = this.inputUser.getText();
+                    this.pwd = this.inputPassword1.getPassword();
+                    this.mainClass.getUserController().insertUser(mainClass.getTipoDocUser(),
+                                                                  mainClass.getNumeroIdentificacion(),
+                                                                  mainClass.getUserDir(),
+                                                                  mainClass.getNombreUser(),
+                                                                  mainClass.getTelUser(), 
+                                                                  this.user,
+                                                                  String.valueOf(pwd));
+                    System.out.println("´[RegisterUserPwdView] Datos insertados::"+mainClass.getTipoDocUser()+"::"
+                                        +mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"
+                                        +mainClass.getNombreUser()+"::"+ mainClass.getTelUser()+"::"+ this.user+
+                                        "::"+String.valueOf(pwd));
+                    JOptionPane.showMessageDialog(this,"Usuario creado");
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                }else if(this.tipoOperacion == 1){                    
+                    this.user = this.inputUser.getText();
+                    this.pwd = this.inputPassword1.getPassword();
+                    this.mainClass.getUserController().actualizarDatos(mainClass.getTipoDocUser(),
+                                                                  mainClass.getNumeroIdentificacion(),
+                                                                  mainClass.getUserDir(),
+                                                                  mainClass.getNombreUser(),
+                                                                  mainClass.getTelUser(), 
+                                                                  this.user,
+                                                                  String.valueOf(pwd));
+                    System.out.println("´[RegisterUserPwdView] Datos actualizados::"+mainClass.getTipoDocUser()+"::"
+                                        +mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"
+                                        +mainClass.getNombreUser()+"::"+ mainClass.getTelUser()+"::"+ this.user+
+                                        "::"+String.valueOf(pwd));
+                    JOptionPane.showMessageDialog(this,"Usuario actualizado");
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                }
             }
             //fin validacion passwords
         }else {
@@ -289,9 +306,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
     private libraries.MaterialButton materialButton1;
     private libraries.MaterialButton materialButton2;
     private views.Input numDoc;
-    private views.Input numDoc1;
     private views.Input numDoc2;
-    private views.Input numDoc3;
     private views.Input numDoc4;
     // End of variables declaration//GEN-END:variables
 }
