@@ -184,7 +184,7 @@ public class Login extends javax.swing.JFrame {
           ctlDashboard.showView(inputUser.getText());
           this.setVisible(false);
         }else{
-            JOptionPane.showMessageDialog(this,"Usuario o Contraseña erroneos, verifique de nuevo");
+            JOptionPane.showMessageDialog(this,"Usuario o Contraseña incorrectos");
         }
     }//GEN-LAST:event_submitMouseClicked
 
