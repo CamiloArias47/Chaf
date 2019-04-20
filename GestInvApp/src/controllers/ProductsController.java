@@ -152,54 +152,8 @@ public class ProductsController {
       if(product == null) product = new ProductModel();
       ArrayList<ArrayList> productos = product.getProducts();
       return productos;
-      /*  Object[][] tabla = new Object[productos.size()][9];
-        int j = 0;
-        for (int i = 0; i < productos.size() ; i++ ) {
-          tabla[j][0] = productos.get(i).get(0).toString();
-          tabla[j][1] = productos.get(i).get(1).toString();
-          tabla[j][2] = productos.get(i).get(4).toString();
-          tabla[j][3] = productos.get(i).get(2).toString();
-          tabla[j][4] = productos.get(i).get(3).toString();
-          tabla[j][5] = productos.get(i).get(5).toString();
-          tabla[j][6] = productos.get(i).get(6).toString();
-          tabla[j][7] = this.editar;
-          tabla[j][8] = productos.get(i).get(7).toString().equals("A") ? this.eliminar : this.activar;
-          j++;
-        }
-      return tabla;*/
   }
 
-  /*
-  *
-
-  public DefaultTableModel getModelProducts(){
-    this.setTabla();
-
-    DefaultTableModel model = new DefaultTableModel(
-      tabla,
-      new String[]{
-        "Id","Nombre","Marca","Precio Compra","Precio Venta","Proveedor","Cantidad","Editar","Desactivar/Activar"
-      }
-    ){
-          Class[] types = new Class [] {
-              java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-          };
-          boolean[] canEdit = new boolean [] {
-              false, false, false, false, false, false, false, false, false
-          };
-
-          public Class getColumnClass(int columnIndex) {
-              return types [columnIndex];
-          }
-
-          public boolean isCellEditable(int rowIndex, int columnIndex) {
-              return canEdit [columnIndex];
-          }
-      };
-
-    return model;
-  }
-  **/
 
   /*
   *valida wue los campos del registro e producto esten completos
