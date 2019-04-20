@@ -10,15 +10,7 @@ package views;
  *
  * @author Carlos Andres Cordoba Ramos
  */
-<<<<<<< HEAD
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-=======
 import controllers.DashboardController;
->>>>>>> master
 import javax.swing.JFrame;
 import controllers.ProductsController;
 import controllers.VentasController;
@@ -329,6 +321,7 @@ public class DashboardView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private libraries.MaterialButton btnVentas;
     private libraries.MaterialButton materialButton2;
     private libraries.MaterialButton materialButton4;
     private libraries.MaterialButton materialButton5;

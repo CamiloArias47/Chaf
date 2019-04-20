@@ -182,7 +182,7 @@ public class VentasView extends javax.swing.JFrame {
     private void addProduct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProduct
         // TODO add your handling code here:
         VentasChoseProduct viewChoseProduct = new VentasChoseProduct();
-       
+
     }//GEN-LAST:event_addProduct
 
     /**
