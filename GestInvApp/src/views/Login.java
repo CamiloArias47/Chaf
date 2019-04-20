@@ -9,6 +9,7 @@ import controllers.DashboardController;
 import javax.swing.JFrame;
 import controllers.LoginController;
 import controllers.CurrentSesionController;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,7 +50,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/chaf.png"))); // NOI18N
 
         submit.setBackground(new java.awt.Color(119, 177, 236));
-        submit.setText("Iniciar sesión");
+        submit.setText("ACCEDER");
         submit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 submitMouseClicked(evt);
@@ -182,6 +183,8 @@ public class Login extends javax.swing.JFrame {
           ctlDashboard.setIdUserLogged(ctlLogin.getIdUserLogged() );
           ctlDashboard.showView(inputUser.getText());
           this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(this,"Usuario o Contraseña erroneos, verifique de nuevo");
         }
     }//GEN-LAST:event_submitMouseClicked
 

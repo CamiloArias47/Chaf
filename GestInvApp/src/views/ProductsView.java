@@ -80,12 +80,15 @@ public class ProductsView extends javax.swing.JFrame {
     public void setUserIdLogged(int id){
       this.userIdLogged = id;
     }
-
-    public void setInfoUser(){
-      CurrentSesionController sesion = new CurrentSesionController(this.userIdLogged);
-      this.nameUser.setText(sesion.getName());
-      this.rolUser.setText(sesion.getRol());
+    
+    public void setCurrentUserName(String name){
+       this.nameUser.setText(name);
     }
+    
+    public void setCurrentUserRol(String rol){
+        this.rolUser.setText(rol);
+    }
+    
 
     public void setProductsTable(ArrayList<ArrayList> productos){
       this.productos = productos;

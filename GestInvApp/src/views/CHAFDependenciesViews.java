@@ -10,6 +10,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,6 +35,10 @@ public class CHAFDependenciesViews {
     /*renderizador encargado de "convertir" los datos del jlabel para que se vean las imgns en el jtable  */
     private LabelRenderer renderizador = new LabelRenderer();
     private Dimension DefaultSizaCHAF;
+    /*Datos de fecha*/
+    private Date date = Calendar.getInstance().getTime();
+    private DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+    private String fechaActual = dateFormat.format(date);
     
       /**
          Creacion de boton editar
@@ -66,6 +74,10 @@ public class CHAFDependenciesViews {
     }
      public JButton getActivar(){
          return this.activar;
+     }
+     
+     public String getFechaActual(){
+         return this.fechaActual;
      }
      public JButton getEditar(){
          return this.editar;

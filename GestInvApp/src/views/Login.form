@@ -91,7 +91,7 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ec" green="b1" red="77" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Iniciar sesi&#xf3;n"/>
+        <Property name="text" type="java.lang.String" value="ACCEDER"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="submitMouseClicked"/>

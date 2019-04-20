@@ -50,10 +50,11 @@ public class ProductsController {
   /*
   *Muestra el modulo de productos
   **/
-  public void showView(){
+  public void showView(String nameUser,String rolUser){
     if(productView == null) productView = new ProductsView();
     productView.setUserIdLogged(this.userIdLogged);
-    productView.setInfoUser();
+    productView.setCurrentUserName(nameUser);
+    productView.setCurrentUserRol(rolUser);
     productView.setVisible(true);
     productView.setLayout(null);
     this.setButons(); //establecemos los botones de la tabla

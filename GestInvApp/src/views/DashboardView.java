@@ -16,8 +16,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import views.ProductsView;
-import controllers.CurrentSesionController;
 import javax.swing.JFrame;
 import controllers.ProductsController;
 import javax.swing.JOptionPane;
@@ -29,12 +27,11 @@ public class DashboardView extends javax.swing.JFrame {
     /**
      * Creates new form DashboardView
      */
-    private Date date = Calendar.getInstance().getTime();
-    private DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
-    private String fechaActual = dateFormat.format(date);
+    
     private CHAFDependenciesViews dp = new CHAFDependenciesViews();
     private String mensajeModulos = "Los desarrolladores de CHAF estamos construyendo este modulo, gracias por comprender";            
     private int userIdLogged; //id del usuario logueado, se lo pasamos a otros modulos
+    private String usuario,rol;
 
     public DashboardView() {
 
@@ -44,11 +41,13 @@ public class DashboardView extends javax.swing.JFrame {
     }
     
     public void setCurrentUser(String user){
+        this.usuario = user;
         this.sesionActual.setText(user);
     }
 
-    public void setRol(String rol){
-        this.rolSesionActual.setText(rol);
+    public void setRol(String rolActual){
+        this.rol = rolActual;
+        this.rolSesionActual.setText(rolActual);
     }
     public void setUserIdLogged(int id){
         this.userIdLogged = id;
@@ -174,7 +173,7 @@ public class DashboardView extends javax.swing.JFrame {
         jPanel1.add(materialButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 11, 85, 46));
 
         sesionActual.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
-        sesionActual.setText("Fecha: " + fechaActual);
+        sesionActual.setText(dp.getFechaActual());
         jPanel1.add(sesionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, 20));
 
         rolSesionActual.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
@@ -185,7 +184,7 @@ public class DashboardView extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
-        jLabel3.setText("Fecha: " + fechaActual);
+        jLabel3.setText(this.dp.getFechaActual());
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -231,7 +230,8 @@ public class DashboardView extends javax.swing.JFrame {
         System.out.println("[DashboardView]: entrando a modulo de Usuarios");
         UserView userView = new UserView();
         userView.setUserIdLogged(this.userIdLogged);
-        userView.setInfoUser();
+        userView.setCurrentUserName(this.usuario);
+        userView.setCurrentUserRol(this.rol);
         userView.setVisible(true);
         userView.setLayout(null);
         userView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -242,7 +242,8 @@ public class DashboardView extends javax.swing.JFrame {
         System.out.println("[DashboardView]: entrando a modulo de Clientes");
         CustomersView customersView = new CustomersView();
         customersView.setUserIdLogged(this.userIdLogged);
-        customersView.setInfoUser();
+        customersView.setCurrentUserName(this.usuario);
+        customersView.setCurrentUserRol(this.rol);
         customersView.setVisible(true);
         customersView.setLayout(null);
         customersView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -253,7 +254,8 @@ public class DashboardView extends javax.swing.JFrame {
         System.out.println("[DashboardView]: entrando a modulo de Proveedores");
         ProvidersView  providerView = new ProvidersView();
         providerView.setUserIdLogged(this.userIdLogged);
-        providerView.setInfoUser();
+        providerView.setCurrentUserName(this.usuario);
+        providerView.setCurrentUserRol(this.rol);
         providerView.setVisible(true);
         providerView.setLayout(null);
         providerView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -263,7 +265,7 @@ public class DashboardView extends javax.swing.JFrame {
         // TODO add your handling code here:
         ProductsController controlProducts = new ProductsController();
         controlProducts.setUserIdLogged(this.userIdLogged);
-        controlProducts.showView();
+        controlProducts.showView(this.usuario,this.rol);
     }//GEN-LAST:event_BtnProductActionPerformed
 
     private void materialButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton2ActionPerformed

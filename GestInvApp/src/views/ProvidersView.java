@@ -31,19 +31,18 @@ public class ProvidersView extends javax.swing.JFrame {
         this.setResizable(false);
     }
     
-    public void refresh(){
-        this.initComponents();
+    public void setCurrentUserName(String name){
+       this.nameUser.setText(name);
+    }
+    
+    public void setCurrentUserRol(String rol){
+        this.rolUser.setText(rol);
     }
     
      public void setUserIdLogged(int id){
       this.userIdLogged = id;
     }
-    
-    public void setInfoUser(){
-      CurrentSesionController sesion = new CurrentSesionController(this.userIdLogged);
-      this.nameUser.setText(sesion.getName());
-      this.rolUser.setText(sesion.getRol());
-    }
+ 
     public Object[][] initRows(int filas){
         //// variables para traer el login del usuario, 
         ///  ya que el metodo getUserForTable pide como parametros
@@ -86,6 +85,7 @@ public class ProvidersView extends javax.swing.JFrame {
         materialButton1 = new libraries.MaterialButton();
         rolUser = new javax.swing.JLabel();
         nameUser = new javax.swing.JLabel();
+        FechaActual = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,34 +136,34 @@ public class ProvidersView extends javax.swing.JFrame {
 
         nameUser.setText("jLabel1");
 
+        FechaActual.setText(this.dp.getFechaActual());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rolUser)
+                    .addComponent(nameUser)
+                    .addComponent(FechaActual)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rolUser)
-                            .addComponent(nameUser))))
+                        .addGap(74, 74, 74)
+                        .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(23, 23, 23)
+                .addComponent(FechaActual)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nameUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rolUser)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -266,6 +266,7 @@ public class ProvidersView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel FechaActual;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private libraries.MaterialButton materialButton1;
