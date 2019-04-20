@@ -70,43 +70,43 @@ public class CHAFDependenciesViews {
         actImg          = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
         activar.setIcon(actImg);
         
-        DefaultSizaCHAF = new Dimension(600,600);
     }
-     public JButton getActivar(){
+    
+    public JButton getActivar(){
          return this.activar;
-     }
+    }
      
-     public String getFechaActual(){
+    public String getFechaActual(){
          return this.fechaActual;
-     }
-     public JButton getEditar(){
+    }
+    public JButton getEditar(){
          return this.editar;
-     }
-     public JButton getEliminar(){
+    }
+    public JButton getEliminar(){
          return this.eliminar;
-     }
+    }
      
-     public Dimension getDefaultSizaCHAF(){
+    public Dimension getDefaultSizaCHAF(){
          return DefaultSizaCHAF;
-     }
+    }
      public LabelRenderer getRender(){
          return this.renderizador;
-     }
-     
-     public int getSizeColumn(){
-         return this.sizeColumn;
-     }
-     public class LabelRenderer extends DefaultTableCellRenderer implements TableCellRenderer{
-        public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){
-            return (Component)value;   
-     }
     }
      
-     public ImageIcon getChafLogo(){
+    public int getSizeColumn(){
+         return this.sizeColumn;
+    }
+    public class LabelRenderer extends DefaultTableCellRenderer implements TableCellRenderer{
+        public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){
+            return (Component)value;   
+        }
+    }
+     
+    public ImageIcon getChafLogo(){
          ImageIcon icon = new ImageIcon(this.getClass().getResource("../img/chaf.png"));
          Image img = icon.getImage();
          Image newimg = img.getScaledInstance(60, 40,  java.awt.Image.SCALE_SMOOTH);
          ImageIcon chafIcon = new ImageIcon(newimg);
          return chafIcon;
-     }
+    }
 }
