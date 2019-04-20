@@ -7,7 +7,9 @@ package views;
 
 import controllers.CurrentSesionController;
 import controllers.UserController;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -27,16 +29,18 @@ public class UserView extends javax.swing.JFrame {
     public UserView() {
         
     initComponents();
+    this.setResizable(false);
     }
     
     public void setUserIdLogged(int id){
       this.userIdLogged = id;
     }
+    public void setCurrentUserName(String name){
+       this.nameUser.setText(name);
+    }
     
-    public void setInfoUser(){
-      CurrentSesionController sesion = new CurrentSesionController(this.userIdLogged);
-      this.nameUser.setText(sesion.getName());
-      this.rolUser.setText(sesion.getRol());
+    public void setCurrentUserRol(String rol){
+        this.rolUser.setText(rol);
     }
     
     public Object[][] initRows(int filas){
@@ -79,8 +83,9 @@ public class UserView extends javax.swing.JFrame {
         materialButton1 = new libraries.MaterialButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        nameUser = new javax.swing.JLabel();
+        FechaActual = new javax.swing.JLabel();
         rolUser = new javax.swing.JLabel();
+        nameUser = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -138,38 +143,38 @@ public class UserView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        nameUser.setText("jLabel1");
+        FechaActual.setText(this.dp.getFechaActual());
 
         rolUser.setText("jLabel2");
+
+        nameUser.setText("jLabel1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rolUser)
+                    .addComponent(nameUser)
+                    .addComponent(FechaActual)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rolUser)
-                            .addComponent(nameUser))))
+                        .addGap(74, 74, 74)
+                        .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(23, 23, 23)
+                .addComponent(FechaActual)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nameUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rolUser)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,7 +199,7 @@ public class UserView extends javax.swing.JFrame {
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
         System.out.println("[UserView]: entrando a creacion de Usuarios");
-        TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO");
+        TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO",0);
         creacionTercero.setVisible(true);
         creacionTercero.setLayout(null);
         creacionTercero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -209,6 +214,45 @@ public class UserView extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
+        int row = this.jTable1.getSelectedRow();
+        int col = this.jTable1.getSelectedColumn();     
+        
+        switch(col){
+            case 2:{
+                System.out.println("col == 3 row ="+row);
+                TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO",1);
+                Object id = this.jTable1.getModel().getValueAt(row, 0);
+                ArrayList <String> datos = this.ctrlUser.showRegisterUser(id.toString());
+                creacionTercero.setNumeroIdentificacion(datos.get(1));
+                creacionTercero.setUserDir(datos.get(2));
+                creacionTercero.setNombreUser(datos.get(3));
+                creacionTercero.setTelUser(datos.get(4));
+                creacionTercero.setVisible(true);                    
+            }
+            break;
+            case 3:{
+            // Boton  Desactivar
+                Object id = this.jTable1.getModel().getValueAt(row, 0);
+                if(this.ctrlUser.getEstadoUser(id.toString())){
+                    this.ctrlUser.cambiarEstado(id.toString(),false);
+                    JOptionPane.showMessageDialog(this,"Se Inactivo satisfactoriamente");
+                }else{
+                    JOptionPane.showMessageDialog(this,"Usuario ya se encuentra Inactivo");
+                }
+            }
+            break;
+            case 4:{
+            // Boton  Activar
+                Object id = this.jTable1.getModel().getValueAt(row, 0);
+                if(this.ctrlUser.getEstadoUser(id.toString())){
+                    JOptionPane.showMessageDialog(this,"Usuario ya se encuentra Activo");
+                }else{
+                    this.ctrlUser.cambiarEstado(id.toString(),true);
+                    JOptionPane.showMessageDialog(this,"Se Activo satisfactoriamente");
+                }
+            }
+            break;
+        }
     }//GEN-LAST:event_jTable1MouseClicked
     
      
@@ -250,6 +294,7 @@ public class UserView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel FechaActual;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

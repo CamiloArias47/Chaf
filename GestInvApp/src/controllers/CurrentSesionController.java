@@ -27,5 +27,13 @@ public final class CurrentSesionController {
         
         return rol;
     }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRol(String userRol) {
+        this.rol = userRol;
+    }
 
 }

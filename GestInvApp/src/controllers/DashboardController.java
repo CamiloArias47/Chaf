@@ -35,8 +35,10 @@ public class DashboardController {
       dashboard.setUserIdLogged(userIdLogged); //le pasamos el id del usuario al dashboard, para que lo pueda pasar a los otros modulos
       dashboard.setVisible(true);
       dashboard.setLayout(null);
-      dashboard.setCurrentUser(new UserController().getNameUser(nombreUser.toUpperCase()));
-      dashboard.setRol(new UserController().getRol(nombreUser.toUpperCase()));
+      sesion.setName(new UserController().getNameUser(nombreUser.toUpperCase()));
+      sesion.setRol(new UserController().getRol(nombreUser.toUpperCase()));
+      dashboard.setCurrentUser(sesion.getName());
+      dashboard.setRol(sesion.getRol());
       dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     

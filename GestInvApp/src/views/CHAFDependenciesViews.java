@@ -10,6 +10,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,6 +35,10 @@ public class CHAFDependenciesViews {
     /*renderizador encargado de "convertir" los datos del jlabel para que se vean las imgns en el jtable  */
     private LabelRenderer renderizador = new LabelRenderer();
     private Dimension DefaultSizaCHAF;
+    /*Datos de fecha*/
+    private Date date = Calendar.getInstance().getTime();
+    private DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+    private String fechaActual = dateFormat.format(date);
     
       /**
          Creacion de boton editar
@@ -62,39 +70,43 @@ public class CHAFDependenciesViews {
         actImg          = new ImageIcon(activarIcon.getImage().getScaledInstance(20, 20, 0));
         activar.setIcon(actImg);
         
-        DefaultSizaCHAF = new Dimension(600,600);
     }
-     public JButton getActivar(){
+    
+    public JButton getActivar(){
          return this.activar;
-     }
-     public JButton getEditar(){
-         return this.editar;
-     }
-     public JButton getEliminar(){
-         return this.eliminar;
-     }
+    }
      
-     public Dimension getDefaultSizaCHAF(){
+    public String getFechaActual(){
+         return this.fechaActual;
+    }
+    public JButton getEditar(){
+         return this.editar;
+    }
+    public JButton getEliminar(){
+         return this.eliminar;
+    }
+     
+    public Dimension getDefaultSizaCHAF(){
          return DefaultSizaCHAF;
-     }
+    }
      public LabelRenderer getRender(){
          return this.renderizador;
-     }
-     
-     public int getSizeColumn(){
-         return this.sizeColumn;
-     }
-     public class LabelRenderer extends DefaultTableCellRenderer implements TableCellRenderer{
-        public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){
-            return (Component)value;   
-     }
     }
      
-     public ImageIcon getChafLogo(){
+    public int getSizeColumn(){
+         return this.sizeColumn;
+    }
+    public class LabelRenderer extends DefaultTableCellRenderer implements TableCellRenderer{
+        public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){
+            return (Component)value;   
+        }
+    }
+     
+    public ImageIcon getChafLogo(){
          ImageIcon icon = new ImageIcon(this.getClass().getResource("../img/chaf.png"));
          Image img = icon.getImage();
          Image newimg = img.getScaledInstance(60, 40,  java.awt.Image.SCALE_SMOOTH);
          ImageIcon chafIcon = new ImageIcon(newimg);
          return chafIcon;
-     }
+    }
 }

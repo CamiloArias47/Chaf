@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -45,6 +46,7 @@ public class ProductsView extends javax.swing.JFrame {
      * Creates new form ProductsView
      */
     public ProductsView() {
+
           //Creacion de boton editar
          editar          = new JButton();
          editar.setBackground(Color.white);
@@ -72,17 +74,21 @@ public class ProductsView extends javax.swing.JFrame {
          activar.setName("activar");
 
          initComponents();
+         this.setResizable(false);
     }
 
     public void setUserIdLogged(int id){
       this.userIdLogged = id;
     }
-
-    public void setInfoUser(){
-      CurrentSesionController sesion = new CurrentSesionController(this.userIdLogged);
-      this.nameUser.setText(sesion.getName());
-      this.rolUser.setText(sesion.getRol());
+    
+    public void setCurrentUserName(String name){
+       this.nameUser.setText(name);
     }
+    
+    public void setCurrentUserRol(String rol){
+        this.rolUser.setText(rol);
+    }
+    
 
     public void setProductsTable(ArrayList<ArrayList> productos){
       this.productos = productos;
@@ -189,12 +195,11 @@ public class ProductsView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         nameUser = new javax.swing.JLabel();
         rolUser = new javax.swing.JLabel();
-        btnRegester = new libraries.MaterialButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        materialButton1 = new libraries.MaterialButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(533, 628));
         setResizable(false);
 
         jLabel1.setText(this.fechaActual);
@@ -202,14 +207,6 @@ public class ProductsView extends javax.swing.JFrame {
         nameUser.setText("Nombre usuario");
 
         rolUser.setText("Rol");
-
-        btnRegester.setBackground(new java.awt.Color(119, 177, 236));
-        btnRegester.setText("Registrar producto");
-        btnRegester.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegesterActionPerformed(evt);
-            }
-        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -244,6 +241,19 @@ public class ProductsView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        materialButton1.setBackground(new java.awt.Color(119, 177, 236));
+        materialButton1.setText("REGISTRAR PRODUCTO");
+        materialButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                materialButton1MouseClicked(evt);
+            }
+        });
+        materialButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                materialButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -260,8 +270,8 @@ public class ProductsView extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(btnRegester, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(97, 97, 97)
+                        .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -273,9 +283,9 @@ public class ProductsView extends javax.swing.JFrame {
                 .addComponent(nameUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rolUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRegester, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(11, 11, 11)
+                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(50, Short.MAX_VALUE))
         );
@@ -327,6 +337,18 @@ public class ProductsView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mouseClicledTB
 
+    private void materialButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialButton1MouseClicked
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_materialButton1MouseClicked
+
+    private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
+        // TODO add your handling code here:
+        if(productCtl == null) productCtl = new ProductsController();
+        productCtl.setUserIdLogged(this.userIdLogged);
+        productCtl.showFormRegister();
+    }//GEN-LAST:event_materialButton1ActionPerformed
+
     public class LabelRenderer extends DefaultTableCellRenderer implements TableCellRenderer{
      public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row,int column){
       return (Component)value;
@@ -369,10 +391,10 @@ public class ProductsView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private libraries.MaterialButton btnRegester;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private libraries.MaterialButton materialButton1;
     private javax.swing.JLabel nameUser;
     private javax.swing.JLabel rolUser;
     // End of variables declaration//GEN-END:variables

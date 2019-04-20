@@ -6,8 +6,11 @@
 package views;
 
 import controllers.CurrentSesionController;
+import controllers.ProductsController;
 import controllers.ProvidersController;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,17 +28,21 @@ public class ProvidersView extends javax.swing.JFrame {
      */
     public ProvidersView() {
         initComponents();
+        this.setResizable(false);
+    }
+    
+    public void setCurrentUserName(String name){
+       this.nameUser.setText(name);
+    }
+    
+    public void setCurrentUserRol(String rol){
+        this.rolUser.setText(rol);
     }
     
      public void setUserIdLogged(int id){
       this.userIdLogged = id;
     }
-    
-    public void setInfoUser(){
-      CurrentSesionController sesion = new CurrentSesionController(this.userIdLogged);
-      this.nameUser.setText(sesion.getName());
-      this.rolUser.setText(sesion.getRol());
-    }
+ 
     public Object[][] initRows(int filas){
         //// variables para traer el login del usuario, 
         ///  ya que el metodo getUserForTable pide como parametros
@@ -78,6 +85,7 @@ public class ProvidersView extends javax.swing.JFrame {
         materialButton1 = new libraries.MaterialButton();
         rolUser = new javax.swing.JLabel();
         nameUser = new javax.swing.JLabel();
+        FechaActual = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,34 +136,34 @@ public class ProvidersView extends javax.swing.JFrame {
 
         nameUser.setText("jLabel1");
 
+        FechaActual.setText(this.dp.getFechaActual());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rolUser)
+                    .addComponent(nameUser)
+                    .addComponent(FechaActual)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rolUser)
-                            .addComponent(nameUser))))
+                        .addGap(74, 74, 74)
+                        .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(23, 23, 23)
+                .addComponent(FechaActual)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nameUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rolUser)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,6 +175,46 @@ public class ProvidersView extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
+        int row = this.jTable1.getSelectedRow();
+        int col = this.jTable1.getSelectedColumn(); 
+        switch(col){
+            case 3:{
+                System.out.println("col == 3 row ="+row);
+                TercerosRegisterView creacionTercero = new TercerosRegisterView("PROVEEDOR",1);
+                Object id = this.jTable1.getModel().getValueAt(row, 1);
+                ArrayList <String> datos = this.ctrlProvider.showRegisterProvider(Integer.parseInt(id.toString()));
+                creacionTercero.setNumeroIdentificacion(datos.get(1));
+                creacionTercero.setUserDir(datos.get(2));
+                creacionTercero.setNombreUser(datos.get(3));
+                creacionTercero.setTelUser(datos.get(4));
+                creacionTercero.setVisible(true); 
+            }
+            break;
+            case 4:{
+            // Boton  Desactivar
+                Object id = this.jTable1.getModel().getValueAt(row, 1);
+                int numDoc = Integer.parseInt(id.toString());
+                if(this.ctrlProvider.getEstadoProveedor(numDoc)){
+                    this.ctrlProvider.cambiarEstado(numDoc,false);
+                    JOptionPane.showMessageDialog(this,"Se Inactivo satisfactoriamente");
+                }else{
+                    JOptionPane.showMessageDialog(this,"Usuario ya se encuentra Inactivo");
+                }
+            }
+            break;
+            case 5:{
+            // Boton  Activar
+                Object id = this.jTable1.getModel().getValueAt(row, 1);
+                int numDoc = Integer.parseInt(id.toString());
+                if(this.ctrlProvider.getEstadoProveedor(numDoc)){
+                    JOptionPane.showMessageDialog(this,"Usuario ya se encuentra Activo");
+                }else{
+                    this.ctrlProvider.cambiarEstado(numDoc,true);
+                    JOptionPane.showMessageDialog(this,"Se Activo satisfactoriamente");                    
+                }
+            }
+            break;
+        }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void materialButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialButton1MouseClicked
@@ -176,7 +224,7 @@ public class ProvidersView extends javax.swing.JFrame {
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
         System.out.println("[TercerosRegisterView]: entrando a creacion de Usuarios");
-        TercerosRegisterView creacionTercero = new TercerosRegisterView("PROVEEDOR");
+        TercerosRegisterView creacionTercero = new TercerosRegisterView("PROVEEDOR",0);
         creacionTercero.setVisible(true);
         creacionTercero.setLayout(null);
         creacionTercero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -218,6 +266,7 @@ public class ProvidersView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel FechaActual;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private libraries.MaterialButton materialButton1;

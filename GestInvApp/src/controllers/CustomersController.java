@@ -30,7 +30,37 @@ public class CustomersController {
     public int getUsersOnTable(){
         return this.modeloCustomer.getCantidadClientes();
     }
-      public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
-          this.modeloCustomer.insertarCliente(tipoDoc, numDoc, dir, name, tel);
-      }
+    public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel){
+         this.modeloCustomer.insertarCliente(tipoDoc, numDoc, dir, name, tel);
+    }
+    public void updateUser(String tipoDoc,int numDoc,String dir,String name,String tel){
+        this.modeloCustomer.actualizarCliente(Integer.parseInt(this.showRegisterProvider(numDoc).get(0)),tipoDoc, numDoc, dir, name, tel);
+    }
+    
+    public ArrayList<String> showRegisterProvider(int numDocProv){
+        ArrayList <String> dataProvider = new ArrayList<String>();
+        this.modeloCustomer.getDataCliente(numDocProv);
+        //tercero id
+        dataProvider.add(String.valueOf(this.modeloCustomer.getTercero_id()));    
+        // numero documento
+        dataProvider.add(String.valueOf(this.modeloCustomer.getNumeroDoc()));
+        // direccion
+        dataProvider.add(this.modeloCustomer.getDireccion());
+        // nombre
+        dataProvider.add(this.modeloCustomer.getNameCliente());
+        //telefono
+        dataProvider.add(this.modeloCustomer.getTelefono());
+        return dataProvider;
+    }
+    public boolean getEstadoCliente(int numDoc){
+        return this.modeloCustomer.getStatusCustomer(numDoc);
+    }
+    public boolean cambiarEstado(int numDoc,boolean nuevoEstado){
+        if(this.modeloCustomer.getStatusCustomer(numDoc) != nuevoEstado){
+            this.modeloCustomer.setStatusCustomer(numDoc, nuevoEstado);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
