@@ -7,7 +7,9 @@ package views;
 
 import controllers.CurrentSesionController;
 import controllers.UserController;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -27,6 +29,7 @@ public class UserView extends javax.swing.JFrame {
     public UserView() {
         
     initComponents();
+    this.setResizable(false);
     }
     
     public void setUserIdLogged(int id){
@@ -209,6 +212,45 @@ public class UserView extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
+        int row = this.jTable1.getSelectedRow();
+        int col = this.jTable1.getSelectedColumn();     
+        
+        switch(col){
+            case 2:{
+                System.out.println("col == 3 row ="+row);
+                TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO",1);
+                Object id = this.jTable1.getModel().getValueAt(row, 0);
+                ArrayList <String> datos = this.ctrlUser.showRegisterUser(id.toString());
+                creacionTercero.setNumeroIdentificacion(datos.get(1));
+                creacionTercero.setUserDir(datos.get(2));
+                creacionTercero.setNombreUser(datos.get(3));
+                creacionTercero.setTelUser(datos.get(4));
+                creacionTercero.setVisible(true);                    
+            }
+            break;
+            case 3:{
+            // Boton  Desactivar
+                Object id = this.jTable1.getModel().getValueAt(row, 0);
+                if(this.ctrlUser.getEstadoUser(id.toString())){
+                    this.ctrlUser.cambiarEstado(id.toString(),false);
+                    JOptionPane.showMessageDialog(this,"Se Inactivo satisfactoriamente");
+                }else{
+                    JOptionPane.showMessageDialog(this,"Usuario ya se encuentra Inactivo");
+                }
+            }
+            break;
+            case 4:{
+            // Boton  Activar
+                Object id = this.jTable1.getModel().getValueAt(row, 0);
+                if(this.ctrlUser.getEstadoUser(id.toString())){
+                    JOptionPane.showMessageDialog(this,"Usuario ya se encuentra Activo");
+                }else{
+                    this.ctrlUser.cambiarEstado(id.toString(),true);
+                    JOptionPane.showMessageDialog(this,"Se Activo satisfactoriamente");
+                }
+            }
+            break;
+        }
     }//GEN-LAST:event_jTable1MouseClicked
     
      

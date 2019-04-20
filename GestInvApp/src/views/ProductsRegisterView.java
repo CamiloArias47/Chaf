@@ -26,6 +26,7 @@ public class ProductsRegisterView extends javax.swing.JFrame {
      */
     public ProductsRegisterView() {
         initComponents();
+        this.setResizable(false);
     }
 
     /*

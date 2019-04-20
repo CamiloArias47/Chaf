@@ -38,6 +38,7 @@ public class ProductsView extends javax.swing.JFrame {
      */
     public ProductsView() {
         initComponents();
+        this.setResizable(false);
     }
 
     public void setUserIdLogged(int id){

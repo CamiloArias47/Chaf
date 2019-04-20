@@ -35,6 +35,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
             creacionUsuario = new UserController();
         }
         initComponents();
+        this.setResizable(false);
     }
     
     public int getTipoOperacion(){
@@ -377,10 +378,17 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         if(moduloInicio.equals("USUARIO")){
             System.out.println("[TercerosRegisterView]: Creando Usuario");
             if(this.jComboBox3.getSelectedItem().equals("USUARIO")){
-                RegisterUserPwdView newUser = new RegisterUserPwdView(this);
-                newUser.setVisible(true);
-                this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            }else {
+                if(this.tipoOperacion == 0){    
+                    RegisterUserPwdView newUser = new RegisterUserPwdView(this,this.tipoOperacion);
+                    newUser.setVisible(true);
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }else if(this.tipoOperacion == 1){
+                    RegisterUserPwdView newUser = new RegisterUserPwdView(this,this.tipoOperacion);
+                    newUser.setVisible(true);
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }
+            }
+            else {
                 JOptionPane.showMessageDialog(this,"Solo se pueden Crear Usuarios en este modulo");
             }
         }else if(moduloInicio.equals("PROVEEDOR")){
@@ -411,6 +419,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,"Solo se pueden Crear Proveedores en este modulo");
                 }
             }
+            
         }else if(moduloInicio.equals("CLIENTE")){
             if(this.tipoOperacion == 0){
             System.out.println("[TercerosRegisterView]: Creando Cliente");

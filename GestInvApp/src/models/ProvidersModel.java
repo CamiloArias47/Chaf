@@ -233,5 +233,42 @@ public class ProvidersModel {
         try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProviderModel] Error: no se pudo liberar la conexión:"+e); }
       }
     }
+    
+    public boolean getStatusProvider(int numDoc){
+      Connection conexion = null;
+      boolean estado = false;
+      try{
+            ConexionBD conexionPoll = new ConexionBD();
+            conexion = conexionPoll.getBasicDataSource().getConnection();
+            PreparedStatement query = conexion.prepareStatement(" SELECT get_proveedor_status(?)");
+            query.setInt(1, numDoc);
+            ResultSet res = query.executeQuery();
+            while(res.next()){
+                estado = res.getBoolean(1);  
+            }
+            return estado;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProvidersModel.class.getName()).log(Level.SEVERE, null, ex);
+            return estado;
+        }finally{
+            try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProviderModel] Error: no se pudo liberar la conexión:"+e); }
+        }
+    }
+    
+    public void setStatusProvider(int numDoc,boolean estado){
+        Connection conexion = null;
+        try {
+            ConexionBD conexionPoll = new ConexionBD();
+            conexion = conexionPoll.getBasicDataSource().getConnection();
+            PreparedStatement query = conexion.prepareStatement(" SELECT set_proveedor_status(?,?)");
+            query.setInt(1, numDoc);
+            query.setBoolean(2, estado);
+            query.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProvidersModel.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProviderModel] Error: no se pudo liberar la conexión:"+e); }
+        }
+    }
 
 }

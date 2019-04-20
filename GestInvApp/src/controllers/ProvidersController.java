@@ -53,4 +53,15 @@ public class ProvidersController {
         dataProvider.add(this.modeloProvider.getTelefono());
         return dataProvider;
     }
+    public boolean getEstadoProveedor(int numDoc){
+        return this.modeloProvider.getStatusProvider(numDoc);
+    }
+    public boolean cambiarEstado(int numDoc,boolean nuevoEstado){
+        if(this.modeloProvider.getStatusProvider(numDoc) != nuevoEstado){
+            this.modeloProvider.setStatusProvider(numDoc, nuevoEstado);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

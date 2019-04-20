@@ -52,4 +52,15 @@ public class CustomersController {
         dataProvider.add(this.modeloCustomer.getTelefono());
         return dataProvider;
     }
+    public boolean getEstadoCliente(int numDoc){
+        return this.modeloCustomer.getStatusCustomer(numDoc);
+    }
+    public boolean cambiarEstado(int numDoc,boolean nuevoEstado){
+        if(this.modeloCustomer.getStatusCustomer(numDoc) != nuevoEstado){
+            this.modeloCustomer.setStatusCustomer(numDoc, nuevoEstado);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

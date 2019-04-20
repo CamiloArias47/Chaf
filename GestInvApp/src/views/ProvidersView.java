@@ -28,6 +28,11 @@ public class ProvidersView extends javax.swing.JFrame {
      */
     public ProvidersView() {
         initComponents();
+        this.setResizable(false);
+    }
+    
+    public void refresh(){
+        this.initComponents();
     }
     
      public void setUserIdLogged(int id){
@@ -171,40 +176,45 @@ public class ProvidersView extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int row = this.jTable1.getSelectedRow();
-        int col = this.jTable1.getSelectedColumn();     
-        if(col == 3){
-            System.out.println("col == 3 row ="+row);
-            TercerosRegisterView creacionTercero = new TercerosRegisterView("PROVEEDOR",1);
-            Object id = this.jTable1.getModel().getValueAt(row, 1);
-            ArrayList <String> datos = this.ctrlProvider.showRegisterProvider(Integer.parseInt(id.toString()));
-            creacionTercero.setNumeroIdentificacion(datos.get(1));
-            creacionTercero.setUserDir(datos.get(2));
-            creacionTercero.setNombreUser(datos.get(3));
-            creacionTercero.setTelUser(datos.get(4));
-            creacionTercero.setVisible(true);                    
+        int col = this.jTable1.getSelectedColumn(); 
+        switch(col){
+            case 3:{
+                System.out.println("col == 3 row ="+row);
+                TercerosRegisterView creacionTercero = new TercerosRegisterView("PROVEEDOR",1);
+                Object id = this.jTable1.getModel().getValueAt(row, 1);
+                ArrayList <String> datos = this.ctrlProvider.showRegisterProvider(Integer.parseInt(id.toString()));
+                creacionTercero.setNumeroIdentificacion(datos.get(1));
+                creacionTercero.setUserDir(datos.get(2));
+                creacionTercero.setNombreUser(datos.get(3));
+                creacionTercero.setTelUser(datos.get(4));
+                creacionTercero.setVisible(true); 
+            }
+            break;
+            case 4:{
+            // Boton  Desactivar
+                Object id = this.jTable1.getModel().getValueAt(row, 1);
+                int numDoc = Integer.parseInt(id.toString());
+                if(this.ctrlProvider.getEstadoProveedor(numDoc)){
+                    this.ctrlProvider.cambiarEstado(numDoc,false);
+                    JOptionPane.showMessageDialog(this,"Se Inactivo satisfactoriamente");
+                }else{
+                    JOptionPane.showMessageDialog(this,"Usuario ya se encuentra Inactivo");
+                }
+            }
+            break;
+            case 5:{
+            // Boton  Activar
+                Object id = this.jTable1.getModel().getValueAt(row, 1);
+                int numDoc = Integer.parseInt(id.toString());
+                if(this.ctrlProvider.getEstadoProveedor(numDoc)){
+                    JOptionPane.showMessageDialog(this,"Usuario ya se encuentra Activo");
+                }else{
+                    this.ctrlProvider.cambiarEstado(numDoc,true);
+                    JOptionPane.showMessageDialog(this,"Se Activo satisfactoriamente");                    
+                }
+            }
+            break;
         }
-
-        if(col == 5){
-
-          System.out.println("col = 5 row ="+row);
-        }
-        if(col== 3){
-            System.out.println("col = 3 row ="+row);
-            
-        }
-//          if(productCtl == null) productCtl = new ProductsController();
-//          if(typeButton.toString().substring(20, 27).equals("elimina")){
-//            seleccion = JOptionPane.showConfirmDialog(null, "¿Desea desactivar el producto?", "Desactivar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-//            ArrayList<String> result = productCtl.delete(Integer.parseInt(id));
-//            JOptionPane.showMessageDialog(null,result.get(1) );  
-//          }
-//          else{
-//            seleccion = JOptionPane.showConfirmDialog(null, "¿Desea activar el producto?", "Activar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-//            ArrayList<String> result = productCtl.activate(Integer.parseInt(id));
-//            JOptionPane.showMessageDialog(null,result.get(1) );
-//          }
-
-        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void materialButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialButton1MouseClicked
