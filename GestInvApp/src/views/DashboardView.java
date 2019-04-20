@@ -10,16 +10,14 @@ package views;
  *
  * @author Carlos Andres Cordoba Ramos
  */
-import controllers.DashboardController;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import views.ProductsView;
-import controllers.CurrentSesionController;
 import javax.swing.JFrame;
 import controllers.ProductsController;
+import controllers.VentasController;
 import javax.swing.JOptionPane;
 
 
@@ -67,7 +65,7 @@ public class DashboardView extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        materialButton1 = new libraries.MaterialButton();
+        btnVentas = new libraries.MaterialButton();
         materialButton2 = new libraries.MaterialButton();
         BtnProduct = new libraries.MaterialButton();
         materialButton4 = new libraries.MaterialButton();
@@ -90,15 +88,15 @@ public class DashboardView extends javax.swing.JFrame {
         });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        materialButton1.setBackground(new java.awt.Color(102, 153, 255));
-        materialButton1.setText("VENTAS");
-        materialButton1.setPreferredSize(new java.awt.Dimension(96, 25));
-        materialButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnVentas.setBackground(new java.awt.Color(102, 153, 255));
+        btnVentas.setText("VENTAS");
+        btnVentas.setPreferredSize(new java.awt.Dimension(96, 25));
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                materialButton1ActionPerformed(evt);
+                btnVentasActionPerformed(evt);
             }
         });
-        jPanel1.add(materialButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 259, 50));
+        jPanel1.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 259, 50));
 
         materialButton2.setBackground(new java.awt.Color(102, 153, 255));
         materialButton2.setText("COTIZACIONES");
@@ -274,14 +272,11 @@ public class DashboardView extends javax.swing.JFrame {
                         dp.getChafLogo());
     }//GEN-LAST:event_materialButton2ActionPerformed
 
-    private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
+    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(
-                        this,
-                        this.mensajeModulos,
-                        "Advertencia", JOptionPane.INFORMATION_MESSAGE,
-                        dp.getChafLogo());
-    }//GEN-LAST:event_materialButton1ActionPerformed
+        VentasController ventasControl = new VentasController();
+        ventasControl.showVentasView();
+    }//GEN-LAST:event_btnVentasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -320,10 +315,10 @@ public class DashboardView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private libraries.MaterialButton BtnProduct;
+    private libraries.MaterialButton btnVentas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private libraries.MaterialButton materialButton1;
     private libraries.MaterialButton materialButton2;
     private libraries.MaterialButton materialButton4;
     private libraries.MaterialButton materialButton5;
