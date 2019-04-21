@@ -25,11 +25,18 @@ public class TercerosRegisterView extends javax.swing.JFrame {
     private UserController creacionUsuario;
     /* Variable para si se hace una insercion (0) o una actualizacion(1)*/
     private int tipoOperacion;
+    private CustomersView vistaClientes;
+    private ProvidersView vistaProveedores; 
+    private UserView vistaUsuarios;
+            
 
     
-    public TercerosRegisterView(String invokeModule,int typeOperation) {
+    public TercerosRegisterView(String invokeModule,int typeOperation,CustomersView cv,ProvidersView pv, UserView uv) {
         this.moduloInicio = invokeModule;
         this.tipoOperacion = typeOperation;
+        this.vistaClientes = cv;
+        this.vistaProveedores = pv;
+        this.vistaUsuarios = uv;
         System.out.println("[TercerosRegisterView]: Me invocaron desde : " + this.moduloInicio );
         if(this.moduloInicio.equals("USUARIO") && (this.tipoOperacion == 1 || this.tipoOperacion == 0)){
             creacionUsuario = new UserController();
@@ -85,6 +92,9 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         this.inputUserTel.setText(telefono);
     }
     
+    public void refreshVistaUser(){
+        this.vistaUsuarios.refresh();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,7 +120,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
         numDoc1 = new views.Input();
         jComboBox3 = new javax.swing.JComboBox<String>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jComboBox1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(153, 153, 153));
@@ -381,6 +391,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                 if(this.tipoOperacion == 0){    
                     RegisterUserPwdView newUser = new RegisterUserPwdView(this,this.tipoOperacion);
                     newUser.setVisible(true);
+                    
                     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 }else if(this.tipoOperacion == 1){
                     RegisterUserPwdView newUser = new RegisterUserPwdView(this,this.tipoOperacion);
@@ -402,6 +413,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                                             this.inputUserNomUser.getText(), 
                                             this.inputUserTel.getText());
                     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    
                 }else {
                     JOptionPane.showMessageDialog(this,"Solo se pueden Crear Proveedores en este modulo");
                 }
@@ -415,6 +427,7 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                                             this.inputUserNomUser.getText(), 
                                             this.inputUserTel.getText());
                     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    
                 }else {
                     JOptionPane.showMessageDialog(this,"Solo se pueden Crear Proveedores en este modulo");
                 }
@@ -430,7 +443,9 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                                             this.inputUserDir.getText(), 
                                             this.inputUserNomUser.getText(), 
                                             this.inputUserTel.getText());
-                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);            
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
+                    
+                    
                 }else {
                         JOptionPane.showMessageDialog(this,"Solo se pueden Crear Proveedores en este modulo");
                 }
@@ -442,9 +457,11 @@ public class TercerosRegisterView extends javax.swing.JFrame {
                                             this.inputUserDir.getText(), 
                                             this.inputUserNomUser.getText(), 
                                             this.inputUserTel.getText());
-                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);           
             }
         }
+        
+        this.dispose();
     }//GEN-LAST:event_materialButton1ActionPerformed
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed

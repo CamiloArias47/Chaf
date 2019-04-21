@@ -9,7 +9,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import controllers.CurrentSesionController;
 import controllers.CustomersController;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -35,7 +34,11 @@ public class CustomersView extends javax.swing.JFrame {
     public CustomersView() {
         initComponents();
     }
-    
+    public void refresh(){
+        this.initComponents();
+        this.validate();
+    }
+   
     public void setUserIdLogged(int id){
       this.userIdLogged = id;
     }
@@ -193,9 +196,9 @@ public class CustomersView extends javax.swing.JFrame {
         switch(col){
             case 3:{
                 System.out.println("col == 3 row ="+row);
-                TercerosRegisterView creacionTercero = new TercerosRegisterView("CLIENTE",1);
+                TercerosRegisterView creacionTercero = new TercerosRegisterView("CLIENTE",1,this,null,null);
                 Object id = this.jTable1.getModel().getValueAt(row, 1);
-                ArrayList <String> datos = this.ctrlCustomers.showRegisterProvider(Integer.parseInt(id.toString()));
+                ArrayList <String> datos = this.ctrlCustomers.showRegisterCustomer(Integer.parseInt(id.toString()));
                 creacionTercero.setNumeroIdentificacion(datos.get(1));
                 creacionTercero.setUserDir(datos.get(2));
                 creacionTercero.setNombreUser(datos.get(3));
@@ -239,7 +242,7 @@ public class CustomersView extends javax.swing.JFrame {
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
         System.out.println("[TercerosRegisterView]: entrando a creacion de Usuarios");
-        TercerosRegisterView creacionTercero = new TercerosRegisterView("CLIENTE",0);
+        TercerosRegisterView creacionTercero = new TercerosRegisterView("CLIENTE",0,this,null,null);
         creacionTercero.setVisible(true);
         creacionTercero.setLayout(null);
         creacionTercero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

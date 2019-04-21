@@ -5,21 +5,17 @@
  */
 package controllers;
 
-import java.io.UnsupportedEncodingException;
 import javax.swing.JFrame;
 import views.Login;
-import views.ProvidersView;
-import views.UserView;
-import java.security.*;
 /**
  *
  * @author camilo
  */
 public class Main {
-    public static void main(String[] args) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public static void main(String[] args){
           Login login = new Login();
           login.setVisible(true);
           login.setLayout(null);
           login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
-    }         
+    }       
 }

@@ -34,10 +34,10 @@ public class CustomersController {
          this.modeloCustomer.insertarCliente(tipoDoc, numDoc, dir, name, tel);
     }
     public void updateUser(String tipoDoc,int numDoc,String dir,String name,String tel){
-        this.modeloCustomer.actualizarCliente(Integer.parseInt(this.showRegisterProvider(numDoc).get(0)),tipoDoc, numDoc, dir, name, tel);
+        this.modeloCustomer.actualizarCliente(Integer.parseInt(this.showRegisterCustomer(numDoc).get(0)),tipoDoc, numDoc, dir, name, tel);
     }
     
-    public ArrayList<String> showRegisterProvider(int numDocProv){
+    public ArrayList<String> showRegisterCustomer(int numDocProv){
         ArrayList <String> dataProvider = new ArrayList<String>();
         this.modeloCustomer.getDataCliente(numDocProv);
         //tercero id

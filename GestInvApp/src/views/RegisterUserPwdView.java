@@ -204,6 +204,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
+        mainClass.dispose();
     }//GEN-LAST:event_materialButton1ActionPerformed
 
     private void materialButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialButton2MouseClicked
@@ -234,6 +235,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,"Usuario creado");
                     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                    
                 }else if(this.tipoOperacion == 1){                    
                     this.user = this.inputUser.getText();
                     this.pwd = this.inputPassword1.getPassword();
@@ -251,6 +253,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,"Usuario actualizado");
                     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                    
                 }
             }
             //fin validacion passwords

@@ -32,6 +32,10 @@ public class UserView extends javax.swing.JFrame {
     this.setResizable(false);
     }
     
+    public void refresh(){
+        this.initComponents();
+    }
+    
     public void setUserIdLogged(int id){
       this.userIdLogged = id;
     }
@@ -199,7 +203,7 @@ public class UserView extends javax.swing.JFrame {
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
         System.out.println("[UserView]: entrando a creacion de Usuarios");
-        TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO",0);
+        TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO",0,null,null,this);
         creacionTercero.setVisible(true);
         creacionTercero.setLayout(null);
         creacionTercero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -220,7 +224,7 @@ public class UserView extends javax.swing.JFrame {
         switch(col){
             case 2:{
                 System.out.println("col == 3 row ="+row);
-                TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO",1);
+                TercerosRegisterView creacionTercero = new TercerosRegisterView("USUARIO",1,null,null,this);
                 Object id = this.jTable1.getModel().getValueAt(row, 0);
                 ArrayList <String> datos = this.ctrlUser.showRegisterUser(id.toString());
                 creacionTercero.setNumeroIdentificacion(datos.get(1));
