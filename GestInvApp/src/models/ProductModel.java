@@ -128,6 +128,32 @@ public class ProductModel {
       }
     }
 
+    public ArrayList<ArrayList> getProductsWhereName(String name){
+      ArrayList<ArrayList> products = new ArrayList<ArrayList>();
+      Connection conexion = null;
+      try{
+        ConexionBD conexionPoll = new ConexionBD();
+        conexion = conexionPoll.getBasicDataSource().getConnection();
+        PreparedStatement query = conexion.prepareStatement("SELECT p.producto_id, p.descripcion, p.costo, p.precio_venta, m.nombre, t.nombre_tercero, p.cantidad, p.estado FROM producto AS p INNER JOIN marca as m ON p.marca_id = m.marca_id INNER JOIN tercero as t ON p.proveedor = t.tercero_id WHERE  p.estado = 'A' AND LOWER(p.descripcion) LIKE LOWER(?) ORDER BY p.producto_id ASC");
+        query.setString(1,  "%" + name + "%");
+        ResultSet result = query.executeQuery();
+        while (result.next()) {
+          ArrayList<String> product = new ArrayList<String>();
+          for (int i = 1; i<=8 ;i++ ) {
+            product.add(result.getString(i));
+          }
+          products.add(product);
+        }
+      }
+      catch(SQLException ex){
+        Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      finally{
+        try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no fue posible liberar la conexión "+e); }
+      }
+      return products;
+    }
+
     /*
     *Guarda un producto en la base de datos;
     **/
