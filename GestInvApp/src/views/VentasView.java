@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 public class VentasView extends javax.swing.JFrame {
 
     private CHAFDependenciesViews dp = new CHAFDependenciesViews();
+    private int idClient;
 
     /**
      * Creates new form VentasView
@@ -23,6 +24,11 @@ public class VentasView extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+
+    public void setIdClient(int id){
+      this.idClient = id;
+      System.out.println("[DEBUG] recibi id:"+id);
     }
 
     /**
@@ -175,8 +181,9 @@ public class VentasView extends javax.swing.JFrame {
 
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
-        VentasChoseClient viweChoseClient = new VentasChoseClient();
-        
+        VentasChoseClient viewChoseClient = new VentasChoseClient();
+        viewChoseClient.setVentasView(this);
+
     }//GEN-LAST:event_materialButton1ActionPerformed
 
     private void addProduct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProduct

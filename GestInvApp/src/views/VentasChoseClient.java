@@ -23,6 +23,7 @@ public class VentasChoseClient extends javax.swing.JFrame {
     private ArrayList<ArrayList> clientes;
     private Object id = null;
     private CHAFDependenciesViews dp = new CHAFDependenciesViews();
+    private VentasView ventasView;
 
     /**
      * Creates new form VentasChoseClient
@@ -37,6 +38,10 @@ public class VentasChoseClient extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    public void setVentasView(VentasView ventasView){
+      this.ventasView = ventasView;
     }
 
     public void setClientsTable(ArrayList<ArrayList> clientes){
@@ -193,6 +198,9 @@ public class VentasChoseClient extends javax.swing.JFrame {
                           "debes elegir un cliente primero",
                           "Advertencia", JOptionPane.INFORMATION_MESSAGE,
                           dp.getChafLogo());
+        }
+        else{
+          if(ventasView != null) ventasView.setIdClient(Integer.parseInt(id.toString()));
         }
     }//GEN-LAST:event_materialButton1ActionPerformed
 
