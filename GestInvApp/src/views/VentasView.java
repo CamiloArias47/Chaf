@@ -5,8 +5,9 @@
  */
 package views;
 
+import controllers.CustomersController;
+import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,7 +16,8 @@ import javax.swing.JOptionPane;
 public class VentasView extends javax.swing.JFrame {
 
     private CHAFDependenciesViews dp = new CHAFDependenciesViews();
-    private int clientId;
+    private int idClient;
+
     /**
      * Creates new form VentasView
      */
@@ -24,11 +26,12 @@ public class VentasView extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-    
+
     public void refresh(){
-        this.initComponents();
+        //this.initComponents();
+        this.repaint();
     }
-    
+
     public void setNameClient(String nuevoValor){
         this.NombreCliente.setText(nuevoValor);
     }
@@ -42,12 +45,22 @@ public class VentasView extends javax.swing.JFrame {
     public void setTelClient(String nuevoValor){
         this.telefonoCliente.setText(nuevoValor);
     }
-    
-    /** identificador del cliente en la bd*/
-    public void setClientId(int id){
-        this.clientId = id;
+
+    public void setIdClient(int id){
+      this.idClient = id;
+      System.out.println("[DEBUG] recibi id:"+id);
     }
-    
+
+    public void setInfoCLient(){
+      CustomersController ctrlCustomers = new CustomersController();
+      ArrayList<String> data = ctrlCustomers.showRegisterCustomer(this.idClient);
+      //this.setClientId(Integer.parseInt(data.get(0)));
+      this.setNameClient(data.get(3));
+      this.setIdClient(data.get(1));
+      this.setDirClient(data.get(2));
+      this.setDirClient(data.get(4));
+      this.refresh();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -199,8 +212,9 @@ public class VentasView extends javax.swing.JFrame {
 
     private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
         // TODO add your handling code here:
-        VentasChoseClient viweChoseClient = new VentasChoseClient(this);
-        
+        VentasChoseClient viewChoseClient = new VentasChoseClient();
+        viewChoseClient.setVentasView(this);
+
     }//GEN-LAST:event_materialButton1ActionPerformed
 
     private void addProduct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProduct

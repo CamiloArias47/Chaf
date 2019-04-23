@@ -24,13 +24,13 @@ public class VentasChoseClient extends javax.swing.JFrame {
     private ArrayList<ArrayList> clientes;
     private Object id = null;
     private CHAFDependenciesViews dp = new CHAFDependenciesViews();
-    private VentasView venta;
+    private VentasView ventasView;
+
     /**
      * Creates new form VentasChoseClient
      */
-    public VentasChoseClient(VentasView mainClass) {
+    public VentasChoseClient() {
         initComponents();
-        this.venta = mainClass;
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
@@ -38,6 +38,10 @@ public class VentasChoseClient extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    public void setVentasView(VentasView ventasView){
+      this.ventasView = ventasView;
     }
 
     public void setClientsTable(ArrayList<ArrayList> clientes){
@@ -194,16 +198,11 @@ public class VentasChoseClient extends javax.swing.JFrame {
                           "debes elegir un cliente primero",
                           "Advertencia", JOptionPane.INFORMATION_MESSAGE,
                           dp.getChafLogo());
-        }else{
-            CustomersController ctrlCustomers = new CustomersController();
-            ArrayList<String> data = ctrlCustomers.showRegisterCustomer(Integer.parseInt(id.toString()));
-            this.venta.setClientId(Integer.parseInt(data.get(0)));
-            this.venta.setNameClient(data.get(3));
-            this.venta.setIdClient(data.get(1));
-            this.venta.setDirClient(data.get(2));
-            this.venta.setDirClient(data.get(4));
-            this.venta.refresh();
-            this.dispose();
+        }
+        else{
+          if(ventasView != null) ventasView.setIdClient(Integer.parseInt(id.toString()));
+          if(ventasView != null) ventasView.setInfoCLient();
+          this.dispose();
         }
     }//GEN-LAST:event_materialButton1ActionPerformed
 
@@ -217,7 +216,7 @@ public class VentasChoseClient extends javax.swing.JFrame {
         input = nombreCliente.getText();
           if(ventas == null) ventas = new VentasController();
           this.setClientsTable(ventas.getClientesWhereName(input));
-          
+
     }//GEN-LAST:event_keyTypedEvent
 
     private void mouseClikedOnTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClikedOnTable
@@ -228,39 +227,39 @@ public class VentasChoseClient extends javax.swing.JFrame {
     }//GEN-LAST:event_mouseClikedOnTable
 
     /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(VentasChoseClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(VentasChoseClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(VentasChoseClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(VentasChoseClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new VentasChoseClient().setVisible(true);
-//            }
-//        });
-//    }
+   * @param args the command line arguments
+   */
+      public static void main(String args[]) {
+          /* Set the Nimbus look and feel */
+          //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+          /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+           * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+           */
+          try {
+              for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                  if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VentasChoseClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VentasChoseClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VentasChoseClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VentasChoseClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new VentasChoseClient().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private views.Input input1;
