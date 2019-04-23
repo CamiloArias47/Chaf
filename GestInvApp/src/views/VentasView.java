@@ -5,8 +5,9 @@
  */
 package views;
 
+import controllers.CustomersController;
+import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,9 +27,39 @@ public class VentasView extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
+    public void refresh(){
+        //this.initComponents();
+        this.repaint();
+    }
+
+    public void setNameClient(String nuevoValor){
+        this.NombreCliente.setText(nuevoValor);
+    }
+    /* numero de documento del cliente*/
+    public void setIdClient(String nuevoValor){
+        this.IdentificacionCliente.setText(nuevoValor);
+    }
+    public void setDirClient(String nuevoValor){
+        this.direccionCliente.setText(nuevoValor);
+    }
+    public void setTelClient(String nuevoValor){
+        this.telefonoCliente.setText(nuevoValor);
+    }
+
     public void setIdClient(int id){
       this.idClient = id;
       System.out.println("[DEBUG] recibi id:"+id);
+    }
+
+    public void setInfoCLient(){
+      CustomersController ctrlCustomers = new CustomersController();
+      ArrayList<String> data = ctrlCustomers.showRegisterCustomer(this.idClient);
+      //this.setClientId(Integer.parseInt(data.get(0)));
+      this.setNameClient(data.get(3));
+      this.setIdClient(data.get(1));
+      this.setDirClient(data.get(2));
+      this.setDirClient(data.get(4));
+      this.refresh();
     }
 
     /**
@@ -42,13 +73,13 @@ public class VentasView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        NombreCliente = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        IdentificacionCliente = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        direccionCliente = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        telefonoCliente = new javax.swing.JLabel();
         materialButton1 = new libraries.MaterialButton();
         jPanel2 = new javax.swing.JPanel();
         materialButton2 = new libraries.MaterialButton();
@@ -65,22 +96,22 @@ public class VentasView extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(32, 171, 230));
         jLabel1.setText("Cliente");
 
-        jLabel2.setText("Nombre Cliente");
+        NombreCliente.setText("Nombre Cliente");
 
         jLabel3.setForeground(new java.awt.Color(32, 171, 230));
-        jLabel3.setText("Id");
+        jLabel3.setText("Numero Identificacion");
 
-        jLabel4.setText("65456464");
+        IdentificacionCliente.setText("65456464");
 
         jLabel5.setForeground(new java.awt.Color(32, 171, 230));
         jLabel5.setText("Dirección");
 
-        jLabel6.setText("Calle 34 # 455");
+        direccionCliente.setText("Calle 34 # 455");
 
         jLabel7.setForeground(new java.awt.Color(32, 171, 230));
         jLabel7.setText("Telefono");
 
-        jLabel8.setText("895552215");
+        telefonoCliente.setText("895552215");
 
         materialButton1.setBackground(new java.awt.Color(119, 177, 236));
         materialButton1.setText("Buscar");
@@ -99,13 +130,13 @@ public class VentasView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
+                    .addComponent(NombreCliente)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4)
+                    .addComponent(IdentificacionCliente)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6)
+                    .addComponent(direccionCliente)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                    .addComponent(telefonoCliente))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -114,19 +145,19 @@ public class VentasView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(NombreCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(IdentificacionCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                .addComponent(direccionCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addComponent(telefonoCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -228,17 +259,17 @@ public class VentasView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel IdentificacionCliente;
+    private javax.swing.JLabel NombreCliente;
+    private javax.swing.JLabel direccionCliente;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private libraries.MaterialButton materialButton1;
     private libraries.MaterialButton materialButton2;
+    private javax.swing.JLabel telefonoCliente;
     // End of variables declaration//GEN-END:variables
 }

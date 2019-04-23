@@ -5,6 +5,7 @@
  */
 package views;
 
+import controllers.CustomersController;
 import controllers.VentasController;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -30,7 +31,6 @@ public class VentasChoseClient extends javax.swing.JFrame {
      */
     public VentasChoseClient() {
         initComponents();
-
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
@@ -201,6 +201,8 @@ public class VentasChoseClient extends javax.swing.JFrame {
         }
         else{
           if(ventasView != null) ventasView.setIdClient(Integer.parseInt(id.toString()));
+          if(ventasView != null) ventasView.setInfoCLient();
+          this.dispose();
         }
     }//GEN-LAST:event_materialButton1ActionPerformed
 
@@ -214,27 +216,28 @@ public class VentasChoseClient extends javax.swing.JFrame {
         input = nombreCliente.getText();
           if(ventas == null) ventas = new VentasController();
           this.setClientsTable(ventas.getClientesWhereName(input));
+
     }//GEN-LAST:event_keyTypedEvent
 
     private void mouseClikedOnTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClikedOnTable
         // TODO add your handling code here:
         int row = jTable1.getSelectedRow();
         int col = jTable1.getSelectedColumn();
-        id = jTable1.getModel().getValueAt(row, 0);
+        id = jTable1.getModel().getValueAt(row, 2);
     }//GEN-LAST:event_mouseClikedOnTable
 
     /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+   * @param args the command line arguments
+   */
+      public static void main(String args[]) {
+          /* Set the Nimbus look and feel */
+          //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+          /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+           * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+           */
+          try {
+              for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                  if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
