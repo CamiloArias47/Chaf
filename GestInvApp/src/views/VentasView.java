@@ -54,7 +54,6 @@ public class VentasView extends javax.swing.JFrame {
     public void setInfoCLient(){
       CustomersController ctrlCustomers = new CustomersController();
       ArrayList<String> data = ctrlCustomers.showRegisterCustomer(this.idClient);
-      //this.setClientId(Integer.parseInt(data.get(0)));
       this.setNameClient(data.get(3));
       this.setIdClient(data.get(1));
       this.setDirClient(data.get(2));
@@ -220,7 +219,7 @@ public class VentasView extends javax.swing.JFrame {
     private void addProduct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProduct
         // TODO add your handling code here:
         VentasChoseProduct viewChoseProduct = new VentasChoseProduct();
-
+        viewChoseProduct.setVentasView(this);
     }//GEN-LAST:event_addProduct
 
     /**

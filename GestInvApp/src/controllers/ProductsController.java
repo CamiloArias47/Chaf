@@ -167,6 +167,11 @@ public class ProductsController {
   }
 
 
+  public ArrayList<ArrayList> getProductsWhereName(String name){
+    if(product == null) product = new ProductModel();
+    return product.getProductsWhereName(name);
+  }
+
   //::::::::::::::::::::::::::::::::::::::::::::::::::CRUD:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
   /*

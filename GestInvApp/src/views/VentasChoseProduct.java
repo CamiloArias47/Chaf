@@ -5,14 +5,22 @@
  */
 package views;
 
+import controllers.ProductsController;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author camilo
  */
 public class VentasChoseProduct extends javax.swing.JFrame {
+
+    private VentasView ventasView;
+    private ArrayList<ArrayList> productos;
+    private String inputValue;
+    private ProductsController control = null;
 
     /**
      * Creates new form VentasChoseProduct
@@ -27,6 +35,51 @@ public class VentasChoseProduct extends javax.swing.JFrame {
       setVisible(true);
 
       initComponents();
+    }
+
+    public void setVentasView(VentasView view){
+      this.ventasView = view;
+    }
+
+    public void setProductsTable(ArrayList<ArrayList> productos){
+      this.productos = productos;
+      Object[][] tabla = new Object[productos.size()][5];
+      int j = 0;
+      for (int i = 0; i < productos.size() ; i++ ) {
+        tabla[j][0] = productos.get(i).get(0).toString();
+        tabla[j][1] = productos.get(i).get(1).toString();
+        tabla[j][2] = productos.get(i).get(4).toString();
+        tabla[j][3] = productos.get(i).get(3).toString();
+        tabla[j][4] = productos.get(i).get(6).toString();
+        j++;
+      }
+      this.setModelTable(tabla);
+    }
+
+    public void setModelTable(Object[][] tabla){
+      DefaultTableModel model = new DefaultTableModel(
+        tabla,
+        new String[]{
+          "Id","Nombre","Marca","precio venta","Cantidad"
+        }
+      ){
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        };
+
+      jTable1.setModel(model);
     }
 
     /**
@@ -51,6 +104,11 @@ public class VentasChoseProduct extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                keyPressedInput(evt);
+            }
+        });
 
         javax.swing.GroupLayout input1Layout = new javax.swing.GroupLayout(input1);
         input1.setLayout(input1Layout);
@@ -176,6 +234,13 @@ public class VentasChoseProduct extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void keyPressedInput(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyPressedInput
+        // TODO add your handling code here:
+        inputValue = jTextField1.getText();
+        if(control == null) control = new ProductsController();
+        this.setProductsTable(control.getProductsWhereName(inputValue));
+    }//GEN-LAST:event_keyPressedInput
 
     /**
      * @param args the command line arguments

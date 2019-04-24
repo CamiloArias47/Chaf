@@ -61,7 +61,7 @@ public class CustomersModel {
     public String getTelefono() {
         return telefono;
     }
-    
+
    private void setCantidadClientes() {
         Connection conex = null;
         try {
@@ -161,7 +161,7 @@ public class CustomersModel {
           try{ if(conex != null) conex.close();}catch(Exception e){ System.out.println("[CustomersModel] Error: no fue posible liberar la conexión");}
         }
     }
-        
+
     public void getDataCliente(int numDocProveedor){
        Connection conexion = null;
         try{
@@ -185,9 +185,9 @@ public class CustomersModel {
         }
         finally{
           try{ if(conexion != null) conexion.close();}catch(Exception e){ System.out.println("[CustomerModel] Error: no fue posible liberar la conexión");}
-        }      
+        }
     }
-    
+
     public boolean getStatusCustomer(int numDoc){
       Connection conexion = null;
       boolean estado = false;
@@ -198,7 +198,7 @@ public class CustomersModel {
             query.setInt(1, numDoc);
             ResultSet res = query.executeQuery();
             while(res.next()){
-                estado = res.getBoolean(1);  
+                estado = res.getBoolean(1);
             }
             return estado;
         } catch (SQLException ex) {
@@ -208,7 +208,7 @@ public class CustomersModel {
             try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[CustomersModel] Error: no se pudo liberar la conexión:"+e); }
         }
     }
-    
+
     public void setStatusCustomer(int numDoc,boolean estado){
         Connection conexion = null;
         try {
@@ -263,9 +263,7 @@ public class CustomersModel {
         ConexionBD conexion = new ConexionBD();
         con = conexion.getBasicDataSource().getConnection();
         PreparedStatement query = con.prepareStatement("SELECT t.* FROM tercero AS t INNER JOIN cliente ON t.tercero_id = cliente.tercero_id WHERE cliente.estado = true AND LOWER(t.nombre_tercero) LIKE LOWER(?)");
-        System.out.println("[DEBUG] antes del setString, name="+name);
         query.setString(1,  "%" + name + "%");
-        System.out.println("[DEBUG] despues del setString");
         ResultSet result = query.executeQuery();
         while(result.next()){
           ArrayList<String> cliente = new ArrayList<String>();
