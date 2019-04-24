@@ -1,11 +1,9 @@
-
 package views;
 
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.WindowConstants;
 import libraries.TextPrompt;
 import views.TercerosRegisterView;
 

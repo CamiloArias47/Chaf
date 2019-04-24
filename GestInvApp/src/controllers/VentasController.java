@@ -7,6 +7,7 @@ package controllers;
 
 import java.util.ArrayList;
 import models.CustomersModel;
+import models.ProductModel;
 import views.VentasView;
 
 /**
@@ -16,6 +17,8 @@ import views.VentasView;
 public class VentasController {
 
     private CustomersModel cliente = null;
+    private ProductModel producto = null;
+    private int ClientId;
 
     public void showVentasView(){
         VentasView ventasView = new VentasView();
@@ -25,5 +28,14 @@ public class VentasController {
     public ArrayList<ArrayList> getClientesWhereName(String name){
       if(cliente == null) cliente = new CustomersModel();
       return cliente.getClientWhere(name);
+    }
+    
+    public void setClientId(int newVal){
+        this.ClientId = newVal;
+    }
+    
+    public ArrayList<ArrayList> getProductWhereName(String name){
+      if(producto == null) producto = new ProductModel();
+      return producto.getProductWhere(name);
     }
 }
