@@ -16,7 +16,7 @@ import views.TercerosRegisterView;
 public class RegisterUserPwdView extends javax.swing.JFrame {
 
     private TextPrompt usuarioPH,passwordPH,repitaPasswordPH;
-    private String user;
+    private String user, type;
     private char[] pwd;
     private TercerosRegisterView mainClass;
     private int tipoOperacion;
@@ -37,7 +37,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
     public char[] getPwd() {
         return pwd;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,6 +56,8 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
         numDoc4 = new views.Input();
         inputPassword1 = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
+        numDoc3 = new views.Input();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -110,6 +112,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
         inputUser.setToolTipText("");
         this.usuarioPH = new TextPrompt("Nombre de usuario",this.inputUser);
         inputUser.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        inputUser.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         inputUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputUserActionPerformed(evt);
@@ -155,6 +158,27 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/chaf.png"))); // NOI18N
 
+        jComboBox1.setBackground(new java.awt.Color(254, 254, 254));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vendedor", "Administrador" }));
+        jComboBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        javax.swing.GroupLayout numDoc3Layout = new javax.swing.GroupLayout(numDoc3);
+        numDoc3.setLayout(numDoc3Layout);
+        numDoc3Layout.setHorizontalGroup(
+            numDoc3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(numDoc3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jComboBox1, 0, 314, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        numDoc3Layout.setVerticalGroup(
+            numDoc3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(numDoc3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,18 +186,20 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(numDoc2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(numDoc4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(numDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(materialButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(numDoc3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(117, 117, 117)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(materialButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -183,15 +209,17 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(numDoc2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(numDoc3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(numDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(numDoc4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(materialButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(materialButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -215,19 +243,21 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!(this.inputPassword.getPassword().length == 0) && !(this.inputPassword1.getPassword().length == 0) && (this.inputUser.getText() != null)){
             if(!(Arrays.equals(this.inputPassword.getPassword(), this.inputPassword1.getPassword()))){
-             //Inicio validacion de passwords   
+             //Inicio validacion de passwords
                 JOptionPane.showMessageDialog(this, "Las Contraseñas no coinciden!!");
             }else{
                 if(this.tipoOperacion == 0){
                     this.user = this.inputUser.getText();
                     this.pwd = this.inputPassword1.getPassword();
+                    this.type = jComboBox1.getSelectedItem().toString();
                     this.mainClass.getUserController().insertUser(mainClass.getTipoDocUser(),
                                                                   mainClass.getNumeroIdentificacion(),
                                                                   mainClass.getUserDir(),
                                                                   mainClass.getNombreUser(),
-                                                                  mainClass.getTelUser(), 
+                                                                  mainClass.getTelUser(),
                                                                   this.user,
-                                                                  String.valueOf(pwd));
+                                                                  String.valueOf(pwd),
+                                                                  this.type);
                     System.out.println("´[RegisterUserPwdView] Datos insertados::"+mainClass.getTipoDocUser()+"::"
                                         +mainClass.getNumeroIdentificacion()+"::"+mainClass.getUserDir()+"::"
                                         +mainClass.getNombreUser()+"::"+ mainClass.getTelUser()+"::"+ this.user+
@@ -235,15 +265,15 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,"Usuario creado");
                     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-                    
-                }else if(this.tipoOperacion == 1){                    
+
+                }else if(this.tipoOperacion == 1){
                     this.user = this.inputUser.getText();
                     this.pwd = this.inputPassword1.getPassword();
                     this.mainClass.getUserController().actualizarDatos(mainClass.getTipoDocUser(),
                                                                   mainClass.getNumeroIdentificacion(),
                                                                   mainClass.getUserDir(),
                                                                   mainClass.getNombreUser(),
-                                                                  mainClass.getTelUser(), 
+                                                                  mainClass.getTelUser(),
                                                                   this.user,
                                                                   String.valueOf(pwd));
                     System.out.println("´[RegisterUserPwdView] Datos actualizados::"+mainClass.getTipoDocUser()+"::"
@@ -253,7 +283,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,"Usuario actualizado");
                     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-                    
+
                 }
             }
             //fin validacion passwords
@@ -273,7 +303,7 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -305,11 +335,13 @@ public class RegisterUserPwdView extends javax.swing.JFrame {
     private javax.swing.JPasswordField inputPassword;
     private javax.swing.JPasswordField inputPassword1;
     private javax.swing.JTextField inputUser;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private libraries.MaterialButton materialButton1;
     private libraries.MaterialButton materialButton2;
     private views.Input numDoc;
     private views.Input numDoc2;
+    private views.Input numDoc3;
     private views.Input numDoc4;
     // End of variables declaration//GEN-END:variables
 }
