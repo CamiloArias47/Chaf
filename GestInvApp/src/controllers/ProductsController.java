@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controllers;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import models.ProvidersModel;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -16,7 +10,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import models.MarcaModel;
 import views.ProductsView;
 import views.ProductsRegisterView;
@@ -34,7 +27,6 @@ public class ProductsController {
   private ImageIcon editarIcon,eliminarIcon,activarIcon;
   private Icon edImg,elimImg,actImg;
   private ProductsView productView = null;
-  //private Object tabla[][];
   private ProductsRegisterView formRegister = null;
   private ProvidersModel proveedor = null;
   private MarcaModel marca = null;
@@ -167,11 +159,6 @@ public class ProductsController {
   }
 
 
-  public ArrayList<ArrayList> getProductsWhereName(String name){
-    if(product == null) product = new ProductModel();
-    return product.getProductsWhereName(name);
-  }
-
   //::::::::::::::::::::::::::::::::::::::::::::::::::CRUD:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
   /*
@@ -285,5 +272,8 @@ public class ProductsController {
     }
     return saved;
   }
+  
+
+  
 
 }

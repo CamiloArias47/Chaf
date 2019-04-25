@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package views;
 
-import controllers.CustomersController;
+
 import controllers.VentasController;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import libraries.TextPrompt;
 
 /**
  *
@@ -25,17 +20,13 @@ public class VentasChoseClient extends javax.swing.JFrame {
     private Object id = null;
     private CHAFDependenciesViews dp = new CHAFDependenciesViews();
     private VentasView ventasView;
+    private TextPrompt PlaceHolderNomClient;
 
     /**
      * Creates new form VentasChoseClient
      */
     public VentasChoseClient() {
         initComponents();
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        int height = pantalla.height;
-        int width = pantalla.width;
-        setSize(width/2, height/2);
-
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -108,6 +99,7 @@ public class VentasChoseClient extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         nombreCliente.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        PlaceHolderNomClient = new TextPrompt ("Nombre del cliente",this.nombreCliente);
         nombreCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 handlerInput(evt);
@@ -138,13 +130,9 @@ public class VentasChoseClient extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id","Nombre","NumeroId","Dirección","Telefono"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -214,7 +202,7 @@ public class VentasChoseClient extends javax.swing.JFrame {
     private void keyTypedEvent(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyTypedEvent
         // TODO add your handling code here:
         input = nombreCliente.getText();
-          if(ventas == null) ventas = new VentasController();
+          if(ventas == null) ventas = this.ventasView.getControllerVentas();
           this.setClientsTable(ventas.getClientesWhereName(input));
 
     }//GEN-LAST:event_keyTypedEvent

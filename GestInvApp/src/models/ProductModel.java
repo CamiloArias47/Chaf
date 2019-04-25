@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package models;
 
 import java.sql.Connection;
@@ -126,32 +122,6 @@ public class ProductModel {
       finally{
         try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no fue posible liberar la conexión "+e); }
       }
-    }
-
-    public ArrayList<ArrayList> getProductsWhereName(String name){
-      ArrayList<ArrayList> products = new ArrayList<ArrayList>();
-      Connection conexion = null;
-      try{
-        ConexionBD conexionPoll = new ConexionBD();
-        conexion = conexionPoll.getBasicDataSource().getConnection();
-        PreparedStatement query = conexion.prepareStatement("SELECT p.producto_id, p.descripcion, p.costo, p.precio_venta, m.nombre, t.nombre_tercero, p.cantidad, p.estado FROM producto AS p INNER JOIN marca as m ON p.marca_id = m.marca_id INNER JOIN tercero as t ON p.proveedor = t.tercero_id WHERE  p.estado = 'A' AND LOWER(p.descripcion) LIKE LOWER(?) ORDER BY p.producto_id ASC");
-        query.setString(1,  "%" + name + "%");
-        ResultSet result = query.executeQuery();
-        while (result.next()) {
-          ArrayList<String> product = new ArrayList<String>();
-          for (int i = 1; i<=8 ;i++ ) {
-            product.add(result.getString(i));
-          }
-          products.add(product);
-        }
-      }
-      catch(SQLException ex){
-        Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
-      }
-      finally{
-        try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no fue posible liberar la conexión "+e); }
-      }
-      return products;
     }
 
     /*
@@ -304,6 +274,35 @@ public class ProductModel {
     public String getNombreMarca(){
       return nombreMarca;
     }
-
+    public ArrayList<ArrayList> getProductWhere(String name){
+      ArrayList<ArrayList> productos = new ArrayList<ArrayList>();
+      Connection con = null;
+      try{
+        ConexionBD conexion = new ConexionBD();
+        con = conexion.getBasicDataSource().getConnection();
+        PreparedStatement query = con.prepareStatement("SELECT p.producto_id,p.descripcion, p.precio_venta, m.nombre,a.nombre_tercero,p.cantidad FROM  producto AS p NATURAL JOIN marca AS m INNER JOIN tercero AS a ON a.tercero_id = p.proveedor  WHERE estado = 'A' AND LOWER(descripcion) LIKE LOWER(?)");
+        System.out.println("[DEBUG] antes del setString, name="+name);
+        query.setString(1,  "%" + name + "%");
+        System.out.println("[DEBUG] despues del setString");
+        ResultSet result = query.executeQuery();
+        while(result.next()){
+          ArrayList<String> producto = new ArrayList<String>();
+          producto.add(result.getString(1));
+          producto.add(result.getString(2));
+          producto.add(result.getString(3));
+          producto.add(result.getString(4));
+          producto.add(result.getString(5));
+          producto.add(result.getString(6));
+          productos.add(producto);
+        }
+      }
+      catch(SQLException ex){
+        Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      finally{
+        try{ if(con != null) con.close(); }catch(Exception e){ System.out.println("[CustomerModel] Error: no fue posible liberar la conexión "+e); }
+      }
+      return productos;
+    }
 
 }
