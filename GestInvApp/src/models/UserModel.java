@@ -205,18 +205,18 @@ public class UserModel {
             query.setString(5, tel);
             query.setString(6, login);
             query.setInt(8, rol);
-            byte[] bytesOfMessage;
+            /*byte[] bytesOfMessage;
             bytesOfMessage = pwd.getBytes("UTF-8");
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] thedigest = md.digest(bytesOfMessage);
-            pwd = String.valueOf(thedigest);
+            pwd = String.valueOf(thedigest);*/
             query.setString(7, pwd);
             query.execute();
             System.out.println("[UserModel]: se inserto el tercero: " + name);
-        } catch (NoSuchAlgorithmException ex) {
+        /*} catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);*/
         } catch (SQLException ex) {
             Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);
         }

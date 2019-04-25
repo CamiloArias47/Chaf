@@ -6,6 +6,7 @@
 package models;
 
 
+import controllers.UserController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,23 +23,26 @@ public class LoginModel extends ConexionBD{
     private String user;
     private String pass;
     private int terceroId;
+    private UserController userCTL = null;
 
     public boolean validate(){
-        
+
             ConexionBD conexionPoll = new ConexionBD();
             Connection conexion = null;
-        try {    
+            if(userCTL == null) userCTL = new UserController();
+        try {
             // BasicDataSource nos reserva una conexion y nos la devuelve.
             conexion = conexionPoll.getBasicDataSource().getConnection();
-            PreparedStatement query1 = conexion.prepareStatement("SELECT encriptar_dato(?)");
+            /*PreparedStatement query1 = conexion.prepareStatement("SELECT encriptar_dato(?)");
             query1.setString(1,pass);
             ResultSet res = query1.executeQuery();
             while(res.next()){
                 pass = res.getString(1);
-            }
-            PreparedStatement query2 = conexion.prepareStatement("SELECT * FROM usuario WHERE lower(login_usuario) = lower(?) and contraseña = ?");  
-            query2.setString(1,user);    
-            query2.setString(2,pass);
+            }*/
+            PreparedStatement query2 = conexion.prepareStatement("SELECT * FROM usuario WHERE lower(login_usuario) = lower(?) and contraseña = ?");
+            System.out.println("[DEBUG] user: "+user+" pass: "+pass);
+            query2.setString(1,user);
+            query2.setString(2,userCTL.hashSHA3(pass));
             ResultSet response = query2.executeQuery();
             if(response.next()){
                 return true;
@@ -49,7 +53,7 @@ public class LoginModel extends ConexionBD{
         } catch (SQLException ex) {
             Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        
+
         } finally {
            // En realidad no cierra la conexion, sino que avisa al pool de que
            // esta conexión queda libre.
@@ -60,7 +64,7 @@ public class LoginModel extends ConexionBD{
              }
            } catch(Exception e) { }
         }
-        
+
     }
 
     public void setUser(String user){
@@ -78,7 +82,7 @@ public class LoginModel extends ConexionBD{
     public String getPass(){
       return this.pass;
     }
-    
+
     public void serTerceroId(int terId){
       this.terceroId = terId;
     }

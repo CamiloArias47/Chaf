@@ -7,6 +7,9 @@ package controllers;
 
 import java.util.ArrayList;
 import models.UserModel;
+import org.bouncycastle.jcajce.provider.digest.SHA3;
+import org.bouncycastle.util.encoders.Hex;
+import java.security.SecureRandom;
 
 /**
  *
@@ -20,8 +23,22 @@ public class UserController {
 
         //faltan validaciones
         int rol = rollString.equals("Vendedor") ? 1 : 2;
-        this.modeloUser.insertUser(tipoDoc, numDoc, dir, name,tel,login,pwd,rol);
+        this.modeloUser.insertUser(tipoDoc, numDoc, dir, name,tel,login,hashSHA3(pwd),rol);
 
+    }
+
+    public String hashSHA3(String word){
+      SecureRandom random = new SecureRandom();
+      byte[] salt = new byte[16];
+      random.nextBytes(salt);
+      System.out.println(salt);
+
+      String input = "Hello world !"+salt;
+      SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
+      byte[] digest = digestSHA3.digest(word.getBytes());
+
+      System.out.println("[UserController] SHA3-512 = " + Hex.toHexString(digest));
+      return Hex.toHexString(digest);
     }
 
     public String getRol(String login){
