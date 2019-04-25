@@ -23,7 +23,7 @@ public class VentasChoseProduct extends javax.swing.JFrame {
     private String input;
     private VentasController ventas;
     private ArrayList<ArrayList> productos;
-    private int cantidad;
+    private int cantidadIngresada,cantidadProducto;
     private String nombre,precioVenta,marca,proveedor;
     private CHAFDependenciesViews dp = new CHAFDependenciesViews();
     private Object id = null;
@@ -101,18 +101,17 @@ public class VentasChoseProduct extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         input2 = new views.Input();
         inputCantidad = new javax.swing.JTextField();
-        materialButton1 = new libraries.MaterialButton();
+        btnAgregarProducto = new libraries.MaterialButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         nombreProducto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         PlaceHolderNomProd = new TextPrompt("Nombre del Producto",this.nombreProducto);
-        nombreProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+	nombreProducto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 nombreProductokeyTypedEvent(evt);
             }
         });
-
         javax.swing.GroupLayout input1Layout = new javax.swing.GroupLayout(input1);
         input1.setLayout(input1Layout);
         input1Layout.setHorizontalGroup(
@@ -148,6 +147,11 @@ public class VentasChoseProduct extends javax.swing.JFrame {
                 inputCantidadActionPerformed(evt);
             }
         });
+        inputCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inputCantidadKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout input2Layout = new javax.swing.GroupLayout(input2);
         input2.setLayout(input2Layout);
@@ -166,9 +170,19 @@ public class VentasChoseProduct extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        materialButton1.setBackground(new java.awt.Color(119, 177, 236));
-        materialButton1.setText("Agregar Producto");
+        btnAgregarProducto.setBackground(new java.awt.Color(119, 177, 236));
+        btnAgregarProducto.setText("Agregar Producto");
+        btnAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarProductoActionPerformed(evt);
+            }
+        });
 
+	 jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -177,14 +191,14 @@ public class VentasChoseProduct extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(input2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(materialButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)))
+                    .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(input2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(materialButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -249,10 +263,25 @@ public class VentasChoseProduct extends javax.swing.JFrame {
         this.setProductsTable(ventas.getProductWhereName(input));
     }//GEN-LAST:event_nombreProductokeyTypedEvent
 
-    private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-       
-          if(id == null || this.inputCantidad.getText().length() == 0 || cantidad < 0){
+        int row = jTable1.getSelectedRow();
+        this.id = jTable1.getModel().getValueAt(row, 0);
+        this.nombre = jTable1.getModel().getValueAt(row, 1).toString();
+        this.precioVenta = jTable1.getModel().getValueAt(row, 2).toString();
+        this.marca = jTable1.getModel().getValueAt(row, 3).toString();
+        this.proveedor = jTable1.getModel().getValueAt(row, 4).toString();
+        this.cantidadProducto = Integer.parseInt(jTable1.getModel().getValueAt(row, 5).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
+        // TODO add your handling code here:
+        if(!(this.inputCantidad.getText().length() == 0)){
+           this.cantidadIngresada = Integer.parseInt(this.inputCantidad.getText());
+           System.out.println("cant::" + cantidadIngresada);
+        }
+        if(id == null || this.inputCantidad.getText().length() == 0 || this.cantidadIngresada > this.cantidadProducto){
           JOptionPane.showMessageDialog(
                           this,
                           "No ha seleccionado un producto o la cantidad diferente a la disponible",
@@ -260,28 +289,23 @@ public class VentasChoseProduct extends javax.swing.JFrame {
                           dp.getChafLogo());
             }
             else{
-                  cantidad = Integer.parseInt(this.inputCantidad.getText());
+                  
                   ArrayList <String> producto = new  ArrayList <String>();
                   producto.add(this.id.toString());                  
                   producto.add(this.nombre);                  
                   producto.add(this.precioVenta);                  
                   producto.add(this.marca);                  
                   producto.add(this.proveedor);                  
-                  producto.add(String.valueOf(this.cantidad));
+                  producto.add(String.valueOf(this.cantidadIngresada));
+                  System.out.println("cant::oninsert::" + cantidadIngresada);
                   this.ventasView.addNewProduct(producto);
           }
-    }//GEN-LAST:event_materialButton1ActionPerformed
+    }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void inputCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputCantidadKeyTyped
         // TODO add your handling code here:
-        int row = jTable1.getSelectedRow();
-        id = jTable1.getModel().getValueAt(row, 0);
-        this.nombre = jTable1.getModel().getValueAt(row, 1).toString();
-        this.precioVenta = jTable1.getModel().getValueAt(row, 2).toString();
-        this.marca = jTable1.getModel().getValueAt(row, 3).toString();
-        this.proveedor = jTable1.getModel().getValueAt(row, 4).toString();
-        cantidad = Integer.parseInt(jTable1.getModel().getValueAt(row, 5).toString());
-    }//GEN-LAST:event_jTable1MouseClicked
+  
+    }//GEN-LAST:event_inputCantidadKeyTyped
 
     /**
      * @param args the command line arguments
@@ -319,6 +343,7 @@ public class VentasChoseProduct extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private libraries.MaterialButton btnAgregarProducto;
     private views.Input input1;
     private views.Input input2;
     private javax.swing.JTextField inputCantidad;
@@ -326,7 +351,6 @@ public class VentasChoseProduct extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private libraries.MaterialButton materialButton1;
     private javax.swing.JTextField nombreProducto;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,6 +8,7 @@ package controllers;
 import java.util.ArrayList;
 import models.CustomersModel;
 import models.ProductModel;
+import models.VentasModel;
 import views.VentasView;
 
 /**
@@ -18,7 +19,10 @@ public class VentasController {
 
     private CustomersModel cliente = null;
     private ProductModel producto = null;
-    private int ClientId;
+    private int ClientId,usuarioActual;
+    private ArrayList<ArrayList> productos;
+    private VentasModel modeloVentas = new VentasModel();
+    
 
     public void showVentasView(){
         VentasView ventasView = new VentasView();
@@ -33,9 +37,28 @@ public class VentasController {
     public void setClientId(int newVal){
         this.ClientId = newVal;
     }
+    public void setUsuarioActual(int newVal){
+        this.usuarioActual = newVal;
+    }
     
     public ArrayList<ArrayList> getProductWhereName(String name){
       if(producto == null) producto = new ProductModel();
       return producto.getProductWhere(name);
     }
+    
+    public boolean validateStock(int idProducto,int cantidad){
+        if(this.producto.getStockProductById(idProducto) < cantidad){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    public void makeVentaCabecera(int clientId,int totalVenta){
+        this.modeloVentas.insertVentaCabecera(clientId, this.usuarioActual, totalVenta);
+    }
+    public void makeVentaDetalle(int producto,int cantidad,int valorUnitario){
+        this.modeloVentas.insertVentaDetalle(producto, cantidad, valorUnitario);
+    }
+
 }

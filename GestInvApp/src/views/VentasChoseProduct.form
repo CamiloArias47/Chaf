@@ -142,7 +142,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="input2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="materialButton1" alignment="0" pref="252" max="32767" attributes="0"/>
+                          <Component id="btnAgregarProducto" alignment="0" pref="252" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -152,7 +152,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="input2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="materialButton1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="btnAgregarProducto" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -196,17 +196,21 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputCantidadActionPerformed"/>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="inputCantidadKeyTyped"/>
                   </Events>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="libraries.MaterialButton" name="materialButton1">
+            <Component class="libraries.MaterialButton" name="btnAgregarProducto">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ec" green="b1" red="77" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Agregar Producto"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarProductoActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

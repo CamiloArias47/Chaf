@@ -304,5 +304,28 @@ public class ProductModel {
       }
       return productos;
     }
+    
+    public int getStockProductById(int id){
+      Connection con = null;
+      int stock = 0;
+      try{
+        ConexionBD conexion = new ConexionBD();
+        con = conexion.getBasicDataSource().getConnection();
+        PreparedStatement query = con.prepareStatement("SELECT cantidad FROM producto where producto_id = ?");
+        query.setInt(1,id);
+        ResultSet result = query.executeQuery();
+        while(result.next()){
+            stock= result.getInt(1);
+        }
+        return stock;
+      }
+      catch(SQLException ex){
+        Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      finally{
+        try{ if(con != null) con.close(); }catch(Exception e){ System.out.println("[CustomerModel] Error: no fue posible liberar la conexión "+e); }
+      }
+      return stock;
+    }
 
 }
