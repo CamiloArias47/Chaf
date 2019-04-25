@@ -67,10 +67,10 @@ public class UserModel {
     public String getPwd() {
         return pwd;
     }
-    
-    
-    
-    
+
+
+
+
 
     public UserModel(String tipo_id, String direccion, String nombre, String telefono, int tercero_id, int numero_id) {
         this.tipo_id = tipo_id;
@@ -114,7 +114,7 @@ public class UserModel {
     public String getRoleUser(String login){
         String rol = null;
         try {
-            Connection conex = null;   
+            Connection conex = null;
             ConexionBD con = new ConexionBD();
             conex = con.getBasicDataSource().getConnection();
             PreparedStatement query = conex.prepareStatement("SELECT obtener_rol(?)");
@@ -191,33 +191,34 @@ public class UserModel {
      * Descripcion: Inserta un usuario en la tabla usuario y en la tabla tercero
      * utilizando una funcion definida en la BD.
      */
-    public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel,String login,String pwd){
+    public void insertUser(String tipoDoc,int numDoc,String dir,String name,String tel,String login,String pwd, int rol){
 
         Connection conex = null;
         try {
             ConexionBD con = new ConexionBD();
             conex = con.getBasicDataSource().getConnection();
-            PreparedStatement query = conex.prepareStatement("SELECT insertar_usuario(?,?,?,?,?,?,?)");
+            PreparedStatement query = conex.prepareStatement("SELECT insertar_usuario(?,?,?,?,?,?,?,?)");
             query.setString(1, tipoDoc);
             query.setInt(2,numDoc);
             query.setString(3, dir);
             query.setString(4,name);
             query.setString(5, tel);
             query.setString(6, login);
-            byte[] bytesOfMessage;
+            query.setInt(8, rol);
+            /*byte[] bytesOfMessage;
             bytesOfMessage = pwd.getBytes("UTF-8");
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] thedigest = md.digest(bytesOfMessage);
-            pwd = String.valueOf(thedigest);        
+            pwd = String.valueOf(thedigest);*/
             query.setString(7, pwd);
             query.execute();
             System.out.println("[UserModel]: se inserto el tercero: " + name);
-        } catch (NoSuchAlgorithmException ex) {
+        /*} catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);*/
         } catch (SQLException ex) {
-            Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);   
+            Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
           try{ if (conex != null) conex.close();}catch(Exception e) { System.out.println("[UserModel] Error: error liberando conexión");}
@@ -279,7 +280,7 @@ public class UserModel {
         try{ if(conex != null) conex.close(); }catch(Exception e){ System.out.println("[UserModel] Error: no fue posible liberar la conexión "+e); }
       }
     }
-    
+
     public void updateUser(String tipoDoc,int numDoc,String dir,String name,String tel,String login,String pwd){
         Connection conex = null;
         try {
@@ -296,7 +297,7 @@ public class UserModel {
             bytesOfMessage = pwd.getBytes("UTF-8");
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] thedigest = md.digest(bytesOfMessage);
-            pwd = String.valueOf(thedigest);        
+            pwd = String.valueOf(thedigest);
             query.setString(7, pwd);
             query.execute();
             System.out.println("[UserModel]: se actualizo el tercero: " + name);
@@ -305,12 +306,12 @@ public class UserModel {
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);   
+            Logger.getLogger(LoginModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
           try{ if (conex != null) conex.close();}catch(Exception e) { System.out.println("[UserModel] Error: error liberando conexión");}
         }
-    }  
+    }
     public boolean getStatusUser(String login){
       Connection conexion = null;
       boolean estado = false;
@@ -321,7 +322,7 @@ public class UserModel {
             query.setString(1, login);
             ResultSet res = query.executeQuery();
             while(res.next()){
-                estado = res.getBoolean(1);  
+                estado = res.getBoolean(1);
             }
             return estado;
         } catch (SQLException ex) {
@@ -331,7 +332,7 @@ public class UserModel {
             try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[UserModel] Error: no se pudo liberar la conexión:"+e); }
         }
     }
-    
+
     public void setStatusUser(String login,boolean estado){
         Connection conexion = null;
         try {
