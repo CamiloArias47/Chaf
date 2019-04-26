@@ -23,7 +23,8 @@ import javax.swing.table.DefaultTableModel;
 public class VentasView extends javax.swing.JFrame {
 
     private CHAFDependenciesViews dp = new CHAFDependenciesViews();
-    private int idClient;
+    private int idClient,numdocClient;
+    private int UsuarioActual;
     /*Se inicializa en  -1 debido a que por defecto inica en 0 y eliminaria el 1er elemento de la tabla*/
     private int deleteRow = -1;
     private VentasController ctrVentas;
@@ -57,7 +58,7 @@ public class VentasView extends javax.swing.JFrame {
     }
     
     /* numero de documento del cliente*/
-    public void setIdClient(String nuevoValor){
+    public void setNumeroDocumento(String nuevoValor){
         this.IdentificacionCliente.setText(nuevoValor);
     }
     
@@ -74,6 +75,14 @@ public class VentasView extends javax.swing.JFrame {
       System.out.println("[DEBUG] recibi id:"+id);
     }
     
+    public void setNumDocClient(int newVal){
+        this.numdocClient = newVal;
+    }
+    
+    public void setUserLogged(int newVal){
+        this.UsuarioActual = newVal;
+    }
+    
     public int findOnTable(String idProducto){
         int ExistOnTable = 0;
         for(int i = 0;i<idproductos.size();i++){
@@ -86,8 +95,8 @@ public class VentasView extends javax.swing.JFrame {
 
     public void addNewProduct(ArrayList<String> producto){
         this.idproductos.add(producto.get(0));
-        this.cantidadProducto.add(producto.get(2));
-        this.precioUnitario.add(producto.get(5));
+        this.precioUnitario.add(producto.get(2));
+        this.cantidadProducto.add(producto.get(5));
         if(!(this.findOnTable(producto.get(0)) > 1)){
             DefaultTableModel model = (DefaultTableModel) this.TableProductosEnVenta.getModel();
             model.addRow(new Object[]{producto.get(0),
@@ -112,10 +121,9 @@ public class VentasView extends javax.swing.JFrame {
 
     public void setInfoCLient(){
       CustomersController ctrlCustomers = new CustomersController();
-      ArrayList<String> data = ctrlCustomers.showRegisterCustomer(this.idClient);
-      //this.setClientId(Integer.parseInt(data.get(0)));
+      ArrayList<String> data = ctrlCustomers.showRegisterCustomer(this.numdocClient);
       this.setNameClient(data.get(3));
-      this.setIdClient(data.get(1));
+      this.setNumeroDocumento(data.get(1));
       this.setDirClient(data.get(2));
       this.setDirClient(data.get(4));
       this.refresh();
@@ -350,8 +358,6 @@ public class VentasView extends javax.swing.JFrame {
             VentasChoseProduct viewChoseProduct = new VentasChoseProduct();
             viewChoseProduct.SetVentasView(this);
         }
-        
-
     }//GEN-LAST:event_addProduct
 
     private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
@@ -391,14 +397,21 @@ public class VentasView extends javax.swing.JFrame {
             for(int i=0;i<this.idproductos.size();i++){
                 totalVenta += Integer.parseInt(this.precioUnitario.get(i)) * Integer.parseInt(this.cantidadProducto.get(i));
             }
-            System.out.println("totVen::"+totalVenta);
+            this.ctrVentas.makeVentaCabecera(idClient,this.UsuarioActual,totalVenta);
             for(int i=0;i<this.idproductos.size();i++){
-                
+                this.ctrVentas.makeVentaDetalle(Integer.parseInt(this.idproductos.get(i)),
+                                                Integer.parseInt(this.cantidadProducto.get(i)),
+                                                Integer.parseInt(this.precioUnitario.get(i)));
+                this.ctrVentas.descontarCantidad(Integer.parseInt(this.idproductos.get(i)), 
+                                                Integer.parseInt(this.cantidadProducto.get(i)));
             }
-            
+                        JOptionPane.showMessageDialog(
+                          this,
+                          "Venta Realizada",
+                          "Advertencia", JOptionPane.INFORMATION_MESSAGE,
+                          dp.getChafLogo());
+                        this.dispose();
         }
-        
-//this.ctrVentas.
     }//GEN-LAST:event_btnFinalVentasActionPerformed
 
     /**

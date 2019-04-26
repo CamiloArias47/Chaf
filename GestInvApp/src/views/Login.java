@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     private views.DashboardView dashboard;
+    private int UserLogged;
     /**
      * Creates new form Login
      */
@@ -177,7 +178,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         LoginController ctlLogin = new LoginController();
         ctlLogin.clickLogin(inputUser.getText(),inputPassword.getText());
-
+        
         if(ctlLogin.getLogged()){
           DashboardController ctlDashboard = new DashboardController();
           ctlDashboard.setIdUserLogged(ctlLogin.getIdUserLogged() );

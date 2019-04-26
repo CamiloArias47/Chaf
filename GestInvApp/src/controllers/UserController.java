@@ -57,7 +57,8 @@ public class UserController {
     public int getUsersOnTable(){
         return modeloUser.getCantidadUsers();
     }
-    public int getTerceroIdUser(){
+    public int getTerceroIdUser(String login){
+        this.modeloUser.whereUserName(login);
         return this.modeloUser.getTercero_id();
     }
     public String getNameUser(String login){

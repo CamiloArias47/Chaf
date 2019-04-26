@@ -268,9 +268,8 @@ public class DashboardView extends javax.swing.JFrame {
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         // TODO add your handling code here:
         VentasController ventasControl = new VentasController();
-        ventasControl.setUsuarioActual(this.userIdLogged);
-        System.out.println(this.userIdLogged);
-        ventasControl.showVentasView();
+        ventasControl.showVentasView(userIdLogged);
+        System.out.println("ventasUser::"+ this.userIdLogged);
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

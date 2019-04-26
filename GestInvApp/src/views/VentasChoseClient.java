@@ -21,6 +21,7 @@ public class VentasChoseClient extends javax.swing.JFrame {
     private CHAFDependenciesViews dp = new CHAFDependenciesViews();
     private VentasView ventasView;
     private TextPrompt PlaceHolderNomClient;
+    private Object numDocClient = null;
 
     /**
      * Creates new form VentasChoseClient
@@ -189,6 +190,7 @@ public class VentasChoseClient extends javax.swing.JFrame {
         }
         else{
           if(ventasView != null) ventasView.setIdClient(Integer.parseInt(id.toString()));
+          if(ventasView != null) ventasView.setNumDocClient(Integer.parseInt(numDocClient.toString()));
           if(ventasView != null) ventasView.setInfoCLient();
           this.dispose();
         }
@@ -210,8 +212,8 @@ public class VentasChoseClient extends javax.swing.JFrame {
     private void mouseClikedOnTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClikedOnTable
         // TODO add your handling code here:
         int row = jTable1.getSelectedRow();
-        int col = jTable1.getSelectedColumn();
-        id = jTable1.getModel().getValueAt(row, 2);
+        id = jTable1.getModel().getValueAt(row, 0);
+        numDocClient = jTable1.getModel().getValueAt(row, 2);
     }//GEN-LAST:event_mouseClikedOnTable
 
     /**

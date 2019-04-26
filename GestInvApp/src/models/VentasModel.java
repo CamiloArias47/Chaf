@@ -32,7 +32,7 @@ public class VentasModel {
         query.setInt(1,cliente_id);
         query.setInt(2,tercero_id);
         query.setInt(3,totalventa);
-        query.executeQuery();
+        query.execute();
       }
       catch(SQLException ex){
         Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,11 +47,11 @@ public class VentasModel {
       try{
         ConexionBD conexion = new ConexionBD();
         con = conexion.getBasicDataSource().getConnection();
-        PreparedStatement query = con.prepareStatement("INSERT INTO venta_detalle (venta_id, producto_id,cantidad,valor_unitario)values((SELECT MAX(venta_id) FROM venta),?,?,?))");
+        PreparedStatement query = con.prepareStatement("INSERT INTO ventadetalle (venta_id, producto_id,cantidad,valor_unitario)values((SELECT MAX(venta_id) FROM venta),?,?,?)");
         query.setInt(1,producto);
         query.setInt(2,cantidad);
         query.setInt(3,valor_unitario);
-        query.executeQuery();
+        query.execute();
       }
       catch(SQLException ex){
         Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);

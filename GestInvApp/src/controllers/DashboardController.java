@@ -37,8 +37,10 @@ public class DashboardController {
       dashboard.setLayout(null);
       sesion.setName(new UserController().getNameUser(nombreUser.toUpperCase()));
       sesion.setRol(new UserController().getRol(nombreUser.toUpperCase()));
+      sesion.setUserLogged(new UserController().getTerceroIdUser(nombreUser.toUpperCase()));
       dashboard.setCurrentUser(sesion.getName());
       dashboard.setRol(sesion.getRol());
+      dashboard.setUserIdLogged(sesion.getId());
       dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     

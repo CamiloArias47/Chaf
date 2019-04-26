@@ -19,13 +19,14 @@ public class VentasController {
 
     private CustomersModel cliente = null;
     private ProductModel producto = null;
-    private int ClientId,usuarioActual;
-    private ArrayList<ArrayList> productos;
+    private int ClientId;
     private VentasModel modeloVentas = new VentasModel();
+    private ProductModel modeloProducto = new ProductModel();
     
 
-    public void showVentasView(){
+    public void showVentasView(int userLogged){
         VentasView ventasView = new VentasView();
+        ventasView.setUserLogged(userLogged);
         ventasView.setVisible(true);
     }
 
@@ -37,9 +38,7 @@ public class VentasController {
     public void setClientId(int newVal){
         this.ClientId = newVal;
     }
-    public void setUsuarioActual(int newVal){
-        this.usuarioActual = newVal;
-    }
+    
     
     public ArrayList<ArrayList> getProductWhereName(String name){
       if(producto == null) producto = new ProductModel();
@@ -54,11 +53,13 @@ public class VentasController {
         }
     }
     
-    public void makeVentaCabecera(int clientId,int totalVenta){
-        this.modeloVentas.insertVentaCabecera(clientId, this.usuarioActual, totalVenta);
+    public void makeVentaCabecera(int clientId,int usuario,int totalVenta){
+        this.modeloVentas.insertVentaCabecera(clientId, usuario, totalVenta);
     }
     public void makeVentaDetalle(int producto,int cantidad,int valorUnitario){
         this.modeloVentas.insertVentaDetalle(producto, cantidad, valorUnitario);
     }
-
+    public void descontarCantidad(int producto,int cantidad){
+        this.modeloProducto.descontarCantidad(producto,cantidad);
+    }
 }

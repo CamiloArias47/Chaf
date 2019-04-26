@@ -243,6 +243,25 @@ public class ProductModel {
         try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no se pudo liberar la conexion:"+e); }
       }
     }
+    
+    public void descontarCantidad(int idProducto,int cantidadARestar){
+        Connection conexion = null;
+        try{
+          ConexionBD conexionPoll = new ConexionBD();
+          conexion = conexionPoll.getBasicDataSource().getConnection();
+          PreparedStatement query = conexion.prepareStatement("SELECT descontar_cantidad(?,?)");
+          query.setInt(1, idProducto);
+          query.setInt(2, cantidadARestar);
+          query.execute();
+        }
+        catch(SQLException ex){
+          Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        finally{
+          try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProductModel] Error: no se pudo liberar la conexion:"+e); }
+        } 
+    }
 
 
     //:::::::Getters:::::::::::::::::::
@@ -280,7 +299,7 @@ public class ProductModel {
       try{
         ConexionBD conexion = new ConexionBD();
         con = conexion.getBasicDataSource().getConnection();
-        PreparedStatement query = con.prepareStatement("SELECT p.producto_id,p.descripcion, p.precio_venta, m.nombre,a.nombre_tercero,p.cantidad FROM  producto AS p NATURAL JOIN marca AS m INNER JOIN tercero AS a ON a.tercero_id = p.proveedor  WHERE estado = 'A' AND LOWER(descripcion) LIKE LOWER(?)");
+        PreparedStatement query = con.prepareStatement("SELECT p.producto_id,p.descripcion, p.precio_venta, m.nombre,a.nombre_tercero,p.cantidad FROM  producto AS p NATURAL JOIN marca AS m INNER JOIN tercero AS a ON a.tercero_id = p.proveedor  WHERE estado = 'A' AND p.cantidad > 0 AND LOWER(descripcion) LIKE LOWER(?)");
         System.out.println("[DEBUG] antes del setString, name="+name);
         query.setString(1,  "%" + name + "%");
         System.out.println("[DEBUG] despues del setString");

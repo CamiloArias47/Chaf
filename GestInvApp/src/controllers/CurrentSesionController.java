@@ -27,6 +27,10 @@ public final class CurrentSesionController {
         
         return rol;
     }
+    public int getId() {
+        
+        return id;
+    }
     
     public void setName(String name) {
         this.name = name;
@@ -34,6 +38,10 @@ public final class CurrentSesionController {
 
     public void setRol(String userRol) {
         this.rol = userRol;
+    }
+    
+    public void setUserLogged(int userLogged) {
+        this.id = userLogged;
     }
 
 }
