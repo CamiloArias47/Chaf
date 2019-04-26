@@ -206,11 +206,8 @@ public class DashboardView extends javax.swing.JFrame {
 
     private void materialButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton7ActionPerformed
         // TODO add your handling code here:
-       JOptionPane.showMessageDialog(
-                        this,
-                        this.mensajeModulos,
-                        "Advertencia", JOptionPane.INFORMATION_MESSAGE,
-                        dp.getChafLogo());
+        ReporteView reporteView = new ReporteView();
+        reporteView.setVisible(true);
     }//GEN-LAST:event_materialButton7ActionPerformed
 
     private void materialButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton6ActionPerformed
